@@ -1,0 +1,19 @@
+<% if !@msg.nil? %>
+  <div class="separator"></div>
+  <h1><%= @msg %></h1>
+  <h3><%= @contact.service_response %></h3>
+  <div class="separator"></div>
+<% end %>
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :contact, :url => { :action => "update", :id=>@contact.contactid } do |f| %>
+
+    <%= hidden_field_tag 'contact[partyid]', @contact.partyid %>
+    <%= hidden_field_tag 'contact[contacttype_lu_id]', @contact.contacttype_lu_id %>
+
+    <%=  render :partial => "form.html" %>
+
+    <%= f.submit("Update") %>
+  <% end %>
+</div>

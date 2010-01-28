@@ -1,0 +1,35 @@
+<%
+
+  rightsholderOptions = empty_options
+  @rightsholders.each_with_index { |rh, index |
+        rightsholderOptions = rightsholderOptions + "<option value='"+rh.partyid.to_s+"'>"+ rh.preferred + "</option>"
+  }
+
+  typeOptions = empty_options
+  @relationshipTypes.each_with_index { |type, index |
+        typeOptions = typeOptions + "<option value='"+type.relationship_lu_id.to_s+"'>"+ type.label.to_s + "</option>"
+  }
+
+%>
+
+<% ajax_form_for :agreement, :url => { :controller=>"relationship", :action => "create" } do |f| %>
+    <%= hidden_field_tag "agreementid", @agreement.id.to_int %>
+    <%= hidden_field_tag "relationship[delegator]", @rightsholderA.partyid %>
+
+    <table class="form">
+      <tr>
+        <td class="label"><%= label_tag "left", "Rights Holder A" %></td>
+        <td class="field"><strong><%= @rightsholderA.preferred %></strong></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label_tag "relationship_lu_id", "Relationship Type" %></td>
+        <td class="field"><%= select_tag "relationship[relationship_lu_id]", typeOptions%></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label_tag "rightsholderid_b", "Rights Holder B" %></td>
+        <td class="field"><%= select_tag "relationship[delegatee]", rightsholderOptions %></td>
+      </tr>
+    </table>
+
+  <p><%= f.submit 'Create' %></p>
+<% end %>

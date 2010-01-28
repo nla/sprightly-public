@@ -1,0 +1,67 @@
+<%
+    default_source = session[:source]
+    default_source = "rightsholder" if default_source.nil?
+
+    source_options = [["rightsholder", "Rights Holder"], ["catalogue","Catalogue"],["dcm","Internal Images"]]
+    #source_selected_index = 0
+    source_option_tags = ""
+    source_options.each_with_index { |option_arr, i|
+      source_option_tags += "<option value='" + option_arr[0] +"'>" + option_arr[1] + "</option>"
+      #if default_source == option_arr[0] then
+      #  source_selected_index = i
+      #end
+    }
+
+%>
+<div id="miniSearchPanel">
+     <form method="get" action="<%= url_for(:action => 'search', :controller => 'search', :only_path => false) %>">
+       <div>         
+         <span id="miniSourceSelector" class="mini-search-source">
+            <% if session[:search_source].nil? or session[:search_source]=="rightsholder" then %>
+              <%= image_tag("rightsholder.png", :title=>"Search Rights Holders") %>
+              <%= hidden_field_tag "source", "rightsholder" %>
+            <% elsif session[:search_source]=="catalogue" %>
+              <%= image_tag("catalogue.png", :title=>"Search Works from the Catalogue") %>
+              <%= hidden_field_tag "source", "catalogue" %>
+            <% elsif session[:search_source]=="dcm" %>
+              <%= image_tag("dcm.png", :title=>"Search Works from DCM") %>
+              <%= hidden_field_tag "source", "dcm" %>
+            <% end %>
+         </span>
+         <%= text_field_tag "q", "" %>
+         <%= image_submit_tag("search.png") %>
+       </div>
+     </form>
+    <ul id="miniSourceSelectorMenu" class="contextMenu" style="display: none">
+      <li>
+        <%= image_tag("rightsholder.png", :alt=>"rightsholder", :title=>"Search Rights Holders") %> Rights Holders
+      </li>
+      <li>
+        <%= image_tag("catalogue.png", :alt=>"catalogue", :title=>"Search Works from the Catalogue") %> Catalogue
+      </li>
+      <li>
+        <%= image_tag("dcm.png", :alt=>"dcm", :title=>"Search Works from DCM") %> Internal Images
+      </li>
+    </ul>
+     <script type="text/javascript">
+      /*************************************************************************
+       * Enable the jQuery context menu for the source selector.
+       */
+      $(document).ready(function() {
+        $("#miniSourceSelector").contextMenu({menu: 'miniSourceSelectorMenu', fixed: true});
+        $("#miniSourceSelectorMenu li").hover(function(){$(this).addClass("hover");},function(){$(this).removeClass("hover");})
+        $("#miniSourceSelectorMenu").css("left", $("#miniSourceSelector").offset().left+"px");
+        $("#miniSourceSelectorMenu").css("top", $("#miniSourceSelector").offset().top+$("#miniSourceSelector").height()+"px");
+        $(document.body).append($("#miniSourceSelectorMenu")); /* move to body to avoid styling issues in IE7*/
+        $("#miniSourceSelector").hover(function(){$(this).addClass("hovered")},function(){if ($("#miniSourceSelectorMenu:visible").length==0) {$(this).removeClass("hovered")}});
+        $("#miniSourceSelectorMenu").bind("closed", function() {
+          $("#miniSourceSelector").removeClass("hovered");
+        });
+        $("#miniSourceSelectorMenu li").click(function(){
+          $("#miniSearchPanel #source").val($(this).find("img").attr("alt"));
+          $("#miniSourceSelector img").replaceWith($(this).find("img").clone());
+        });
+      });
+
+    </script>    
+</div>

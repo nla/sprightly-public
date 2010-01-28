@@ -1,0 +1,166 @@
+<%
+  parent_selector = ".ui-accordion-content:first" if parent_selector.nil?
+  show_create_rightsholder_button = false if show_create_rightsholder_button.nil?
+  create_rightsholder_action = "javascript:void(0);" if create_rightsholder_action.nil?
+%>
+ <div id="searchPanel">
+       <% ajax_form_for :agreement, :url => { :controller=>'rightsholders', :action => 'search', :only_path => false }, :parent_selector=>parent_selector, :html=>{:id=>"searchAndSelectForm"} do |f| %>
+           <%= hidden_field_tag "parent_selector", parent_selector %>
+         <div id="simpleSearch">
+              <input type="hidden" name="source" value="rightsholder" />
+              <input type="hidden" name="page_source" value="<%= @page_source %>" />
+              <input type="text" value="<%= @query %>" name="q" id="searchString" />
+              <input id="searchButton" type="submit" value="Search" class="blue-button"/>
+              <% if show_create_rightsholder_button then %>
+                or <button class="blue-button secondary" onclick="<%= create_rightsholder_action %>; return false;">Create Rights Holder</button>
+              <% end %>
+              <!-- <input id="selectButton" type="button" value="Select Rights Holder" class="green-button disabled" onclick="if (!$(this).hasClass('disabled')) { rhsearch.selectRightsHolder();}; return false;"/>-->
+              <span class="ajax-form-seperator">|</span> <a class='ajax-form-cancel' onclick='AjaxFormHelper.closeDialog(this, true); return false;' href='javascript:void(0);'>Cancel</a>
+         </div>
+       <% end %>
+  </div>
+
+  <%  if @solr_response && @solr_response.num_found.to_i == 0 %>
+    <div id="resultsPanel">
+      <div style="text-align:center">
+        <br/>
+        <br/>
+        <br/>
+        <h3>Your search - <%= @query %> - did not match anything.</h3>
+      </div>
+    </div>
+  <% elsif @solr_response %>
+
+    <%
+        puts currentPage = (@start.to_i/@rows) + 1
+        puts totalPages = (@solr_response.num_found.to_i/@rows) + 1
+
+        if currentPage - 5 <= 0
+          startPage = 1
+        else
+          startPage = currentPage - 5
+        end
+
+        if currentPage + 5 >= totalPages
+          lastPage = totalPages
+        else
+          lastPage = currentPage + 5
+        end
+
+      %>
+
+    <div id="resultsPanel" class="results-panel">
+
+        <div class="summary" style="padding-top: 10px; padding-left: 6px;">
+          Displaying <b><%= (@start.to_i + 1) %></b> to <b><%= @finish %></b> of <b><%= @solr_response.num_found %></b>
+        </div>
+
+             <div class="pagination">
+
+              <% if @start.to_i > 0 %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= currentPage - 1  %>); return false;">&#171; previous</a><% end %>
+
+              <%
+
+                for i in (startPage..lastPage)
+
+                  if i == currentPage
+                    %><b><%= i %></b><%
+                  else
+                    %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= i  %>); return false;"><%= i  %></a><%
+                  end
+                end
+
+              %>
+
+              <% if (@start.to_i+@rows) <= @solr_response.num_found.to_i %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= currentPage + 1  %>); return false;">next &#187;</a><% end %>
+
+      </div>
+      <%= clear_fix  %>
+      <div class="results-list" style="padding: 2px 0 4px">
+        <%=  render :partial => @source+"_searchresult", :collection => @solr_response.items %>
+      </div>
+       <%= clear_fix  %>
+       <div class="pagination">
+
+      <%
+        puts currentPage
+        puts totalPages
+      %>
+
+      <% if @start.to_i > 0 %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= currentPage - 1  %>); return false;">&#171; previous</a><% end %>
+
+      <%
+
+        for i in (startPage..lastPage)
+
+          if i == currentPage
+            %><b><%= i %></b><%
+          else
+            %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= i  %>); return false;"><%= i  %></a><%
+          end
+        end
+
+      %>
+
+      <% if (@start.to_i+@rows) <= @solr_response.num_found.to_i %><a href="javascript:void(0);" onclick="rhsearch.showPage(<%= currentPage + 1  %>); return false;">next &#187;</a><% end %>
+
+      </div>
+
+      <script type="text/javascript">
+          /*********************************************************************
+           * rhsearch defines the functions required by this select widget
+           */
+          var rhsearch = {};
+
+          /*********************************************************************
+           * rhsearch.showPage
+           *    pageIndex (int)
+           *
+           * ajax load the results for the pageIndex.
+           */
+          rhsearch.showPage = function (pageIndex) {
+            $("#searchPanel").parent().ajaxload(
+              "<%= url_for(:action=>'search', :only_path => false)%>?ajax=true",
+              {q:"<%= @query %>",source:"<%= @source %>",start:(pageIndex-1) * <%= @rows %>,authenticity_token:$($("#searchAndSelectForm")[0].authenticity_token).val(), parent_selector:"<%=parent_selector%>"},
+              function() {$("#searchPanel").parent().triggerHandler("pageloaded");}
+            );
+          }
+
+          /*********************************************************************
+           * rhsearch.selectRightsHolder
+           *    pageIndex (id, name)
+           *
+           * upon selecting a result, trigger the event "selected" with the
+           * an array providing the id and name of the rightsholder selected.
+           */
+          rhsearch.selectRightsHolder = function(id, name) {
+             var data = [];
+             data.push(id);
+             data.push(name);
+             $("#searchPanel").parents("<%= parent_selector %>").triggerHandler("selected", data);
+          };
+
+          /*********************************************************************
+           * Init the results items.
+           */
+          initializeResultsList($("#resultsPanel .results-list"));
+
+          /*********************************************************************
+           * Add a click handler to all result items to toggle the search status
+           * of the search button.
+           */
+          $.each(
+            $("#resultsPanel .results-list .result"),
+            function() {
+              $(this).click(function() {
+                 if ($("#resultsPanel .results-list .result.selected:first").length>0) {
+                   $("#selectButton").removeClass("disabled");
+                 } else {
+                   $("#selectButton").addClass("disabled");
+                 }
+              });
+            }
+          );
+      </script>
+    </div>
+  <%  end %>

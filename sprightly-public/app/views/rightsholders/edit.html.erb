@@ -1,0 +1,19 @@
+<% if @party.errors.size > 0 %>
+  <div class="error-msg">Unable to create rightsholder</div>
+<% end %>
+
+<div class="popup">
+  <% ajax_form_for :party, :url => { :controller=>:rightsholders, :action => 'update', :id=>@party.partyid }, :html=>{:id=>"rightsholderForm"} do |f| %>
+    <%= render :partial => "form.html", :locals => { :f => f, :for_edit=>true} %>
+    <p id="pleaseWaitMsg" class="info-msg" style="display: none;">Please Wait. This may take a few moments...</p>
+    <p>
+      <%= f.submit 'Update', :id=>"rightsHolderSubmitButton" %>
+    </p>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $("#rightsHolderSubmitButton").click(function() {
+      $("#pleaseWaitMsg").slideDown();
+  });
+</script>

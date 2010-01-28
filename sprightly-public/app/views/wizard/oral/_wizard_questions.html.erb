@@ -1,0 +1,22 @@
+<ol start="5" class="wizard-questions-list">
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>5} %>
+    <div class="wizard-question-text">May the Library permit unrestricted access to and use of the Material?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>6} %>
+    <div class="wizard-question-text">May the Library allow people to access and make notes about the Material on the Library's premises or while on loan in other libraries?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>7} %>
+    <div class="wizard-question-text">May the Library allow people to have copies of the Interview for personal use?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>8} %>
+    <div class="wizard-question-text">May the Library make the full Interview accessible through its website, provided that the Library requires the end user to agree to the online End User Licence conditions which limits uses and defines responsibilities?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>9} %>
+    <div class="wizard-question-text">May the Library provide copies of the Material for use in performances, transmissions, broadcasts, publications, films and in other public ways, including uses in online media?</div>
+  </li>
+</ol>

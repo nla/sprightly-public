@@ -1,0 +1,42 @@
+<div id="itemDetails">
+  <%=  render :partial => @source + ".html" %>
+  <div class="source">
+    Source:&nbsp;<%= format_source_for_display(@source) %>
+  </div>
+</div>
+
+
+<div class="left">
+
+<%=  render :partial => "copyrightstatus.html" %>
+
+<%= render :partial => "library_decision.html", :locals=>{:dialogOnCloseCallback=>"refreshTabContents"} %>
+
+<%=  render :partial => 'trim/list.html', :locals => { :id_name => 'copydetailsid', :id => @copydetails.copydetailsid.to_i, :dialogOnCloseCallback=>"refreshTabContents" } %>
+
+<%  if !@base_policy.nil? %>
+<div id="base_policy" class="section violet">
+  <div class="section-header">
+    <h3 class="section-title">Access and Use</h3>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data base-policy">
+      <tr>
+        <th width="30%">506 Details</th>
+      </tr>
+      <tr>
+        <td><%= @base_policy %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<%  end %>
+
+
+</div>
+
+<div class="right">
+  <%=  render :partial => "rightsholders.html" %>
+</div>
+
+<div style="clear:both"></div>

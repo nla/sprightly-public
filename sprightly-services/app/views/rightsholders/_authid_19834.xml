@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+
+<lst name="responseHeader">
+ <int name="status">0</int>
+ <int name="QTime">935</int>
+ <lst name="params">
+  <str name="rows">10</str>
+  <str name="start">0</str>
+
+  <str name="indent">on</str>
+  <str name="q">authid-19834</str>
+  <str name="version">2.2</str>
+ </lst>
+</lst>
+<result name="response" numFound="1" start="0">
+ <doc>
+  <str name="authid">19834</str>
+
+  <str name="id">authid-19834</str>
+  <str name="lifedates">1968-</str>
+  <str name="name">Minogue, Kylie</str>
+  <arr name="preferred"><str>Minogue, Kylie, 1968-</str></arr>
+  <str name="source">VOYAGER</str>
+  <date name="timestamp">2009-12-10T03:05:23.025Z</date>
+
+ </doc>
+</result>
+</response>

@@ -1,0 +1,19 @@
+<div class="result">  
+  <div class="rightsholder-result-details">
+
+    <table>
+    <tr>
+      <td width=175px" valign="top">Source: <%= rightsholder_get_source(rightsholder_searchresult) %></td>
+      <td>
+        <a href='javascript:void(0);' onclick="rhsearch.selectRightsHolder('<%= rightsholder_get_id(rightsholder_searchresult) %>', '<%= rightsholder_get_name(rightsholder_searchresult) %>'); return false;"><%= rightsholder_get_name(rightsholder_searchresult) %></a>
+        <%= rightsholder_get_other_names(rightsholder_searchresult) %>
+      </td>
+    </tr>
+  </table>
+
+
+  </div>
+  <button class="rightsholder-select-button green-button" onclick="rhsearch.selectRightsHolder('<%= rightsholder_get_id(rightsholder_searchresult) %>', '<%= rightsholder_get_name(rightsholder_searchresult) %>'); return false;">Select</button>
+  <%= clear_fix %>
+    
+</div>

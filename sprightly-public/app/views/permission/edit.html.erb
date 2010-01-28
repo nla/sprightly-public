@@ -1,0 +1,15 @@
+<% if @permission.errors.size > 0 %>
+  <div class="error-msg">Unable to update permission</div>
+<% end %>
+
+<div id="add" class="popup">
+  <% ajax_form_for :permission, :url => { :action => "update" } do |@f| %>
+
+    <%= hidden_field_tag 'id', @permission.permissionid %>
+    <%= hidden_field_tag 'permission[originalpermissionid]', @permission.originalpermissionid %>
+
+    <%=  render :partial => "form" %>
+    <%= @f.submit("Update") %>
+
+  <% end %>
+</div>

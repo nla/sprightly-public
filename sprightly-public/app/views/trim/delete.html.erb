@@ -1,0 +1,7 @@
+<p>
+  Are you sure you want to delete the reference: <%= @trim.trimrefnumber %>?
+</p>
+<% ajax_form_for :trim, :url => { :action => "destroy" } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+  <%= f.submit 'Delete' %>
+<% end %>

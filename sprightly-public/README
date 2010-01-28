@@ -1,0 +1,182 @@
+Sprightly 2.0
+-------------
+
+Introduction
+============
+This is Sprightly 2.0 which is a Rights Management System developed by the NLA.
+The application is a rails application. It's deployed as a rails app in the
+integration environment on handford, however it's deployed into test and
+production using JRuby.
+
+
+Development Environments
+========================
+
+LOCAL
+-----
+The application can be run locally using webrick or mongrel.
+
+DEV
+---
+The application is deployed using passenger into dev on handford. You can update
+the app using svn on tamboon: /www/dev/info/webapps/rms
+
+To restart the app: touch /www/dev/info/webapps/rms/tmp/restart.txt
+
+TEST
+----
+The application is deployed into test using JRuby. It's deployed on eliot but 
+available through tamboon: /www/test/info/webapps/sprightly
+
+To restart the application go to the tomcat manager: http://www-test.nla.gov.au/manager/html
+
+
+To deploy ensure that WARBLER is installed as a gem on your machine.
+sudo gem install warbler
+
+For more info: http://caldersphere.rubyforge.org/warbler/
+
+To deploy the war:
+* Edit the config/environments/user_test.rb and uncomment the lines 5-6, they enable multi-threading
+* Go to the root of the app
+* $<sprightly-home>/warble war
+* Copy the war file onto tamboon: /www/test/info/webapps/sprightly
+* Unpack the war file: $<sprightly-home>/jar xvf sprightly.war
+* Edit the web.xml file and ensure that rails.env is set to user_test
+
+    <context-param>
+        <param-name>rails.env</param-name>
+        <param-value>user_test</param-value>
+    </context-param>
+
+* Restart the tomcat context
+
+PRODUCTION
+----------
+The application is deployed into test using JRuby. It's deployed on tuross but
+available through tamboon: /www/prod/info/webapps/sprightly
+
+In production only BSS have access to restart tomcat. However, it's your
+responsibility to deploy the app.
+
+Procedure:
+* Edit the config/environments/production.rb and uncomment the lines 5-6, they enable multi-threading
+* build the war locally - described above
+* copy the war file to /www/prod/info/webapps/sprightly/sprightly.war
+
+NB - ensure that it's called sprightly.war
+
+Testing
+=======
+Do not use the standard rake tests as this blows away the UNIT TEST database.
+
+There are three specifically written rake tasks:
+* sprightly:test - This calls sprightly:test_units and sprightly:test_functionals
+* sprightly:test_units - just performs the unit tests
+* sprightly:test_functionals - just performs the functional tests
+
+Continuous Integration
+======================
+The application is automatically linked to hudson: http://apps-devel.nla.gov.au/hudson/job/Sprightly/
+
+
+Rails Environments
+==================
+The rails environments are configured under config/environments
+
+development.rb
+Is used for local and the DEV environment
+
+user_test.rb
+Is used for teh TEST environment. This is like a pre-prod or user testing environment.
+
+test.rb
+Standard rails test environment to run the unit tests. This is mapped to the unittest
+database.
+
+production.rb
+The production environment
+
+Databases
+=========
+Are configured in config/database.yml
+
+Note that the Oracle enhanced adapter is used to connect to the database.
+
+
+development
+used for local and the DEV environment. It uses standard rails db config.
+
+test
+Used for unit testing. It uses standard rails db config.
+
+user_test:
+Used for the user testing / pre-prod environment. The database config reflects
+being connected via JDBC as this environment is deployed via JRuby.
+
+production
+Used for Production environment. The database config reflects being connected
+via JDBC as this environment is deployed via JRuby.
+
+production_dcm:
+Used in a rake task to connect to the production DCM database.
+
+GEMS
+====
+
+The GEMS that are used have been installed locally under vendor/gems:
+* activerecord-oracle_enhanced-adapter
+* markaby : http://markaby.rubyforge.org/
+* assert2 : http://assert2.rubyforge.org/
+* assert_xpath
+* marc : http://rubyforge.org/projects/marc/
+
+To install more GEMS locally:
+* Go to vendor/gems
+* Make a new directory i.e. <gem-name>
+* rake gems unpack GEM=<gem-name>
+
+Rake tasks
+==========
+Run rake -T to get a listing of all available rake tasks. They are located in
+lib/tasks. This project contains the following custom tasks:
+
+Test Tasks
+----------
+* sprightly:test_units
+* sprightly:test_functionals
+* sprightly:test
+
+sprightly:reindex_dcm_search
+----------------------------
+Re-index Internal Images for DCM Search. This connects to the DCM database
+and re-indexes the DCM Solr Search.
+
+You can specify the environment for the task:
+rake RAILS_ENV="development" rms:reindex_rightsholder_search
+
+Also to re-index the USER_TEST or PRODUCTION environments you will need to use
+jruby rake instead of standard rails rake. The reason is that the database.yml
+is configured to connect via JDBC to these environments.
+
+sprightly:reindex_all_rightsholders
+-----------------------------------
+Calls sprightly:reindex_party_search and sprightly:reindex_authority_search
+
+sprightly:reindex_authority_search
+----------------------------------
+Re-indexes the authority component of the rightsholder search. Read the appropriate environment
+file for where it finds the authority file.
+
+sprightly:reindex_party_search
+------------------------------
+Re-index rightsholders added to RMS. It connects to the RMS database and uploads
+all rightsholder that have been created within the system to the Rightsholder
+Solr Search.
+
+You can specify the environment for the task:
+rake RAILS_ENV="development" rms:reindex_rightsholder_search
+
+Also to re-index the USER_TEST or PRODUCTION environments you will need to use
+jruby rake instead of standard rails rake. The reason is that the database.yml
+is configured to connect via JDBC to these environments.

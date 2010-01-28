@@ -1,0 +1,227 @@
+<%
+  is_australian_address1 = (!@address1_data.has_key?("country") or @address1_data["country"].blank? or @address1_data["country"] == "Australia")
+  is_australian_address2 = (!@address2_data.has_key?("country") or @address2_data["country"].blank? or @address2_data["country"] == "Australia")
+%>
+
+<% if !@msg.nil? %>
+  <p tabindex="-1" id="contactFormMessage" class="<%= @msg_class %>"><%= @msg %></p>
+  <script type="text/javascript">
+      $("#contactFormMessage").focus();
+  </script>
+<% end %>
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :contact, :url => { :action => "create_compiled" } do |f| %>
+    <%= hidden_field_tag 'partyid', @partyid %>
+
+    <%= hidden_field_tag "address1_contact[contacttype_lu_id]", ContacttypeLu.postal %>
+    <%= hidden_field_tag "address2_contact[contacttype_lu_id]", ContacttypeLu.postal %>
+    <%= hidden_field_tag "bh_phone_contact[contacttype_lu_id]", ContacttypeLu.bh_phone %>
+    <%= hidden_field_tag "ah_phone_contact[contacttype_lu_id]", ContacttypeLu.ah_phone %>
+    <%= hidden_field_tag "fax_contact[contacttype_lu_id]", ContacttypeLu.fax %>
+    <%= hidden_field_tag "mobile_phone_contact[contacttype_lu_id]", ContacttypeLu.mobile %>
+    <%= hidden_field_tag "email_contact[contacttype_lu_id]", ContacttypeLu.email %>
+
+    <script type="text/javascript">
+      function convertToInternationalAddress1(addrId) {
+        var state = $("#"+addrId+"_data_state").val();
+        var id = $("#"+addrId+"_data_state").attr("id");
+        var name = $("#"+addrId+"_data_state").attr("name");
+        $("."+addrId+".australian .international-address-action").fadeOut(500, function() {
+          $("#"+addrId+"_data_state").fadeOut(500, function() {
+            $("#"+addrId+"_data_state").replaceWith("<input style='display:none' type='text' id='"+id+"' name='"+name+"'></input>");
+            $("#"+addrId+"_data_state").val(state);
+            $("#"+addrId+"_data_state").fadeIn(500, function() {
+              $("."+addrId+" .country-row td").show();
+              setupCountryAutocomplete(addrId);
+            });
+          });
+        });
+      }
+      function setupCountryAutocomplete(addrId) {
+        $("#"+addrId+"_data_country").autocomplete(<%= Contact.countries.sort.inspect %>,{delay: 10, matchCase: false, highlight: false});
+      }
+    </script>
+
+    <!-- Address -->    
+    <table class="form data">
+      <tbody class="address1 <%= if is_australian_address1 then "australian" else "international" end %>">
+        <tr>
+          <th>Address</th>
+          <th>
+              <a class="international-address-action" href="javascript:void" onclick="convertToInternationalAddress1('address1'); return false;" title="Convert to International Address">
+                <%= image_tag "world.png" %>
+                <span>International Address?</span>
+              </a>
+          </th>
+          <th><%= glossary_term("Privacy", "privacy") %></th>
+          <th><%= glossary_term("Preferred", "preferred_contact") %></th>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :addressee, "Addressee") %></td>
+          <td class="field"><%= text_field_tag "address1_data[addressee]", @address1_data["addressee"] %></td>
+          <td><%= select_tag("address1_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @address1_contact["privacy_lu_id"])) %></td>
+          <td class="field"><%= check_box_tag("address1_contact[preferred]", "Y", @address1_contact["preferred"]=="Y") %> <%= label_tag "address1_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :line1, "Address Line 1") %></td>
+          <td class="field"><%= text_field_tag "address1_data[line1]", @address1_data["line1"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :line2, "Address Line 2") %></td>
+          <td class="field"><%= text_field_tag "address1_data[line2]", @address1_data["line2"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :line3, "Address Line 3") %></td>
+          <td class="field"><%= text_field_tag "address1_data[line3]", @address1_data["line3"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :suburb, "Suburb/Town") %></td>
+          <td class="field"><%= text_field_tag "address1_data[suburb]", @address1_data["suburb"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :state, "State") %></td>
+          <td class="field">
+              <% if is_australian_address1 then %>
+                <%= select_tag("address1_data[state]", empty_options+options_for_select(Contact.states.collect{|arr| arr[1]}.sort,@address1_data["state"])) %>
+              <% else %>
+                  <%= text_field_tag "address1_data[state]", @address1_data["state"] %>
+              <% end %>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address1_data", :postcode, "Postcode") %></td>
+          <td class="field"><%= text_field_tag "address1_data[postcode]", @address1_data["postcode"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="country-row">
+          <td class="label"><%= label("address1_data", :country, "Country") %></td>
+          <td class="field">
+            <%= text_field_tag "address1_data[country]", @address1_data["country"] %>
+            <% if is_australian_address1 then %>
+              <script type="text/javascript">setupCountryAutocomplete("address1");</script>
+            <% end %>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+      <!-- Alternate Address -->
+      <tbody class="address2 <%= if is_australian_address2 then "australian" else "international" end %>">
+        <tr>
+          <th>Alternate Address</th>
+          <th>
+              <a class="international-address-action" href="javascript:void" onclick="convertToInternationalAddress1('address2'); return false;" title="Convert to International Address">
+                <%= image_tag "world.png" %>
+                <span>International Address?</span>
+              </a>
+          </th>
+          <th><%= glossary_term("Privacy", "privacy") %></th>
+          <th><%= glossary_term("Preferred", "preferred_contact") %></th>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :addressee, "Addressee") %></td>
+          <td class="field"><%= text_field_tag "address2_data[addressee]", @address2_data["addressee"] %></td>
+          <td><%= select_tag("address2_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @address2_contact[:privacy_lu_id])) %></td>
+          <td class="field"><%= check_box_tag("address2_contact[preferred]", "Y", @address2_contact["preferred"]=="Y") %>  <%= label_tag "address2_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :line1, "Address Line 1") %></td>
+          <td class="field"><%= text_field_tag "address2_data[line1]", @address2_data["line1"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :line2, "Address Line 2") %></td>
+          <td class="field"><%= text_field_tag "address2_data[line2]", @address2_data["line2"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :line3, "Address Line 3") %></td>
+          <td class="field"><%= text_field_tag "address2_data[line3]", @address2_data["line3"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :suburb, "Suburb/Town") %></td>
+          <td class="field"><%= text_field_tag "address2_data[suburb]", @address2_data["suburb"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :state, "State") %></td>
+          <td class="field">
+            <% if is_australian_address2 then %>
+              <%= select_tag("address2_data[state]", empty_options+options_for_select(Contact.states.collect{|arr| arr[1]}.sort,@address2_data["state"])) %>
+            <% else %>
+                <%= text_field_tag "address2_data[state]", @address2_data["state"] %>
+            <% end %>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="label"><%= label("address2_data", :postcode, "Postcode") %></td>
+          <td class="field"><%= text_field_tag "address2_data[postcode]", @address2_data["postcode"] %></td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="country-row">
+          <td class="label"><%= label("address2_data", :country, "Country") %></td>
+          <td class="field">
+            <%= text_field_tag "address2_data[country]", @address1_data["country"] %>
+            <% if is_australian_address2 then %>
+              <script type="text/javascript">setupCountryAutocomplete("address2");</script>
+            <% end %>
+          </td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+      </tbody>
+      <!-- Other Contact Details -->
+      <tr>
+        <th colspan="2">&nbsp;</th>
+        <th><%= glossary_term("Privacy", "privacy") %></th>
+        <th><%= glossary_term("Preferred", "preferred_contact") %></th>
+      </tr>
+      <!-- BH Phone -->
+      <tr>
+        <td class="label"><%= label("bh_phone_data", :bh_phone, "Phone (Business Hours)") %></td>
+        <td class="field"><%= text_field_tag "bh_phone_data[bh_phone]", @bh_phone_data["bh_phone"] %></td>
+        <td><%= select_tag("bh_phone_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @bh_phone_contact[:privacy_lu_id])) %></td>
+        <td class="field"><%= check_box_tag("bh_phone_contact[preferred]", "Y", @bh_phone_contact["preferred"]=="Y") %>  <%= label_tag "bh_phone_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+      </tr>
+      <!-- AH Phone -->
+      <tr>
+        <td class="label"><%= label("ah_phone_data", :ah_phone, "Phone (After Hours)") %></td>
+        <td class="field"><%= text_field_tag "ah_phone_data[ah_phone]", @ah_phone_data["ah_phone"] %></td>
+        <td><%= select_tag("ah_phone_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @ah_phone_contact[:privacy_lu_id])) %></td>
+        <td class="field"><%= check_box_tag("ah_phone_contact[preferred]", "Y", @ah_phone_contact["preferred"]=="Y") %>  <%= label_tag "ah_phone_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+      </tr>
+      <!-- Mobile Phone -->
+      <tr>
+        <td class="label"><%= label("mobile_phone_data", :mobile, "Mobile") %></td>
+        <td class="field"><%= text_field_tag "mobile_phone_data[mobile]", @mobile_phone_data["mobile"] %></td>
+        <td><%= select_tag("mobile_phone_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @mobile_phone_contact[:privacy_lu_id])) %></td>
+        <td class="field"><%= check_box_tag("mobile_phone_contact[preferred]", "Y", @mobile_phone_contact["preferred"] == "Y") %>  <%= label_tag "mobile_phone_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+      </tr>
+      <!-- Fax -->
+      <tr>
+        <td class="label"><%= label("fax_data", :fax, "Fax") %></td>
+        <td class="field"><%= text_field_tag "fax_data[fax]", @fax_data["fax"] %></td>
+        <td><%= select_tag("fax_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @fax_contact[:privacy_lu_id])) %></td>
+        <td class="field"><%= check_box_tag("fax_contact[preferred]", "Y", @fax_contact["preferred"]=="Y") %>  <%= label_tag "fax_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+      </tr>
+      <!-- Email -->
+     <tr>
+        <td class="label"><%= label("email_data", :email, "Email") %></td>
+        <td class="field"><%= text_field_tag "email_data[email]", @email_data["email"] %></td>
+        <td><%= select_tag("email_contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @email_contact[:privacy_lu_id])) %></td>
+        <td class="field"><%= check_box_tag("email_contact[preferred]", "Y", @email_contact["preferred"]=="Y") %>  <%= label_tag "email_contact[preferred]", "<span class='empty'>(Denoted by "+ image_tag("preferred.png")+")</span>" %></td>
+      </tr>
+    </table>
+    <p>
+      <%= f.submit("Create") %> | <a class="ajax-form-cancel" href="javascript:void(0);" onclick="AjaxFormHelper.closeDialog(this, /* ensure refresh on close as may have added multiple */false); return false;">Cancel</a>
+    </p>
+  <% end %>
+
+</div>

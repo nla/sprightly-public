@@ -1,0 +1,80 @@
+<%
+  is_australian_address = (!@contactdetail.has_key?("country") or @contactdetail["country"].blank? or @contactdetail["country"] == "Australia")
+%>
+<% if is_australian_address then %>
+  <ul class="address-actions add-actions-list">
+    <li class="action add-action">
+      <a href="javascript:void" onclick="convertToInternationalAddress(); return false;" title="Convert to International Address">
+        <%= image_tag "world.png" %>
+        <span class="add-action-text">International Address?</span>
+      </a>
+    </li>
+  </ul>
+  <script type="text/javascript">      
+      $(".address-actions .add-action").hover(function() {$(this).addClass("hovered");},function() {$(this).removeClass("hovered");});
+      function convertToInternationalAddress() {
+        var state = $("#contactdetail_state").val();
+        var id = $("#contactdetail_state").attr("id");
+        var name = $("#contactdetail_state").attr("name");
+        $(".address-actions.add-actions-list").slideUp(500, function() {
+          $("#contactdetail_state").fadeOut(500, function() {
+            $("#contactdetail_state").replaceWith("<input style='display:none' type='text' id='"+id+"' name='"+name+"'>");
+            $("#contactdetail_state").val(state);
+            $("#contactdetail_state").fadeIn(500, function() {
+              $(".country-row td").show();
+              $("#contactdetail_country").autocomplete(<%= Contact.countries.sort.inspect %>,{delay: 10, matchCase: false, highlight: false});
+            });
+          });
+        });
+      }
+  </script>
+<% end %>
+<table class="form <%= if is_australian_address then "australian" else "international" end %> ">
+  <tr>
+    <td class="label"><%= label("contact", :addressee, "Addressee") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[addressee]", @contactdetail["addressee"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :line1, "Address Line 1") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[line1]", @contactdetail["line1"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :line2, "Address Line 2") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[line2]", @contactdetail["line2"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :line3, "Address Line 3") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[line3]", @contactdetail["line3"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :suburb, "Suburb") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[suburb]", @contactdetail["suburb"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :state, "State") %></td>
+    <td class="field">
+      <% if is_australian_address then %>
+        <%= select_tag("contactdetail[state]", empty_options+options_for_select(Contact.states.collect{|arr| arr[1]}.sort,@contactdetail["state"])) %>        
+      <% else %>
+          <%= text_field_tag "contactdetail[state]", @contactdetail["state"] %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("contact", :postcode, "Postcode") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[postcode]", @contactdetail["postcode"] %></td>
+  </tr>
+  <tr class="country-row">
+    <td class="label"><%= label("contact", :country, "Country") %></td>
+    <td class="field">      
+       <%# text_field_tag "contactdetail[country]", @contactdetail["country"] %>
+       <%# render :partial=>"contact/international_selectlist.html", :locals=>{:id=>"contactdetail_country", :name=>"contactdetail[country]", :value=> @contactdetail["country"]} %>
+       <%# select_tag("contactdetail[country]", empty_options+options_for_select(Contact.countries.sort,@contactdetail["country"])) %>
+       <%= text_field_tag "contactdetail[country]", @contactdetail["country"] %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= label_glossary_term "Note", "contact_note", "notes_contact" %></td>
+    <td class="field"><%= text_area_tag "contact[note]", @contact.note, :rows=>3, :cols=>60 %></td>
+  </tr>
+</table>

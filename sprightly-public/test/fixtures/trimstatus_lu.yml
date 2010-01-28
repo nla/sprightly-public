@@ -1,0 +1,6 @@
+active:
+  trimstatus_lu_id: 1
+  trimstatus: Active
+deleted:
+  trimstatus_lu_id: 2
+  trimstatus: Deleted

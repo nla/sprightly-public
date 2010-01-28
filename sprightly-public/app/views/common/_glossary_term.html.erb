@@ -1,0 +1,9 @@
+<%
+  label_for_attr = nil if label_for_attr.nil?
+%>
+
+<% if label_for_attr.blank?  %>
+  <span class="glossary-term" title="<span class='glossary-term-intro'>Definition:</span> <span class='glossary-term-label'><%= label %></span>::<%= definition %>"><%= label %></span>
+<% else %>
+  <%= label_tag label_for_attr, label, :title=> "<span class='glossary-term-intro'>Definition:</span> <span class='glossary-term-label'>" + label + "</span>::" + definition, :class=>"glossary-term" %>
+<% end %>

@@ -1,0 +1,124 @@
+<div class="main-tab-container rightsholder">
+  <ul class="main-tabs horizontal-menu">
+    <li class="main-left-tab selected rh-tab ui-corner-top">
+      <div class="main-tab-icon">
+        <%= image_tag "rightsholder.png", :class=>"icon"  %>
+        <div class="main-tab-desc">Rights Holder</div>
+      </div>
+      <h2><%=  trunc_to_dotdotdot(@rightsholder.name, 40, true) %> <%= @rightsholder.life_dates %></h2>
+    </li>
+    <!--
+    <li class="main-left-tab work-tab ui-corner-top">
+      <%= image_tag "work.png", :class=>"icon"  %>
+    </li>
+    -->
+    <% if session[:user].updater? %>
+      <%= render :partial => 'common/input_tabs.html' %>
+    <% end %>
+  </ul>
+  <%= clear_fix %>
+  <div class="main-tab-content ui-corner-all">
+    <div id="rhTabs">
+        <ul>
+        <li><a title="rhDetails" href="<%= url_for :controller=>'rightsholders',:action=>'show_details',:id=>@id %>" ><span class="tab-label" title="Details tab">Details</span></a></li>
+            <%
+                if @archived_agreements.length > 0 then
+                  agreement_count_html = "<span class='multi-count'>"
+                  agreement_count_html += get_submitted_agreement_count_html(@active_agreements.length)
+                  agreement_count_html += get_count_html(@archived_agreements.length, @archived_agreements.length.to_s+" Archived Agreement(s) linked to this Work", "orange")
+                  agreement_count_html += "</span>"
+                else
+                  agreement_count_html = get_submitted_agreement_count_html(@active_agreements.length)
+                end
+            %>
+            <li><a title="rhAgreements" href="<%= url_for :controller=>'rightsholders',:action=>'show_agreements',:id=>@id %>"><span class="tab-label" title="Agreements tab"><%= agreement_count_html %>Agreements</span></a></li>
+
+            <%
+              role_count_html = ""
+              role_count_html += "<span class='multi-count'>"
+              if @related_works.length>0 then
+                role_count_html += get_count_html(@related_works.length.to_s , @related_works.length.to_s + " Catalogue Work(s) associated with this Rights Holder", "blue")
+              end
+              if @roles.length>0 then
+                role_count_html += get_count_html(@roles.length.to_s , @roles.length.to_s + " Role(s) associated with this Rights Holder", "blue")
+              end
+              if (@delegatees.length>0 or @delegators.length>0) then
+                role_count_html += get_count_html((@delegatees.length + @delegators.length).to_s, (@delegatees.length + @delegators.length).to_s+" Relationship(s) associated with this Rights Holder", "blue")
+              end
+              role_count_html += "</span>"
+            %>
+
+            <li><a title="rhRoles" href="<%= url_for :controller=>'rightsholders',:action=>'show_roles',:id=>@id %>"><span class="tab-label" title="Roles and Relationships tab"><%= role_count_html %>Roles</span></a></li>
+            <li class="ignore-me">
+              <div class="print-invoker">
+                <a href="<%= url_for :controller=>"rightsholders",:action=>"print",:id=>@id %>" target="_blank"><%= image_tag "printer.png" %></a>
+              </div>
+              <script type="text/javascript">
+                /***************************************************************
+                 * Add click handle to the print anchor for it to open a dialog
+                 * window.
+                 */
+                $(document).ready(function() {
+                   $(".print-invoker a").open({
+                      width: 640,
+                      height: 480,                      
+                      centered: "yes"
+                   });
+                });
+              </script>
+            </li>
+          </ul>
+    </div>
+  </div>
+</div>
+
+<%# javascript_include_tag "jquery-splitter"  %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#rhTabs").tabs({cache:true, remote: true, show: onTabShow, load: initTab});
+
+    $("#rhTabs").tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+	$("#rhTabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
+
+     $("#rhTabs .ui-tabs-panel").removeClass("ui-corner-bottom").addClass("ui-corner-all");
+    $("#rhTabs").bind('tabsshow', function(event, ui) {
+        if ($(ui.tab).text()=="Agreements") {            
+            dijit.byId("agreementSplitter").layout();
+            resizeSplitter();
+        }
+    });
+    //initAgreementSplitter();
+    setTimeout("setTabWidth();",0);
+    $(window).resize(setTabWidth);
+    $(document.body).addClass("detail-page");
+  });
+
+  function initTab(event,ui) {
+    initialiseSections("#"+$(ui.panel).attr("id"));
+  }
+
+  function initAgreementTabContents() {
+    /* the tab contents overrides this function upon being loaded into the page
+     * via ajax
+     */
+  }
+
+  function onTabShow(event, ui) {
+    if ($(ui.tab).attr("title")=="rhAgreements") {
+      initAgreementTabContents();
+    }
+  }
+
+  function refreshTabContents() {
+    $($("#rhTabs .ui-tabs-selected a").attr("href")).html('<%= image_tag "busy.gif" %>')
+    $("#rhTabs").tabs('load',$("#rhTabs").tabs('option','selected'));
+  }
+
+  function setTabWidth() {
+      $("#rhTabs").width($("#main").width()-20);
+      $("#rhTabs").height($(window).height()-$("#rhTabs").position().top - $("#main").position().top - 20);
+      $("#rhTabs .ui-tabs-panel").width($("#rhTabs").width()-$("#rhTabs .ui-tabs-nav").width()- 40 +"px");
+      $("#rhTabs .ui-tabs-panel").height($("#rhTabs").height()-30 +"px");
+  }
+</script>
+

@@ -1,0 +1,26 @@
+<div style="padding: 0 1em">
+  <h2>Administrator Functions</h2>
+</div>
+<div id="adminTabs">
+    <ul>
+      <li><a title="adminUserTab" href="<%= url_for :controller=>:admin,:action=>:user_admin, :id=>-1, :ajax=>true %>"><span class="tab-label" title="User Management tab">User Management</span></a></li>
+      <li><a title="adminAgreementReportTab" href="<%= url_for :controller=>:report,:action=>:agreement_reports,:id=>-1,:ajax=>true %>"><span class="tab-label" title="Agreement Report tab">Agreement Reports</span></a></li>
+      <li><a title="adminDiagnoticsTab" href="<%= url_for :controller=>:diagnostics,:action=>:index,:ajax=>true %>"><span class="tab-label" title="Service Availability tab">Service Availability</span></a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+  /* Initialise the jQuery UI tabs */
+  $(document).ready(function(){
+    $("#adminTabs").tabs({cache:true,load: initTab});
+  });
+
+  function refreshTabContents() {
+    $($("#adminTabs .ui-tabs-selected a").attr("href")).html('<%= image_tag "busy.gif" %>')
+    $("#adminTabs").tabs('load',$("#adminTabs").tabs('option','selected'));
+  }
+
+  function initTab(event,ui) {
+    initialiseSections("#"+$(ui.panel).attr("id"));
+  }
+
+</script>

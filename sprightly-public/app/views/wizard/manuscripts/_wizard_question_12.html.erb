@@ -1,0 +1,24 @@
+<p class="question-text">12. May the Library allow people to copy the Material for research or study?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q12", "a", false %>
+  <%= label_tag "q12_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q12", "b", false %>
+  <%= label_tag "q12_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q12b" class="wizard-question-subform">
+    <%= text_area_tag "q12_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q12_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q12_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q12", "c", false %>
+  <%= label_tag "q12_c", "Yes, but only after the following date or event:" %>
+  <div id="q12c" class="wizard-question-subform">
+    <%= text_field_tag "q12_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q12_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>

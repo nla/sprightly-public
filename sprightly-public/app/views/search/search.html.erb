@@ -1,0 +1,28 @@
+<% if session[:user].administrator? %>
+  <div class="cool-boxes two">
+    <div class="cool-box-col">
+      <%= render :partial => 'searchform' %>
+      <%= clear_fix %>
+    </div>
+    <div class="cool-box-col">
+      <div class="input-actions">
+        <%= render :partial=>"common/input_actions.html", :locals=>{:show_work_tray_link=>true} %>
+      </div>
+    </div>
+  </div>
+ <% else %>
+  <%= render :partial => 'searchform' %>
+ <% end %>
+
+<%  if @search_response.num_found.to_i == 0 %>
+  <div id="resultsPanel">
+    <div style="text-align:center">
+      <br/>
+      <br/>
+      <br/>
+      <h3>Your search - <%= @query %> - did not match anything.</h3>
+    </div>
+  </div>
+<%  else    %>
+  <%= render :partial => 'search_results.html' %>
+<%  end %>

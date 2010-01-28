@@ -1,0 +1,18 @@
+<p class="question-text">7. May the Library allow people to have copies of the Interview for personal use?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q7", "a", false %>
+  <%= label_tag "q7_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q7", "b", false %>
+  <%= label_tag "q7_b", "Yes, but only if the Library has received my specific permission on each occasion" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q7", "c", false %>
+  <%= label_tag "q7_c", "Yes, but only after the following date or event:" %>
+  <div id="q7c" class="wizard-question-subform">
+    <%= text_field_tag "q7_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q7_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+--- !ruby/object:Gem::Specification 
+name: markaby
+version: !ruby/object:Gem::Version 
+  version: "0.5"
+platform: ruby
+authors: 
+- Tim Fletcher and _why
+autorequire: 
+bindir: bin
+cert_chain: 
+date: 2006-10-03 00:00:00 +10:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: builder
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 2.0.0
+    version: 
+description: 
+email: 
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- README
+files: 
+- README
+- Rakefile
+- setup.rb
+- test/test_markaby.rb
+- lib/markaby
+- lib/markaby.rb
+- lib/markaby/metaid.rb
+- lib/markaby/tags.rb
+- lib/markaby/builder.rb
+- lib/markaby/cssproxy.rb
+- lib/markaby/rails.rb
+- lib/markaby/template.rb
+- tools/rakehelp.rb
+has_rdoc: true
+homepage: 
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">"
+    - !ruby/object:Gem::Version 
+      version: 0.0.0
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: 
+rubygems_version: 1.3.1
+signing_key: 
+specification_version: 1
+summary: Markup as Ruby, write HTML in your native Ruby tongue
+test_files: 
+- test/test_markaby.rb

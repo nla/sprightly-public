@@ -1,0 +1,12 @@
+<% if @trim.errors.size > 0 %>
+  <div class="error-msg">Unable to create TRIM reference</div>
+<% end %>
+
+<div id="add" class="popup">
+  <% ajax_form_for :trim, :url => { :action => 'create' } do |f| %>
+    <%= render :partial => "form.html", :locals => { :f => f} %>
+    <p>
+      <%= f.submit 'Create' %>
+    </p>
+  <% end %>
+</div>

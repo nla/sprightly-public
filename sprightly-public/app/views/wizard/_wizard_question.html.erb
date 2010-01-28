@@ -1,0 +1,61 @@
+<script type="text/javascript">
+  function validateWizardForm() {
+     $(".wizard-question .error-msg").remove();
+     if ($(".wizard-question .wizard-radio-option.checked").length==0) {
+       $(".wizard-question .question-text").after("<p class='error-msg'>Please select the relevant answer(s) before clicking Generate Policies/Permissions.</p>");
+       $(".wizard-question .error-msg").attr("tabindex",-1);
+       $(".wizard-question .error-msg")[0].focus();
+       return false;
+     }
+     return true;
+  }
+</script>
+
+<% ajax_form_for :agreement, :html=> {:class=>'wizard-question'}, :url => { :action => "answer", :id=>@agreement.id.to_i }, :validate_function=>"validateWizardForm" do |f| %>
+    <%= hidden_field_tag "qid", @qid %>
+    <%= render :partial=>"wizard/"+@agreement.formtype+'/wizard_question_'+@qid+'.html' %>
+    
+    <p><%= f.submit("Generate Permissions") %></p>
+<% end %>
+
+<script type="text/javascript">
+  /* RADIOS */
+  $(".wizard-question input[type=radio]").click(function() {
+    if ($(this).parents(".wizard-radio-option:first").hasClass("checked")) return;
+    $(this).attr("checked","checked");
+    $(".wizard-question .wizard-radio-option").removeClass("checked");
+    $(this).parents(".wizard-radio-option:first").addClass("checked");
+  });
+  /* TOP LEVEL CHECK BOXES and SUBFORM LEVEL CHECKBOXES */
+  $(".wizard-question .wizard-radio-option input[type=checkbox]").click(toggleCheckboxOption);
+
+   function toggleCheckboxOption(forceChecked) {
+     if ($(this).parents(".wizard-question-subform:first").length>0) {
+       if ($(this).attr("checked")) {
+         $(this).parents(".wizard-checkbox-suboption:first").addClass("checked");
+       } else {
+         $(this).parents(".wizard-checkbox-suboption:first").removeClass("checked");
+       }
+       return;
+     }
+     if (forceChecked==true) {
+       $(this).attr("checked","checked");
+     }
+      if ($(this).attr("checked")) {
+          $(this).parents(".wizard-radio-option:first").addClass("checked");
+      } else {
+        $(this).parents(".wizard-radio-option:first").removeClass("checked");
+      }
+   }
+
+   /* Sub-form level checkboxes */
+
+
+   /* Clicking a form widget inside an answer block will mark the answer as checked */
+   $(".wizard-radio-option input[type!='radio'][type!='checkbox'], .wizard-question-subform input, .wizard-radio-option textarea, .wizard-radio-option .ui-datepicker-trigger").click(function() {
+      $(this).parents(".wizard-radio-option:first").find("input[type=radio]").triggerHandler("click");
+      if ($(this).parents(".wizard-radio-option:first").find("input[type=checkbox]").length>0) {
+        toggleCheckboxOption.apply($(this).parents(".wizard-radio-option:first").find("input[type=checkbox]")[0], [true]);
+      }
+   });
+</script>

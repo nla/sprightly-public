@@ -1,0 +1,171 @@
+  <div id="searchPanel">
+       <% ajax_form_for :note, :url => { :action => 'worksearch', :only_path => false } do |f| %>
+         <div id="simpleSearch">
+              <input type="text" value="<%= @query %>" name="q" id="searchString" />
+              <input id="workSearchButton" type="submit" value="Search" class="blue-button"/>
+              <input id="createLinksButton" type="button" value="Create Links" class="green-button disabled" onclick="if (!$(this).hasClass('disabled')) { addWorks();}"/>
+              <a class='ajax-form-cancel' onclick='AjaxFormHelper.closeDialog(this, true); return false;' href='javascript:void(0);'>Cancel</a>
+
+              <ul class="horizontal-menu">
+                  <li><input type="radio" name="source" value="catalogue" id="searchScopeCatalogue" <% if @source==nil or @source=='catalogue'%>checked="checked"<% end %>   /><label for="searchScopeCatalogue">Catalogue</label></li>
+                  <li><input type="radio" name="source" value="dcm" id="searchScopeDCM" <% if @source=='dcm'%>checked="checked"<% end %>/><label for="searchScopeDCM">Internal Images</label></li>
+              </ul>
+         </div>
+       <% end %>
+  </div>
+
+  <%  if @solr_response && @solr_response.num_found.to_i == 0 %>
+    <div id="resultsPanel">
+      <div style="text-align:center">
+        <br/>
+        <br/>
+        <br/>
+        <h3>Your search - <%= @query %> - did not match anything.</h3>
+      </div>
+    </div>
+  <% elsif @solr_response %>
+
+    <%
+        puts currentPage = (@start.to_i/@rows) + 1
+        puts totalPages = (@solr_response.num_found.to_i/@rows) + 1
+
+        if currentPage - 5 <= 0
+          startPage = 1
+        else
+          startPage = currentPage - 5
+        end
+
+        if currentPage + 5 >= totalPages
+          lastPage = totalPages
+        else
+          lastPage = currentPage + 5
+        end
+
+
+      %>
+
+    <div id="workResultsPanel" class="results-panel">
+
+        <div class="summary" style="padding-top: 10px; padding-left: 6px;">
+        <input type="checkbox" id="selectAllToggle" onclick="toggleResultsSelectAll(this)"> <label for="selectAllToggle">Select All</label>&nbsp;&nbsp;&nbsp;Displaying <b><%= (@start.to_i + 1) %></b> to <b><%= @finish %></b> of <b><%= @solr_response.num_found %></b>
+      </div>
+
+             <div class="pagination">
+
+              <% if @start.to_i > 0 %><a href="javascript:void(0);" onclick="showPage(<%= currentPage - 1  %>); return false;">&#171; previous</a><% end %>
+
+              <%
+
+                for i in (startPage..lastPage)
+
+                  if i == currentPage
+                    %><b><%= i %></b><%
+                  else
+                    %><a href="javascript:void(0);" onclick="showPage(<%= i  %>); return false;"><%= i  %></a><%
+                  end
+                end
+
+              %>
+
+              <% if (@start.to_i+@rows) <= @solr_response.num_found.to_i %><a href="javascript:void(0);" onclick="showPage(<%= currentPage + 1  %>); return false;">next &#187;</a><% end %>
+
+      </div>
+
+      <div class="results-list multiselect" style="padding: 2px 0 4px">
+        <%=  render :partial => @source+"_searchresult", :collection => @solr_response.items %>
+      </div>
+
+       <div class="pagination">
+
+      <%
+        puts currentPage
+        puts totalPages
+      %>
+
+      <% if @start.to_i > 0 %><a href="javascript:void(0);" onclick="showPage(<%= currentPage - 1  %>); return false;">&#171; previous</a><% end %>
+
+      <%
+
+        for i in (startPage..lastPage)
+
+          if i == currentPage
+            %><b><%= i %></b><%
+          else
+            %><a href="javascript:void(0);" onclick="showPage(<%= i  %>); return false;"><%= i  %></a><%
+          end
+        end
+
+      %>
+
+      <% if (@start.to_i+@rows) <= @solr_response.num_found.to_i %><a href="javascript:void(0);" onclick="showPage(<%= currentPage + 1  %>); return false;">next &#187;</a><% end %>
+
+      </div>
+
+      <script type="text/javascript">
+
+          function toggleResultsSelectAll(el) {
+            if ($(el).attr("checked")) {
+               $.each($("#workResultsPanel .results-list input:checkbox"), function() {
+                 $(this).attr("checked", "checked");
+                 $(this).parents(".result:first").addClass("selected");
+                });
+            } else {
+               $.each($("#workResultsPanel .results-list input:checkbox"), function() {
+                 $(this).removeAttr("checked");
+                 $(this).parents(".result:first").removeClass("selected");
+               });
+            }
+          }
+
+          function showPage(pageIndex) {
+            $("#workResultsPanel").parents(".ui-dialog-content:first").ajaxload("<%= url_for(:action=>'worksearch', :only_path => false)%>?ajax=true&q=<%= @query %>&source=<%= @source %>&start="+(pageIndex-1) * <%= @rows %>);
+          }
+
+          function addWorks() {
+             $("#createLinksButton, #workSearchButton, #cancelLinkingButton").addClass("disabled");
+             var selectedResults = $("#workResultsPanel .results-list .result.selected");
+             if (selectedResults.length==0) return;
+             var ids = [];
+             $.each(selectedResults, function() {
+               ids.push($(this).find("input").val());
+               $(this).find("input").replaceWith("<img class='busy' src='<%= image_path("busy_f3f8fe.gif") %>' alt='Work is linked' style='float: left; padding-right: 5px;' />");
+             });
+
+             $.ajax(
+                {
+                   url: '<%= url_for :action=>"add_works" %>',
+                   data: {"id[]": ids },
+                   success: function () {
+                      $.each(selectedResults, function() {
+                        $(this).addClass("not-selectable");
+                        $(this).addClass("saved");
+                        $(this).css("background-color","#eeffee");
+                        $(this).removeClass("selected");
+                        $(this).find("img.busy").replaceWith("<img src='<%= image_path("tick.png") %>' alt='Work is linked' style='float: left; padding-right: 5px;' />");
+                      });
+                      //AJAX update the section contents with so the new values display
+                      //$("#relatedWorksSection .section-contents").load();
+                   },
+                   complete: function() {
+                     $("#workSearchButton, #cancelLinkingButton").removeClass("disabled");
+                   }
+                }
+             );
+          };
+
+          initializeResultsList($("#workResultsPanel .results-list"));
+          $.each(
+            $("#workResultsPanel .results-list .result"),
+            function() {
+              $(this).click(function() {
+                 if ($("#workResultsPanel .results-list .result.selected:first").length>0) {
+                   $("#createLinksButton").removeClass("disabled");
+                 } else {
+                   $("#createLinksButton").addClass("disabled");
+                 }
+              });
+            }
+          );
+      </script>
+    </div>
+  <%  end %>

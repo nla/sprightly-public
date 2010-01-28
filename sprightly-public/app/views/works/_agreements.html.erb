@@ -1,0 +1,107 @@
+<script type="text/javascript">
+  /* Sort out the splitter widget */
+
+  dojo.require("dijit.layout.ContentPane");
+  dojo.require("dijit.layout.BorderContainer");
+
+  $(document.body).addClass("nihilo");
+
+  function resizeSplitter(refresh) {
+      //var splitterHeight = $(window).height() - $("#rhTabs").offset().top - $("#rhTabs .ui-tabs-nav").height() - 20;
+      var splitterHeight = parseInt($(window).height() - $(".main-tab-content").offset().top - 55  <% if @archived_agreements.length > 0 %> - 20<% end %>);
+      $("#agreementSplitter").css("height", splitterHeight+"px");
+      if (refresh)
+        dijit.byId("agreementSplitter").layout();
+  }
+
+
+  function initAgreementSplitter() {
+    resizeSplitter(false);
+
+    var borderContainer = new dijit.layout.BorderContainer({gutters: true, liveSplitters: true}, "agreementSplitter");
+    borderContainer.addChild(new dijit.layout.ContentPane({splitter: true, region: "top", minSize: 50, sizeShare: 40},"agreementList"));
+    borderContainer.addChild(new dijit.layout.ContentPane({region: "center", minSize: 200, sizeShare: 60},"agreementDetails"));
+    borderContainer.startup();
+    borderContainer.layout();
+
+    resizeSplitter(true);
+
+    $(window).resize(function() {resizeSplitter(true);});
+  }
+
+  /* Link the table rows with the detail pane */
+  function showAgreementDetails(agreementId) {
+    $("#agreementDetails").html("<img src='<%= image_path('busy.gif') %>'/>");
+    $("#agreementDetails").addClass("empty");
+    $("#agreementDetails").ajaxload("<%= url_for :controller=>'agreement' %>/"+agreementId+"?ajax=true", null, function() {
+      $("#agreementDetails").removeClass("empty");
+      initialiseSections("#agreementDetails");
+      initialiseTooltips("#agreementDetails");
+    });
+  }
+
+  $("#agreementList tbody td").click(function() {
+      $("#agreementList tr.selected").removeClass("selected");
+      $(this).parent().addClass("selected");
+      showAgreementDetails($(this).parent().attr("agreementId"));
+
+  });
+
+
+<% if @archived_agreements.length > 0 %>
+  function toggleArchivedAgreements(checkbox) {
+    if ($(checkbox).attr("checked")) {
+      $("#agreementList .archived").fadeIn();
+    } else {
+      $("#agreementList .archived").fadeOut();
+    }
+  }
+<% end %>
+</script>
+
+<% if @archived_agreements.length > 0 %>
+<div style="float: right; margin-right: 0.5em; font-size: 0.7em;">
+  <%= check_box_tag "agreementFilter", "archived", false, :onclick=>'toggleArchivedAgreements(this)'  %>
+  <%= label_tag "agreementFilter", "Display Archived " + get_count_html(@archived_agreements.length, @archived_agreements.length.to_s + " Archived Agreements associated with this Rights Holder","orange") %>
+</div>
+<% end %>
+<div id="agreementSplitter" style="width: 100%; height: 400px;">
+    <div id="agreementList" style="height: 100px">
+      <%=  render :partial => 'agreement/list.html', :locals=>{:agreements=>@all_agreements, :dialogOnCloseCallback=>"refreshAgreementList"} %>
+    </div>
+    
+    <div id="agreementDetails" class="empty">
+      <center>
+        <p>
+          <i>Select an agreement to view it's details</i>
+        </p>
+      </center>
+      <% if @active_agreements.length>0 %>
+      <script type="text/javascript">
+        $(document).ready( function () {
+          showAgreementDetails("<%= @active_agreements[0].agreementid%>");
+          $("#agreementList tr[agreementid=<%= @active_agreements[0].agreementid%>]").addClass("selected");
+        });
+      </script>
+      <% end %>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var isAgreemenTabInitialised = false;
+    function initAgreementTabContents() {
+      if (!isAgreemenTabInitialised) {
+        initAgreementSplitter();
+        setTimeout("resizeSplitter(true);",100);
+        <% if @archived_agreements.length > 0 %>
+        toggleArchivedAgreements($("#agreementFilter"));
+        <% end %>
+        isAgreemenTabInitialised = true;
+      }
+    }
+
+    function refreshAgreementList() {
+      window.location.hash = "#wkAgreements";
+      window.location.reload();
+    }
+</script>

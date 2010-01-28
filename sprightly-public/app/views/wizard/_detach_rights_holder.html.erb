@@ -1,0 +1,11 @@
+<p>
+  Are you sure you want to detach this Rights Holder from this Agreement?
+</p>
+
+<% ajax_form_for :agreement, :url => { :action => "detach_rights_holder" } do |f| %>
+  <input type="hidden" name="rightsholderid" value="<%= @rightsholderid %>"/>
+  <p>
+    <%= f.submit 'Detach' %>
+  </p>
+<% end %>
+

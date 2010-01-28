@@ -1,0 +1,23 @@
+<div class="filter-options">
+  <% ajax_form_for :contact, :url => { :action => "report",:action=>"agreement_reports" }, :parent_selector => "#adminAgreementReportTab" do |f| %>
+  
+    <b>Filters:</b>
+    <%= hidden_field_tag "filter", "true"  %>
+    <%= select_tag "filter_date_type", options_for_select([["Created", "createdate"],["Updated","auditdate"]], @filter_date_type) %>
+    <%= label_tag "filter_start_date", "from" %> <%= text_field_tag "filter_start_date", @filter_start_date,:class=>"datepicker" %> 
+    <%= label_tag "filter_end_date", "to" %> <%= text_field_tag "filter_end_date", @filter_end_date,:class=>"datepicker" %>
+    
+    <%= f.submit("Apply Filters") %>
+    <span class="ajax-form-cancel"></span><!-- to supress cancel button -->
+  <% end %>
+  
+</div>
+<%=  render :partial => 'report/agreement_totals.html' %>
+<%=  render :partial => 'report/agreement_by_area.html' %>
+<%=  render :partial => 'report/agreement_by_user.html' %>
+
+<% if @filter_applied %>
+<script type="text/javascript">
+  initialiseSections("#adminAgreementReportTab");
+</script>
+<% end %>

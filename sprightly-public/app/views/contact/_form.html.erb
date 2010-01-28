@@ -1,0 +1,31 @@
+    <% if !@contacttype_lu.nil? %>
+
+
+    <table class="form">
+      <tr>
+        <td class="label"><%= label_glossary_term("Privacy", "contact_privacy", "privacy") %></td>
+        <td class="field"><%= select_tag("contact[privacy_lu_id]", options_for_select(PrivacyLu.options, @contact.privacy_lu_id),:onchange=>"updatePrivacyIconPreview()") %> <span id="internalUseOnlyIcon" class="empty" style="display:none">(Denoted by <%= image_tag "stop.png" %>)</span></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label_glossary_term("Preferred", "contact_preferred", "preferred_contact") %></td>
+        <td class="field"><%= check_box("contact", :preferred, {}, "Y") %> <span class="empty">(Denoted by <%= image_tag "preferred.png" %>)</span></td>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      updatePrivacyIconPreview()
+      function updatePrivacyIconPreview() {
+        if ($("#contact_privacy_lu_id").find("option[selected]").text().indexOf("Internal")==0) {
+          $("#internalUseOnlyIcon").fadeIn();
+        } else {
+          $("#internalUseOnlyIcon").fadeOut();
+        }
+      }
+    </script>
+
+    <div class="separator"></div>
+
+        <%=  render :partial => @contacttype_lu.code + ".html" %>
+    <% else %>
+      <p style="font-style: italic;" class="error-msg">Please select a contact <strong>type</strong>.</p><br/>
+    <% end %>

@@ -1,0 +1,39 @@
+<div class="thumbnail">
+  <img  alt="Thumbnail for DCM work - <%= @id %>" src='http://www.nla.gov.au/<%= @id %>-t' />&nbsp;
+</div>
+
+<div class="work-details">
+  <%= label_and_value("Title", @work.title) %>
+  
+
+  <% if !@work.parentpid.nil? && @work.parentpid.length > 0 %>
+    <%= label_and_value("ParentPID", "<a href="+url_for(:controller=>:works, :action=>:show, :id=>@work.parentpid, 'source'=>'dcm')+">"+@work.parentpid+"</a>", true) %>
+  <% end %>
+
+  <div class='label-value-pair'>
+      <div class='label'>PI</div>
+
+      <div class='value'>
+        <ul id="workTree" class="treeview">
+          <li class="placeholder"><%= @id %></li>
+        </ul>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $("#workTree").treeview({
+                url: "<%= url_for :controller => :works, :action => 'children', :id=>@id %>"
+            })
+          });
+
+        </script>
+      </div>
+    </div>
+
+  <% if !@work.bibid.nil? %>
+    <%= label_and_value("Bib ID", "<a href="+url_for(:controller=>:works, :action=>:show, :id=>@work.bibid, 'source'=>'catalogue')+">"+@work.bibid+"</a>", true) %>
+  <% end %>
+
+  <%= label_and_value("Rights Holders", format_dcm_rightsholder(@work.creator, "Creator")) %>
+
+</div>
+
+<%= clear_fix %>

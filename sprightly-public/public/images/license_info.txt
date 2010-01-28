@@ -1,0 +1,21 @@
+------
+Images
+------
+
+Crystal Clear
+- http://commons.wikimedia.org/wiki/Crystal_Clear
+- Licensed under the GNU Lesser General Public License (LGPL).
+
+FamFam Icon Set
+- http://www.famfamfam.com/
+- Licensed under a Creative Commons Attribution 2.5 License.
+
+Dojo/Dijit images
+- to support the Dijit widgets
+- http://www.dojotoolkit.org/
+
+jQueryUI images
+- to support the jQuery UI widgets
+- http://jqueryui.com/
+
+All other images have been designed and authored by staff of the National Library of Australia.

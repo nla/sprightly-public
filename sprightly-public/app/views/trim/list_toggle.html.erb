@@ -1,0 +1,6 @@
+<% if @trimrecords.size == 0 %>
+  &nbsp;
+<% else %>
+  <a href="javascript:void(0);" onclick="toggleMoreDetails(this, '<%= url_for :controller => :trim, :action => :list, :id => @agreementid  %>', '' ); return false;">View (<%=  @trimrecords.size %>) </a>
+<% end %>
+

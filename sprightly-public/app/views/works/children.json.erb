@@ -1,0 +1,11 @@
+[
+  <% @children.each_with_index { |pi, index| %>
+    {
+      "text": <% if @isRoot %>"<%= pi %>"<% else %>"<a href=\"<%= url_for :controller => :works, :action => :show, :id => pi, 'source' => 'dcm' %>\"><%= pi %></a>"<% end %>,
+	  "expanded": false,
+      "hasChildren": true,
+      "id": "<%= pi[pi.index(".")+1..pi.length] %>"
+    }
+    <% if index < @children.length - 1 %>,<%  end %>
+  <% } %>
+]

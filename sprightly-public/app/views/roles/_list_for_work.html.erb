@@ -1,0 +1,40 @@
+
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="30%">Rights Holder</th>
+          <th width="15%">Role</th>
+          <th width="9%" class="audit hide">Date</th>
+          <th width="9%" class="audit hide">User</th>
+          <th width="2%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%
+        if !roles.nil?
+          roles.each_with_index do |role, index|
+          rightsholder_id = rightsholders[role.partyid.to_i].id
+          rightsholder_name = rightsholders[role.partyid.to_i].name
+          rightsholder_life_dates = rightsholders[role.partyid.to_i].life_dates.blank? ? "" : rightsholders[role.partyid.to_i].life_dates
+        %>
+              <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top">               
+                  <%= get_rh_url(rightsholder_name, rightsholder_life_dates, rightsholder_id) %>                  
+                </td>
+                <td valign="top"><%= role.role_lu.label %></td>
+                <td valign="top" class="audit hide"><%= format_date_for_display(role.auditdate) %></td>
+                <td valign="top" class="audit hide"><%= role.audituser %></td>
+                <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <li><%= get_view_agreements_basic_action(rightsholder_id) %></li>
+                    <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :roles, :action => :edit, :id => role.roleid),"Edit Role", true, "{title: 'Edit Role', close: refreshTabContents}") %>
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :roles, :action => :delete, :id => role.roleid),"Delete Role", true, "{title: 'Delete Role', width: 300, height: 200, close: refreshTabContents}") %>
+                  </ul>                  
+                </td>
+              </tr>
+            <%
+          end
+        end
+      %>
+      </tbody>
+    </table>

@@ -1,0 +1,26 @@
+<ul id="wizardLauncherMenu" class="contextMenu" style="display: none">
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"manuscripts" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Manuscripts Form</a>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"maps" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Maps Form</a>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"multi" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Music/Dance Form</a>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"oral" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Oral History Form</a>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"pictures" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Pictures Form</a>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"public" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Public Programs Form</a>
+    </li>
+    <li>
+      <hr/>
+    </li>
+    <li>
+      <a onclick="return AjaxDialogHelper.show('<%= url_for :controller=>'wizard', :action=>'confirm_new', :id=>-1, :formtype=>"multi" %>', 'ajax=true', {title: 'Create Agreement?', width: 300, height: 200});" href="javascript:void(0);">Multi Form</a>
+    </li>
+</ul>

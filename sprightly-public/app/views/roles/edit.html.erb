@@ -1,0 +1,6 @@
+<% ajax_form_for :role, :url => { :controller=>"roles", :action => "update", :id=>@role.roleid } do |f| %>
+
+  <%= render :partial=>"roles/form.html" %>
+
+  <p><%= f.submit 'Save' %></p>
+<% end %>

@@ -1,0 +1,37 @@
+<%
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+%>
+
+<div id="orphanwork" class="section green">
+  <div class="section-header">
+    <h3 class="section-title"><%=  glossary_term("Library Decision","library_decision") %><% if @library_decision.nil? %>: no<% end %></h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Edit",url_for(:controller => :librarydecision, :action => :new, 'copydetailsid'=>@copydetails.get_copydetailsid, 'source'=>request.request_uri),"Edit Library Decisions", true,"{title: 'Edit'"+dialog_callback_option+"}","green") %>
+      <% if !@library_decision.nil? %>
+        <%= action_input_only("Delete",url_for(:controller => :librarydecision, :action => :delete, :id =>@library_decision.get_copystatusid, 'source'=>request.request_uri),"Delete Library Decisions", true,"{title: 'Delete', width: 300, height: 200"+dialog_callback_option+"}","red") %>
+      <%end %>
+
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <% if !@library_decision.nil? %>
+  <div class="section-content">
+      <%= label_and_value("Note",@library_decision.note) %>
+      <%= label_and_value("Date Determined", format_date_for_display(@library_decision.datedetermined)) %>
+      <%= label_and_value("Updated", format_date_for_display(@library_decision.auditdate)) %>
+      <%= label_and_value("Updated By",@library_decision.audituser) %>
+      <%= clear_fix %>
+  </div>
+  <% end  %>
+</div>

@@ -1,0 +1,67 @@
+<%
+# Locals
+# id_name : agreementid, partyid, copydetailsid
+# id : id
+# dialogOnCloseCallback : The javascript close function for the ajax window
+%>
+
+<%
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+%>
+
+<div id="trim_references" class="section <% if @trimrecords.length == 0 %>collapsed<% end %>">
+  <div class="section-header">
+    <h3 class="section-title"><%= glossary_term "TRIM References", "trim_reference"  %></h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add TRIM Reference",url_for(:controller => :trim, :action => :new, id_name=>id),"Add TRIM Reference", true,"{title: 'Add TRIM Reference'"+dialog_callback_option+"}","green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="18%">Reference</th>
+          <th width="10%"><%= glossary_term("Date TRIM'd", "date_trimd") %></th>
+          <th width="48%">Description</th>
+          <th width="10%" class="audit hide">Date</th>
+          <th width="10%" class="audit hide">user</th>
+          <th width="4%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% if !@trimrecords.nil?
+          @trimrecords.each_with_index do |trimrecord, index | %>
+            <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+              <td valign="top"><a target="_blank" href="<%= url_for :controller=>"trim",:action=>"deliver",:id=>trimrecord.get_trimrecordid %>"><%=  trimrecord.trimrefnumber %></a></td>
+              <td valign="top"><%= format_date_for_display(trimrecord.trimdate) %></td>
+              <td valign="top"><%= nl2br(trimrecord.description) %></td>
+              <td valign="top" class="audit hide"><%= format_date_for_display(trimrecord.auditdate) %></td>
+              <td valign="top" class="audit hide"><%= trimrecord.audituser %></td>
+              <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :trim, :action => :edit, :id => trimrecord.get_trimrecordid),"Edit TRIM Reference", true, "{title: 'Edit TRIM Reference'"+dialog_callback_option+"}") %>
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :trim, :action => :delete, :id => trimrecord.get_trimrecordid),"Delete TRIM Reference", true, "{title: 'Delete TRIM Reference', width: 300, height: 200"+dialog_callback_option+"}") %>
+                  </ul>                 
+              </td>
+            </tr>  
+        <% end
+         end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+  

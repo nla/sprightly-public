@@ -1,0 +1,28 @@
+<div id="itemDetails">
+      <div id="rh_thumbnail_image">
+        <script type="text/javascript">
+          $(document).ready(function() {
+            refreshThumbnailImage();
+          });
+
+          function refreshThumbnailImage() {
+            $("#rh_thumbnail_image").ajaxload('<%= url_for :controller => :rightsholders, :action => :thumbnail, :id => @rightsholder.id, :name=>@rightsholder.name,:life_dates=>@rightsholder.life_dates,:ajax=>true %>');
+          }
+        </script>
+      </div>
+      <%=  render :partial => 'identity_title.html' %>
+      <div class="source">
+         <% if @rightsholder.source == "SPRIGHTLY" %>
+            <ul class="rightsholder-actions horizontal-menu">
+                 <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :rightsholders, :action => :edit, :id => @party.partyid),"Edit Rights Holder", true, "{title: 'Edit Rights Holder'}","add-action green") %>
+            </ul>
+         <% end %>
+         Source:&nbsp;<%= @rightsholder.source %>
+      </div>
+</div>
+
+<%=  render :partial => 'note/list', :locals=> {:dialogOnCloseCallback=>"refreshTabContents",:title_glossary_term_code=>"notes_rights_holder"} %>
+
+<%=  render :partial => 'trim/list.html', :locals => { :id_name => 'partyid', :id => @party.get_partyid, :dialogOnCloseCallback => "refreshTabContents" } %>
+
+<%=  render :partial => 'contact/list.html', :locals=>{:contacts=>@contacts, :source=>@rightsholder.source, :partyid=>@party.partyid, :dialogOnCloseCallback=>"refreshTabContents"} %>

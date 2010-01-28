@@ -1,0 +1,14 @@
+<ol start="10" class="wizard-questions-list">
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>10} %>
+    <div class="wizard-question-text">May the Library permit unrestricted use of the Material?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>11} %>
+    <div class="wizard-question-text">May the Library publish the Material in its own publications?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>12} %>
+    <div class="wizard-question-text">May the Library provide copies of the Material for people and organisations other than the Library to use in publications, films, broadcasts and in other public ways, including uses in online media?</div>
+  </li>
+</ol>

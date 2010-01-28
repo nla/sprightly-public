@@ -1,0 +1,35 @@
+<div id="rh_catalogue" class="section <% if @work.rightsholders.nil? || @work.rightsholders.length == 0 %>collapsed<% end %> violet">
+  <div class="section-header">
+    <h3 class="section-title">Rights Holders - Voyager</h3>
+    <ul class="actions horizontal-menu">
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-content">
+    <table width="100%" class="data no-sort">
+
+      <%
+        if !@work.rightsholders.nil?
+          @work.rightsholders.each_with_index { |rh, index|
+            %>
+            <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+              <td valign="top"><%= rh.name %></td>
+              <td valign="top"><%= rh.life_dates %></td>
+              <td valign="top"><%= rh.role %></td>
+              <td valign="top"><%= rh.secondary_role %></td>
+            </tr>
+            <%
+          }
+        end
+      %>
+
+    </table>
+  </div>
+  
+</div>

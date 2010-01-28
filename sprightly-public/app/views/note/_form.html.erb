@@ -1,0 +1,8 @@
+<table class="form">
+  <tr>
+    <td class="label"><%= f.label :note %></td>
+    <td class="field"><%= f.text_area :note , :value => @note.note, :rows=>6, :cols=>60 %></td>
+    <td class="errors"><%= error_message_on(@note, :note) %></td>
+  </tr>
+</table>
+

@@ -1,0 +1,63 @@
+<%
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+%>
+<table width="100%" class="data">
+  <thead>
+    <tr>
+      <th width="15%">Name</th>
+      <th width="15%">Relationship</th>
+      <th width="15%">Name</th>
+      <th width="9%" class="audit hide">Date</th>
+      <th width="9%" class="audit hide">User</th>
+      <th width="2%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%
+    if !delegators.nil?
+      delegators.each_with_index do |delegate, index|
+        %>
+          <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+            <td valign="top"><%= rightsholder.name %> <%= rightsholder.life_dates %></td>
+            <td valign="top"><%= delegate.relationship_lu.label %></td>
+            <td valign="top"><a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>rightsholders[delegate.delegatee].id %> "><%= rightsholders[delegate.delegatee].name %> <%= rightsholders[delegate.delegatee].life_dates %></a></td>
+            <td valign="top" class="audit hide"><%= format_date_for_display(delegate.auditdate) %></td>
+            <td valign="top" class="audit hide"><%= delegate.audituser %></td>
+            <td valign="top">
+              <ul class="table-actions horizontal-menu">
+                <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :relationship, :action => :delete, :id => delegate.relationshipid),"Delete Relationship", true, "{title: 'Delete Relationship', width: 300, height: 200"+dialog_callback_option+"}") %>
+              </ul>                 
+            </td>
+          </tr>
+        <%
+      end
+    end
+  %>
+
+  <%
+    if !delegatees.nil?
+      delegatees.each_with_index do |delegate, index|
+        %>
+          <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+            <td valign="top"><a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>rightsholders[delegate.delegator].id %> "><%= rightsholders[delegate.delegator].name %> <%= rightsholders[delegate.delegator].life_dates %></a></td>
+            <td valign="top"><%= delegate.relationship_lu.label %></td>
+            <td valign="top"><%= rightsholder.name %> <%= rightsholder.life_dates %></td>
+            <td valign="top" class="audit hide"><%= format_date_for_display(delegate.auditdate) %></td>
+            <td valign="top" class="audit hide"><%= delegate.audituser %></td>
+            <td valign="top">
+              <ul class="table-actions horizontal-menu">
+                <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :relationship, :action => :delete, :id => delegate.relationshipid),"Delete Relationship", true, "{title: 'Delete Relationship', width: 300, height: 200"+dialog_callback_option+"}") %>
+              </ul>               
+            </td>
+          </tr>
+        <%
+      end
+    end
+  %>
+  </tbody>
+</table>

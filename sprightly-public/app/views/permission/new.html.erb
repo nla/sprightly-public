@@ -1,0 +1,10 @@
+<% if @permission.errors.size > 0 %>
+  <div class="error-msg">Unable to create permission</div>
+<% end %>
+
+<div id="add" class="popup">
+  <% ajax_form_for :permission, :url => { :action => "create" } do |@f| %>
+    <%=  render :partial => "form" %>
+    <%= @f.submit("Create") %>
+  <% end %>
+</div>

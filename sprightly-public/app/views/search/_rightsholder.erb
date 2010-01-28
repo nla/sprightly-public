@@ -1,0 +1,16 @@
+<div class="result">
+   <div class="more-info-toggle">
+    <a href="javascript:void(0)" onclick="openRightsHolderBusinessCard(this,'<%= url_for :controller=>:rightsholders, :action=>:business_card, :id=>rightsholder_get_id(rightsholder) %>')">
+      <%= image_tag "rightsholder.png", :class=>"result-item-icon" %>
+      <%= image_tag "information.png", :class=>"info-icon" %>
+    </a>
+  </div>
+
+  <div style="float:left; margin-left: 50px;">
+    <a href='<%= url_for(:controller=> 'rightsholders', :action=>'show', 'id'=> rightsholder_get_id(rightsholder)) %>'><%= rightsholder_get_name(rightsholder) %></a>
+    <%= rightsholder_get_other_names(rightsholder) %>
+  </div>
+  
+  <div class="result-source">Source: <%= rightsholder_get_source(rightsholder) %></div>
+  <%= clear_fix %>
+</div>

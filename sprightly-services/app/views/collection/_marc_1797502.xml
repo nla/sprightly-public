@@ -1,0 +1,72 @@
+<collection xmlns="http://www.loc.gov/MARC21/slim"><record>
+    <leader>00722nam  2200229 a 4500</leader>
+    <controlfield tag="001">1797502</controlfield>
+    <controlfield tag="005">19990522000000.0</controlfield>
+    <controlfield tag="008">880104s1987    xnaac         000 0beng d</controlfield>
+    <datafield tag="019" ind1="1" ind2=" ">
+      <subfield code="a">5679603</subfield>
+
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">086436122X (pbk.) :</subfield>
+      <subfield code="c">$4.95 Aust.</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">000005679603</subfield>
+
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">1092274</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">ANB</subfield>
+      <subfield code="b">eng</subfield>
+
+      <subfield code="c">ANB</subfield>
+      <subfield code="d">VMVR</subfield>
+    </datafield>
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">u-at---</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+
+      <subfield code="a">791.45/092/4</subfield>
+      <subfield code="2">19</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Kylie Minogue.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+
+      <subfield code="a">Sydney :</subfield>
+      <subfield code="b">Australian Consolidated Press in association with Greenhouse,</subfield>
+      <subfield code="c">1987.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">[33] p. :</subfield>
+      <subfield code="b">col. ill., ports. ;</subfield>
+
+      <subfield code="c">28 cm. +</subfield>
+      <subfield code="e">1 poster.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Cover title.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+
+      <subfield code="a">Minogue, Kylie,</subfield>
+      <subfield code="d">1968-</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Television actors and actresses</subfield>
+      <subfield code="z">Australia</subfield>
+      <subfield code="x">Biography.</subfield>
+
+    </datafield>
+    <datafield tag="984" ind1=" " ind2=" ">
+      <subfield code="a">ANL</subfield>
+      <subfield code="c">Npf 791.450924 M666W</subfield>
+    </datafield>
+  </record>
+</collection>
+

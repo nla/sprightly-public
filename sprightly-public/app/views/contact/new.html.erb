@@ -1,0 +1,42 @@
+<% if !@msg.nil? %>
+  <p class="<%= @msg_class %>"><%= @msg %></p>
+<% end %>
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :contact, :url => { :action => "create" } do |f| %>
+    <%= hidden_field_tag 'partyid', @partyid %>
+    <%= hidden_field_tag 'contact[partyid]', @partyid %>
+    <table class="form">
+      <tr>
+        <td class="label"><strong>Select type</strong></td>
+        <td class="field">
+          <%= select_tag("contact[contacttype_lu_id]", empty_options+options_for_select(ContacttypeLu.options, @contact.contacttype_lu_id), :onchange=>"changeContactType(this);") %>
+        </td>
+      </tr>
+    </table>
+
+    <div class="separator"></div>
+    
+    <%=  render :partial => "form.html" %>
+
+    <%= f.submit("Create") %>
+  <% end %>
+
+</div>
+
+<script type="text/javascript">
+  /*****************************************************************************
+   * changeContactType
+   *    selectEl (Element)
+   *
+   * Upon changing the contact type, reload the dialog with the form corresponding
+   * to the type selected.
+   *
+   */
+  function changeContactType(selectEl) {
+    var dialog = $(selectEl).parents(".ui-dialog-content:first").data("ajaxDialog");
+    var type = $(selectEl).val();
+    dialog.changeContent("ajax=true&type="+type+"&partyid=<%= @partyid %>");
+  }
+</script>

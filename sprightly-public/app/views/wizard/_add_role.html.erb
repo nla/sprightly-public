@@ -1,0 +1,85 @@
+<%
+ typeOptions = empty_options
+  @roleTypes.each_with_index { |type, index |
+        typeOptions = typeOptions + "<option value='"+type.role_lu_id.to_s+"'>"+ type.label.to_s + "</option>"
+  }
+%>
+
+<% if not @msg.blank? %>
+  <div class="error-msg"><%= @msg %></div>
+<% end %>
+
+<% ajax_form_for :role, :url => { :controller=>"roles", :action => "create" } do |f| %>
+     <%= hidden_field_tag "agreementid", @agreement.agreementid %>
+     <%= hidden_field_tag "rightsholderid", @rightsholder.id %>
+     <table class="form" id="addRoleForm">
+      <tr>
+        <td class="label">Rights Holder</td>
+        <td class="field"><strong><%= @rightsholder.preferred %></strong></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label("role_lu", "id", "Role Type") %></td>
+        <td class="field">
+          <%= select_tag "role_lu_id[]", typeOptions, {:multiple=>true} %>
+          <script type="text/javascript">
+              /*****************************************************************
+               * Enable the role select as a jQuery multiselect widget.
+               */
+              $("#role_lu_id_").multiSelect({
+                selectAll: false,
+                noneSelected: 'Please select one or more:',
+                oneOrMoreSelected: '*'
+              });
+          </script>
+        </td>
+      </tr>
+      <% if @copysets.size > 0 %>
+      <tr>
+        <td class="label">To Works (<i>optional</i>)</td>
+        <td class="field">         
+              <div class="select-all-toggle">
+                <input type="checkbox" id="selectAllToggle" onclick="toggleResultsSelectAll(this)"> <label for="selectAllToggle">Select All</label>
+              </div>
+              <div class="results-list multiselect">
+                <% @copysets.each { |copyset|
+                      copydetail = Copydetails.find(copyset.copydetailsid)
+                %>
+                  <div class="result">
+                    <input type="checkbox" name="copypid[]" value="<%= copydetail.copypid %>"  style="float: left;"/>
+                    <div style="float: left">
+                      <b><%= copydetail.copypid %></b>
+                    </div>
+                    <%= clear_fix %>
+                  </div>
+                <% } %>
+              </div>
+              <script type="text/javascript">
+                 initializeResultsList($("#addRoleForm .results-list"));
+
+                 function toggleResultsSelectAll(el) {
+                    if ($(el).attr("checked")) {
+                       $.each($("#addRoleForm .results-list input:checkbox"), function() {
+                         $(this).attr("checked", "checked");
+                         $(this).parents(".result:first").addClass("selected");
+                        });
+                    } else {
+                       $.each($("#addRoleForm .results-list input:checkbox"), function() {
+                         $(this).removeAttr("checked");
+                         $(this).parents(".result:first").removeClass("selected");
+                       });
+                    }
+                 }
+              </script>          
+        </td>
+      </tr>
+      <% else %>
+      <tr>
+        <td colspan="2">
+          <p class="info-msg">Add specific works in Step A to create more explicit roles.</p>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+
+    <p><%= f.submit 'Create' %></p>
+<% end %>

@@ -1,0 +1,22 @@
+<div class="result">
+  <%
+    bibid = catalogue_get_bibid(catalogue)
+    pi = catalogue_get_pi(catalogue)
+  %>
+  <div class="result-thumbnail">
+    <%= catalogue_get_image(catalogue) %>
+  </div>
+
+  <div class="result-details">
+    <b><a href='<%= url_for(:controller=> 'works', :action=>'show', 'id'=>bibid, 'source'=>@source) %>'><%= catalogue_get_title(catalogue) %></a></b>
+    <%= catalogue_get_author(catalogue) %>
+    <br/>Bib ID: <%= bibid %>
+    <% if !pi.nil? %>
+      <br/>Pi: <%= pi %>
+    <% end %>
+    <br/>Formats: <% catalogue_get_formats(catalogue).each { |format| %><%=format %>&nbsp;<%  } %>
+  </div>
+
+  <%= clear_fix %>
+  
+</div>

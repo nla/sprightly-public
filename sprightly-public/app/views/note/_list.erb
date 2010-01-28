@@ -1,0 +1,64 @@
+<%
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+
+
+%>
+<div id="notes" class="section <% if @notes.length == 0 %>collapsed<% end %>">
+  <div class="section-header">
+    <h3 class="section-title">
+      <% if title_glossary_term_code.blank? %>
+        Notes
+      <% else %>
+        <%= glossary_term "Notes", title_glossary_term_code  %>
+      <% end %>
+    </h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add Note",url_for(:controller => :note, :action => :new, 'partyid' => @party.get_partyid),"Add Note", true,"{title: 'Add Note'"+dialog_callback_option+"}", "green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="75%">Note</th>
+          <th width="10%" class="audit hide">Date</th>
+          <th width="10%" class="audit hide">User</th>
+          <th width="5%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+       <tbody>
+      <%
+        if !@notes.nil?
+          @notes.each_with_index { |note, index |
+            %>
+            <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+              <td valign="top"><%= nl2br(note.note) %></td>
+              <td valign="top" class="audit hide"><%= format_date_for_display(note.auditdate) %></td>
+              <td valign="top" class="audit hide"><%= note.audituser %></td>
+              <td valign="top">
+                <ul class="table-actions horizontal-menu">
+                  <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :note, :action => :edit, :id => note.noteid), "Edit Note", true, "{title: 'Edit Note'"+dialog_callback_option+"}") %>
+                  <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :note, :action => :delete, :id => note.noteid, 'source' => request.request_uri), "Delete Note", true, "{title: 'Delete Note', width: 300, height: 200"+dialog_callback_option+"}") %>
+                </ul>                                
+              </td>
+            </tr>
+            <%
+          }
+        end
+      %>
+      </tbody>
+    </table>
+   </div>
+
+</div>

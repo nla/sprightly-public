@@ -1,0 +1,24 @@
+postal:
+  contacttype_lu_id: 1
+  code: postal
+  label: Postal
+email:
+  contacttype_lu_id: 2
+  code: email
+  label: Email
+ah_phone:
+  contacttype_lu_id: 3
+  code: ah_phone
+  label: Phone (After Hours)
+bh_phone:
+  contacttype_lu_id: 4
+  code: bh_phone
+  label: Phone (Business Hours)
+mobile:
+  contacttype_lu_id: 5
+  code: mobile
+  label: Mobile
+fax:
+  contacttype_lu_id: 6
+  code: fax
+  label: Fax

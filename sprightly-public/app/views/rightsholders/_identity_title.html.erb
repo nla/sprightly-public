@@ -1,0 +1,17 @@
+<div class="rh-details">
+  <%= label_and_value("Name", @rightsholder.name) %>
+  <%= label_and_value("Life Dates",  @rightsholder.life_dates) %>
+  <%
+    if @rightsholder.other_names.length > 0 then
+      other_name_html = '<div class="other-names">'
+      @rightsholder.other_names.each do |other_name|
+        other_name_html += "<div> - " + other_name + "</div>"
+      end
+      other_name_html += "</div>"
+    end
+  %>
+  <%= label_and_value("Other Names",  other_name_html) %>
+
+</div>
+
+<%= clear_fix %>

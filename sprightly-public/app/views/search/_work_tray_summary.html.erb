@@ -1,0 +1,45 @@
+<div class="cool-box">
+     <div class="cool-box-header">
+       <div style="float: right">
+          <a title="Expand/Collapse Sprightly News" class="expand-collapse-news-link collapsed" href="javascript:void(0);"><%= image_tag "show.gif", :class=>"expand-icon" %><%= image_tag "hide.gif", :class=>"collapse-icon" %></a>
+       </div>
+       <h2>Work Tray Summary</h2>
+     </div>
+     <div class="cool-box-content">
+       <% if @draft_agreements.length > 0 %>
+         <strong><a href="<%= url_for :controller=>"agreement", :action=>"work_tray", :id=>-1 %>">Drafts</a> <span class="work-tray-count"><%= @draft_agreements.length %></span></strong>
+          –
+         <a href="<%= url_for :controller=>"agreement", :action=>"work_tray", :id=>-1 %>">Work Tray</a>
+         <ul id="miniWorkTray">
+         <% @draft_agreements.each_with_index { |agreement,i| %>
+           <li class="mini-agreement-result" onclick="location.href='<%= url_for :controller=>:wizard, :action=>"wizard", :id=> agreement.agreementid.to_i %>'" onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+              <div class="title">
+                <%= image_tag "wand.png" %>
+                <span class="type">[DRAFT] <%= agreement.collection_display_label %></span>
+                <% rightsholders = agreement.get_associated_rightsholders
+                if rightsholders.length>0 %> – <%= list_rightsholders(rightsholders, false) %><% end %>
+              </div>
+              <div class="timestamp">
+                <div class="summary-icons">
+                  <% if rightsholders.length > 0  %><%= image_tag "rightsholder.png", :title=>rightsholders.length.to_s + " Rightsholders associated with Agreement", :class=>"has-tooltip" %><% else %><%= image_tag "rightsholder_bw.png", :title=>"No Rightsholders associated with Agreement", :class=>"has-tooltip" %><% end %>
+                  <% if agreement.active_permissions.length > 0  %><%= image_tag "access.png", :title=>agreement.active_permissions.length.to_s + " Permissions associated with Agreement", :class=>"has-tooltip" %><% else %><%= image_tag "access_bw.png", :title=>"No Permissions associated with Agreement", :class=>"has-tooltip" %><% end %>
+                  <% if agreement.active_trimrecords.length > 0  %><%= image_tag "trim.png", :title=>agreement.active_trimrecords.length.to_s + " TRIM Records associated with Agreement", :class=>"has-tooltip" %><% else %><%= image_tag "trim_bw.png", :title=>"No TRIM Records associated with Agreement", :class=>"has-tooltip" %><% end %>
+                  <% if not agreement.note.blank?  %><%= image_tag "note.png", :title=>"Note: "+agreement.note, :class=>"has-tooltip" %><% else %><%= image_tag "note_bw.png", :title=>"No Note associated with Agreement", :class=>"has-tooltip" %><% end %>
+                </div>
+                <%=  label_and_value("Created",format_date_for_display(agreement.createdate), true) %>
+              </div>
+              <%= clear_fix %>
+              <div class="details">
+                <%=  label_and_value("Agreement Date",format_date_for_display(agreement.agreementdate)) %>
+                <%=  label_and_value("Notes",agreement.note, false, false) %>
+              </div>
+              <%= clear_fix %>
+            </li>
+         <% } %>
+         </ul>
+       <% else %>
+          <p class="warning-msg">Currently No Draft Agreements</p>
+       <% end %>
+
+     </div>
+  </div>

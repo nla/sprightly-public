@@ -1,0 +1,36 @@
+<div id="updateThumbnailForm" class="popup">
+  <% ajax_form_for :rightsholder, :url => { :controller=>:rightsholders, :action => 'update_thumbnail', :id=>@rightsholder.id } do |f| %>
+  <table class="form">
+    <tr>
+      <td class="label"><%= label_tag "copypid", "Work PI" %></td>
+      <td class="field"><%= text_field_tag "copypid", @copypid %></td>
+    </tr>
+  </table>
+  <div id="validationMessageBox">
+    <div class="info-msg">Please enter an image PI and validate.</div>
+  </div>
+  <p>
+    <button id="validateThumbnailPIButton" class="blue-button secondary" onclick="validateThumbnailPI()">Validate</button>
+    <%= f.submit 'Update Thumbnail', :class=>"green-button disabled", :disabled=>"disabled" %>
+  </p>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  /*****************************************************************************
+   * checkForDuplicates
+   *    selectEl (Element)
+   *
+   * ...
+   *
+   */
+  function validateThumbnailPI() {
+    $("#validateThumbnailPIButton").addClass("disabled").attr("disabled","disabled");
+    $("#updateThumbnailForm input[type=submit]").addClass("disabled").attr("disabled","disabled");
+    $("#validateThumbnailPIButton").after($('<%= image_tag "busy.gif", :class=>"busy-icon" %>'));
+    $("#validationMessageBox").ajaxload("<%= url_for :controller=>:rightsholders, :action=>:validate_thumbnail, :id=>-1 %>?"+$("#updateThumbnailForm form").serialize(), null, function() {
+      $("#validateThumbnailPIButton").removeClass("disabled").removeAttr("disabled");
+      $(".busy-icon").remove();
+    })
+  }
+</script>

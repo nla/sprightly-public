@@ -1,0 +1,34 @@
+<div class="login-page-content">
+  <div class="cool-boxes two">
+    <div class="cool-box-col">
+      <div id="loginPanel">
+        <% if not @msg.blank? then %>
+          <div class="<%= @msg_class %>"><%= @msg %></div>
+        <% end %>
+        <% form_tag :action => 'create' do %>
+        <table class="form">
+          <tr>
+            <td class="label" style="width: 100px"><%= label_tag "login", "Username" %>:</td>
+            <td class="field"><%= text_field_tag 'login' %></td>
+          </tr>
+          <tr>
+            <td class="label" style="width: 100px"><%= label_tag "password", "Password" %>:</td>
+            <td class="field"><%= password_field_tag 'password' %></td>
+          </tr>
+          <tr>
+            <td class="label" style="width: 100px">&nbsp;</td>
+            <td class="field"><%= submit_tag 'login', :class=>"blue-button secondary" %></td>
+          </tr>
+        </table>
+      <% end %>
+      </div>
+      <%= render :partial=>"search/news_feed.html" %>
+      <script type="text/javascript">
+          $(".cool-box .expand-collapse-news-link").click(toggleCoolBoxSize);
+      </script>
+    </div>
+    <div class="cool-box-col">
+      <%= render :partial=>"usersession/about.html" %>
+    </div>
+  </div>
+</div>

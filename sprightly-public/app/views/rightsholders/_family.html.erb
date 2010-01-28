@@ -1,0 +1,6 @@
+<table class="form">
+  <tr>
+    <td class="label"><%= f.label(:familyname,'Family Name') %></td>
+    <td class="field"><%= f.text_field :familyname, :value => @party.familyname %><%= error_message_on(@party, :familyname) %></td>
+  </tr>
+</table>

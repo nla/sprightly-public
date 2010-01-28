@@ -1,0 +1,79 @@
+<collection xmlns="http://www.loc.gov/MARC21/slim"><record>
+    <leader>00722cam  2200253 a 4500</leader>
+    <controlfield tag="001">2638579</controlfield>
+    <controlfield tag="005">20011022103404.0</controlfield>
+    <controlfield tag="008">010410s2001    enk           001 p eng  </controlfield>
+    <datafield tag="015" ind1=" " ind2=" ">
+      <subfield code="a">GBA1-23585</subfield>
+
+    </datafield>
+    <datafield tag="019" ind1="1" ind2=" ">
+      <subfield code="a">22635239</subfield>
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0141005157 (pbk.) :</subfield>
+      <subfield code="c">L.9.99</subfield>
+
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">000022635239</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">3079638</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+
+      <subfield code="a">Uk</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="d">Uk</subfield>
+      <subfield code="d">VFRK</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+      <subfield code="a">782.421660268</subfield>
+
+      <subfield code="2">21</subfield>
+    </datafield>
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Cave, Nick,</subfield>
+      <subfield code="d">1957-</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+
+      <subfield code="a">Complete lyrics /</subfield>
+      <subfield code="c">Nick Cave.</subfield>
+    </datafield>
+    <datafield tag="246" ind1="1" ind2="0">
+      <subfield code="a">Nick Cave: the complete lyrics, 1978-2001</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+
+      <subfield code="a">London :</subfield>
+      <subfield code="b">Penguin,</subfield>
+      <subfield code="c">2001.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">342 p. ;</subfield>
+      <subfield code="c">20 cm.</subfield>
+
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Includes index.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Cave, Nick,</subfield>
+      <subfield code="d">1957-</subfield>
+
+      <subfield code="v">Songs and music.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Rock music</subfield>
+      <subfield code="v">Texts.</subfield>
+    </datafield>
+    <datafield tag="984" ind1=" " ind2=" ">
+
+      <subfield code="a">ANL</subfield>
+      <subfield code="c">NL 782.421660268 C378</subfield>
+    </datafield>
+  </record>
+</collection>
+

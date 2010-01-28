@@ -1,0 +1,58 @@
+<div class="main-tab-container rightsholder">
+  <ul class="main-tabs horizontal-menu">
+    <li class="main-left-tab rh-tab ui-corner-top selected not-the-context">
+      <%= image_tag "rightsholder.png", :class=>"icon"  %>
+    </li>
+    <li class="main-left-tab work-tab ui-corner-top the-context active" tabindex="1">
+      <%= image_tag "work.png", :class=>"icon"  %>
+      <h2><%=  trunc_to_dotdotdot(@work.title, 60, true) %></h2>
+    </li>
+    <script type="text/javascript">
+      $(".main-tabs .work-tab").click(function() {
+        location.href = "<%= url_for :controller=>"works", :action=>:show, :id=>@id, :source=>@source %>";
+      }).hover(function(){$(this).addClass("hovered")},function(){$(this).removeClass("hovered")});;
+    </script>
+    <% if session[:user].updater? %>
+      <%= render :partial => 'common/input_tabs.html' %>
+    <% end %>
+  </ul>
+  <%= clear_fix %>
+  <div class="main-tab-content ui-corner-all">
+    <div id="wkTabs">
+        <ul>
+          <li><a href="#wkRightsHolders"><span>Rights Holders</span></a></li>
+        </ul>
+        <div id="wkRightsHolders">
+          <div id="itemDetails">
+            <%= render :partial=>@source+"_rightsholders.html" %>
+            <%= clear_fix %>
+            <div class="source">
+              Source:&nbsp;<%= format_source_for_display(@source) %>
+            </div>
+          </div>
+          <%=  render :partial => "rightsholders" %>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<%# javascript_include_tag "jquery-splitter"  %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#wkTabs").tabs({cache:true});
+        $("#wkTabs").tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+	$("#wkTabs .ui-tabs-nav li").removeClass('ui-corner-top').addClass('ui-corner-left');
+
+     $("#wkTabs .ui-tabs-panel").removeClass("ui-corner-bottom").addClass("ui-corner-all");
+    setTabWidth();
+    $(window).resize(setTabWidth);
+  });
+
+  function setTabWidth() {
+      $("#wkTabs").width($("#main").width() - 18);
+      $("#wkTabs").height($(window).height()-$("#wkTabs").position().top - $("#main").position().top - 20);
+      $("#wkTabs .ui-tabs-panel").width($("#wkTabs").width()-$("#wkTabs .ui-tabs-nav").width()-35 +"px");
+      $("#wkTabs .ui-tabs-panel").height($("#wkTabs").height()-30 +"px");
+  }
+</script>

@@ -1,0 +1,29 @@
+<h1><%=  trunc_to_dotdotdot(@rightsholder.name, 40, true) %> <%= @rightsholder.life_dates %></h1>
+<h2>Details</h2>
+<%= render :partial=>"rightsholders/details.html" %>
+
+<h2>Roles</h2>
+<%= render :partial=>"rightsholders/roles.html" %>
+
+<h2>Submitted Agreements (<%= @active_agreements.length %>)</h2>
+<% if @active_agreements.length > 0 %>
+  <% @active_agreements.each_with_index { |agreement, i|  %>
+    <h3><%= i + 1 %>. <%= agreement.collection %> <%= format_date_for_display(agreement.agreementdate) %></h3>
+    <%
+      @agreement = agreement
+      @agreementid = agreement.agreementid
+      @copysets = Copyset.find(:all, :conditions=>{:agreementid=>@agreement.agreementid})
+      @trimrecords = @agreement.active_trimrecords
+      @permissions = @agreement.active_permissions 
+
+      @rightsholders = Array.new
+      Party.find_parties_attached_to_agreement(@agreement.agreementid).each do |party|
+        rh = Rightsholder.get_rightsholder_by_partyid(party.partyid)
+        @rightsholders.push(rh.clone)
+      end
+    %>
+    <%= render :partial=>"agreement/show.html" %>
+  <% } %>
+<% else %>
+  <p>No Submitted Agreements</p>
+<% end %>

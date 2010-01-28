@@ -1,0 +1,73 @@
+<% if @party.errors.size > 0 %>
+  <div class="error-msg">Unable to create rightsholder</div>
+<% end %>
+
+<div id="newRightsholderForm">
+  <table class="form">
+    <tr>
+      <td class="label"><strong>Select type</strong></td>
+      <td class="field">
+        <%= select_tag("party_type", empty_options+options_for_select(Rightsholder.type_options, @rightsholder_type), :onchange=>"changeRightsholderType(this);") %>
+      </td>
+    </tr>
+  </table>
+
+  <div class="separator"></div>
+
+  <% ajax_form_for :party, :url => { :controller=>:rightsholders, :action => 'create' } do |f| %>
+    <%= hidden_field_tag "agreementid", @agreement.agreementid %>
+    <%= render :partial => "rightsholders/form.html", :locals => { :f => f} %>
+    <% if not @rightsholder_type.blank? %>
+      <div  id="duplicateMessageBox">
+        <%= render :partial => "rightsholders/checked_duplicates_message.html" %>
+      </div>
+    <% end %>
+    <p>
+      <button onclick="checkForDuplicates(); return false;" id="checkDuplicatesButton" class="blue-button disabled secondary" disabled="disabled" title="Check for duplicates before creating a new Rights Holder">Check for Duplicates</button> <%= f.submit 'Create', :class=>"green-button disabled",:disabled=>"disabled" %>
+    </p>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  /*****************************************************************************
+   * Init checkDuplicatesButton to be disabled or active based on whether
+   * the party type has been selected.   *
+   */
+  if ($("#party_type").val()!= "") {
+    $("#checkDuplicatesButton").removeClass("disabled");
+    $("#checkDuplicatesButton").removeAttr("disabled");
+  }
+
+  /*****************************************************************************
+   * changeRightsholderType
+   *    selectEl (Element)
+   *
+   * Upon changing the rights holder type, reload the dialog with the form corresponding
+   * to the type selected.
+   *
+   */
+  function changeRightsholderType(selectEl) {
+    var type = $(selectEl).val();
+    $("#newRightsholderForm").html('<%= image_tag "busy.gif" %>')
+    $("#newRightsholderForm").parent().ajaxload("<%=  url_for :controller=>:wizard, :action=>:new_rights_holder, :id=>@agreement.agreementid %>?ajax=true&type="+type);
+  }
+
+  /*****************************************************************************
+   * checkForDuplicates
+   *    selectEl (Element)
+   *
+   * ...
+   *
+   */
+  function checkForDuplicates() {
+    $("#checkDuplicatesButton").addClass("disabled").attr("disabled","disabled");
+    $("#newRightsholderForm input[type=submit]").addClass("disabled").attr("disabled","disabled");
+    $("#checkDuplicatesButton").after($('<%= image_tag "busy.gif", :class=>"busy-icon" %>'));
+    $("#duplicateMessageBox").ajaxload("<%= url_for :controller=>:rightsholders, :action=>:check_duplicates, :id=>-1 %>?"+$("#newRightsholderForm form").serialize(), null, function() {
+      $("#checkDuplicatesButton").removeClass("disabled").removeAttr("disabled");
+      $(".busy-icon").remove();
+      $("#newRightsholderForm input[type=submit]").removeClass("disabled").removeAttr("disabled");
+    })
+  }
+</script>
+

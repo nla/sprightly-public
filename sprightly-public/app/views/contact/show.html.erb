@@ -1,0 +1,61 @@
+<h1>Contact Details History</h1>
+
+<%=  render :partial => 'rightsholders/identity_title.html' %>
+
+<br/>
+  <div class="section-header">
+    <h3 class="section-title">Active</h3>
+  </div>
+  <div class="section-content">
+    <table cellpadding="2" cellspacing="2" width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="35%">Address/Number</th>
+          <th width="30%">Note</th>
+          <th width="15%">Privacy</th>
+          <th width="5%">Date</th>
+          <th width="10%">User</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @party.active_contacts.each_with_index do |contact, index | %>
+          <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+            <td valign="top"><%= format_contact_values_for_display(contact) %></td>
+            <td valign="top"><%= nl2br(contact.note) %> &nbsp;</td>
+            <td valign="top"><%= contact.privacy_lu.label %></td>
+            <td valign="top"><%= format_date_for_display(contact.auditdate) %></td>
+            <td valign="top"><%= contact.audituser %></td>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-header">
+    <h3 class="section-title">Archived</h3>
+  </div>
+  <div class="section-content">
+    <table cellpadding="2" cellspacing="2" width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="35%">Address/Number</th>
+          <th width="30%">Note</th>
+          <th width="15%">Privacy</th>
+          <th width="5%">Created</th>
+          <th width="5%">Archived</th>
+          <th width="5%">User</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @party.archived_contacts.each_with_index do |contact, index | %>
+          <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+            <td valign="top"><%= format_contact_values_for_display(contact) %></td>
+            <td valign="top"><%= nl2br(contact.note) %> &nbsp;</td>
+            <td valign="top"><%= contact.privacy_lu.label %></td>
+            <td valign="top"><%= format_date_for_display(contact.createdate) %></td>
+            <td valign="top"><%= format_date_for_display(contact.auditdate) %></td>
+            <td valign="top"><%= contact.audituser %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>

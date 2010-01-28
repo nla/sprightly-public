@@ -1,0 +1,67 @@
+<collection xmlns="http://www.loc.gov/MARC21/slim"><record>
+    <leader>00678cas  2200229 a 4500</leader>
+    <controlfield tag="001">152021</controlfield>
+    <controlfield tag="005">20040902171929.0</controlfield>
+    <controlfield tag="008">891101d19901991enkar    y    0  1 0eng d</controlfield>
+    <datafield tag="015" ind1=" " ind2=" ">
+      <subfield code="a">b8955456</subfield>
+
+    </datafield>
+    <datafield tag="019" ind1="1" ind2=" ">
+      <subfield code="a">6859016</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">bnn08955456</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+
+      <subfield code="9">2505781</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="d">VSL</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2=" ">
+      <subfield code="a">791.45/028/0924</subfield>
+
+      <subfield code="2">19</subfield>
+    </datafield>
+    <datafield tag="245" ind1="0" ind2="0">
+      <subfield code="a">Kylie Minogue :</subfield>
+      <subfield code="b">the official ... annual.</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+
+      <subfield code="a">Manchester :</subfield>
+      <subfield code="b">World International,</subfield>
+      <subfield code="c">1989.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 v. :</subfield>
+      <subfield code="b">ill.(some col.), ports(some col.) ;</subfield>
+
+      <subfield code="c">30 cm.</subfield>
+    </datafield>
+    <datafield tag="362" ind1="0" ind2=" ">
+      <subfield code="a">1990-1991.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Television drama. Acting. Minogue, Kylie (BNB/PRECIS)</subfield>
+
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Minogue, Kylie,</subfield>
+      <subfield code="d">1968-</subfield>
+    </datafield>
+    <datafield tag="785" ind1="0" ind2="0">
+      <subfield code="t">Kylie</subfield>
+
+    </datafield>
+    <datafield tag="984" ind1=" " ind2=" ">
+      <subfield code="a">2001</subfield>
+      <subfield code="e">(1990-1991)</subfield>
+      <subfield code="c">Nq 791.45028 KYL</subfield>
+    </datafield>
+  </record>
+
+</collection>
+

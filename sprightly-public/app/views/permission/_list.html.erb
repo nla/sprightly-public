@@ -1,0 +1,77 @@
+<%
+# Locals
+# agreementid
+# close : The javascript close function for the ajax window
+
+%>
+
+<div id="permissions" class="section <% if @permissions.length == 0 %>collapsed<% end %> violet">
+  <div class="section-header">
+    <h3 class="section-title"><%= glossary_term "Permissions", "permission" %></h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add Permission",url_for(:controller => :permission, :action => :new, 'agreementid'=>agreementid),"Add Permission", true,"{title: 'Add Permission' "+close+"}","green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="5%"><%= glossary_term("Holder", "permission_holder") %></th>
+          <th width="10%"><%= glossary_term("Type", "permission_type") %></th>
+          <th width="10%"><%= glossary_term("Policy", "permission_policy") %></th>
+          <th width="10%"><%= glossary_term("Purpose", "permission_purpose") %></th>
+          <th width="25%">Details</th>
+          <th width="15%"><%= glossary_term("Note", "notes_permission") %></th>
+          <th width="15%">Trigger</th>
+          <th width="9%" class="audit hide">Date</th>
+          <th width="7%" class="audit hide">User</th>
+          <th width="6%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%
+        if !@permissions.nil?
+          @permissions.each_with_index { |permission, index|
+
+            %>
+              <tr  <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top"><%= permission.permissionholder %></td>
+                <td valign="top"><%= get_icon_for_permission_type(permission.permissiontype_lu) %> <span style="vertical-align: top"><%= permission.permissiontype_lu.label %></span></td>
+                <td valign="top"><%= get_icon_for_permission_policy(permission.permissionpolicy_lu) %> <span style="vertical-align: top"><%= permission.permissionpolicy_lu.label %></span></td>
+                <td valign="top"><%=  get_permission_purpose(permission.permissionpurpose_lu) %></td>
+                <td valign="top"><%= permission.details %></td>
+                <td valign="top"><%= nl2br(remove_null(permission.note)) %></td>
+                <td valign="top">
+                      <%= format_time_or_event(permission.timeoperator) %>
+                      <%= format_years(permission.timeyears) %>
+                      <%= format_time_or_event(permission.eventoperator) %>
+                      <%= format_time_or_event(permission.event) %>
+                      <%= format_date_for_display(permission.triggerdate) %>
+                </td>
+                <td valign="top" class="audit hide"><%= format_date_for_display(permission.auditdate) %></td>
+                <td valign="top" class="audit hide"><%= permission.audituser %></td>
+                <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :permission, :action => :edit, :id => permission.permissionid),"Edit Permission", true, "{title: 'Edit Permission'"+close+"}") %>
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :permission, :action => :delete, :id => permission.permissionid),"Delete Permission", true, "{title: 'Delete Permission', width: 300, height: 200"+close+"}") %>
+                  </ul> 
+                </td>
+              </tr>
+
+            <%
+          }
+        end
+      %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+

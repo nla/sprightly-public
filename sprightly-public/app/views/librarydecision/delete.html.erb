@@ -1,0 +1,9 @@
+<p>
+ Are you sure you want to delete this Library Decision?
+</p>
+
+<% ajax_form_for :librarydecision, :url => { :controller => :librarydecision, :action => "destroy", :id => @copystatus.get_copystatusid } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+  <%= f.submit 'Delete' %>
+<% end %>
+

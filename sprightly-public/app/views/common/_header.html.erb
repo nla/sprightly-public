@@ -1,0 +1,28 @@
+<div id="titleZone">
+  <div class="logo"><a href="<%= url_for :controller=>"search",:action=>"index" %>" title="Return to Sprightly Homepage"><%= image_tag "sprightly-logo.gif", :alt=>"Sprightly Logo" %></a></div>
+  <div class="version-info">
+    <%= SPRIGHTLY_VERSION %> | <a href="<%= SPRIGHTLY_WIKI %>">About</a><br/>
+    <span class="catchphrase">... way better than your paper system!</span>
+  </div>
+    <% if not session[:user].nil? %>
+          <div class="session-info">
+            <div class="session-user"><%= "Logged in as: " + session[:user].id %></div>
+            <div class="session-actions">
+              <% if session[:user].administrator? %>
+                <a href="<%= url_for(:controller => :admin) %>">Admin</a> |
+              <% end %>
+              <a href="<%=  url_for(:controller => 'usersession', :action => 'logout', :id => session[:user].id) %>">Logout</a>
+            </div>
+          </div>
+          <% if  not "SearchController".eql?(controller.class.name) %>
+            <%= render :partial=>"search/mini_searchform" %>          
+            <% if session[:user].updater? %>
+              <%= render :partial=>"common/input_actions.html" %>
+            <% end %>
+          <% end %>
+      <% end %>
+  
+
+</div>
+
+<%= clear_fix %>

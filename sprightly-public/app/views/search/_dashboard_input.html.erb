@@ -1,0 +1,17 @@
+<div class="cool-boxes two">
+  <div class="cool-box-col">
+    <%= render :partial => 'searchform' %>
+    <%= clear_fix %>
+    <%= render :partial=>"news_feed.html" %>
+  </div>
+  <div class="cool-box-col">
+    <div class="input-actions">
+      <%= render :partial=>"common/input_actions.html", :locals=>{:show_work_tray_link=>true} %>
+    </div>
+    <%= render :partial=>"work_tray_summary.html" %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(".cool-box .expand-collapse-news-link").click(toggleCoolBoxSize);
+</script>

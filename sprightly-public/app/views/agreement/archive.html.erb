@@ -1,0 +1,11 @@
+<p>
+  Are you sure you want to archive this agreement?
+</p>
+<% ajax_form_for :agreement, :url => {:controller=>:agreement, :action => "archive_agreement",:id=>@agreement.agreementid } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+  <% if @from_wizard %>
+    <input type="hidden" name="from_wizard" value="true"/>
+  <% end %>
+  <%= f.submit 'Archive' %>
+<% end %>  
+

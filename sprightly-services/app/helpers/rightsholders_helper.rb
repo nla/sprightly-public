@@ -1,0 +1,2 @@
+module RightsholdersHelper
+end

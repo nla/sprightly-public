@@ -1,0 +1,23 @@
+<h3>Totals</h3>
+<table class="data" style="width: 400px">
+  <tr>
+    <th>Active</th>
+    <td style="text-align: right;"><%= @number_of_active_agreements %></td>
+  </tr>
+  <tr>
+    <th>Draft</th>
+    <td style="text-align: right;"><%= @number_of_draft_agreements %></td>
+  </tr>
+  <tr>
+    <th>Archived</th>
+    <td style="text-align: right;"><%= @number_of_archived_agreements %></td>
+  </tr>
+  <tr>
+    <th>Deleted</th>
+    <td style="text-align: right;"><%= @number_of_deleted_agreements %></td>
+  </tr>
+  <tr>
+    <th style="border-top-width: 2px;">Total</th>
+    <td style="border-top-width: 2px; text-align: right;"><%= @number_of_active_agreements + @number_of_archived_agreements + @number_of_deleted_agreements + @number_of_draft_agreements %></td>
+  </tr>
+</table>

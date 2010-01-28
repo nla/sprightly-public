@@ -1,0 +1,38 @@
+<% if @agreement.errors.size > 0 %>
+  <div class="error-msg">Unable to update agreement</div>
+<% end %>
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :agreement, :url => { :controller=>:agreement, :action => "update_details", :id=>@agreement.id.to_int } do |f| %>
+
+    <table class="form">
+      <tr>
+        <td class="label"><%= label_glossary_term("Agreement Date", "agreement_agreementdate", "date_agreement") %></td>
+        <td class="field"><%= f.text_field :agreementdate, :value => format_date_for_display(@agreement.agreementdate), :class=>"datepicker", :editable => false %> <%= error_message_on(@agreement, :agreementdate) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label_glossary_term("Collection Area", "agreement_collection", "collection_area") %></td>
+        <%
+            collection_options = empty_options
+            Agreement.collection_options.sort.each {|key, value|
+              collection_options += "<option value='"+key + "' "
+              if @agreement.collection == key then
+                collection_options += "selected='selected'"
+              end
+              collection_options += ">"+value+"</option>"
+            }
+        %>
+        <td class="field"><%= select_tag "agreement[collection]", collection_options %> <%= error_message_on(@agreement, :collection) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label_glossary_term("Note", "agreement_note", "notes_agreement") %></td>
+        <td class="field"><%= f.text_area :note, :rows=>3, :cols=>60 %> <%= error_message_on(@agreement, :note) %></td>
+      </tr>
+    </table>
+
+    <p>
+      <%= f.submit("Update") %>
+    </p>
+  <% end %>
+</div>

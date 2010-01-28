@@ -1,0 +1,18 @@
+permission_required:
+  permissionpolicy_lu_id: 1
+  code: permission_required
+closed:
+  permissionpolicy_lu_id: 2
+  code: closed
+open:
+  permissionpolicy_lu_id: 3
+  code: open
+part_open_part_permission_required:
+  permissionpolicy_lu_id: 4
+  code: part_open_part_permission_required
+part_open_part_closed:
+  permissionpolicy_lu_id: 5
+  code: part_open_part_closed
+part_premission_required_part_closed:
+  permissionpolicy_lu_id: 6
+  code: part_premission_required_part_closed

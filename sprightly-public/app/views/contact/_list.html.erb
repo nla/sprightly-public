@@ -1,0 +1,78 @@
+<%
+
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+  showButtonForCompiledForm = false if local_assigns[:showButtonForCompiledForm].nil?
+  
+%>
+
+<div id="contact_details" class="section <% if contacts.size == 0 %>collapsed<% end %>">
+  <div class="section-header">
+    <h3 class="section-title">Rights Holder Contact Details</h3>
+    <ul class="actions horizontal-menu">
+      <%
+          dialog_callback_option = ""
+          if not dialogOnCloseCallback.nil? then 
+            dialog_callback_option = ", close: "+dialogOnCloseCallback 
+          end          
+      %>
+      <% if showButtonForCompiledForm then %>
+          <%= action_input_only("Enter Contact Details",url_for(:controller => :contact, :action => :new_compiled, :id=>-1, 'partyid' => partyid),"Enter Contact Details", true,"{title: 'Enter Contact Details'" + dialog_callback_option+ "}","green") %>
+          <%= action_input_only("Add Single Contact",url_for(:controller => :contact, :action => :new, 'source' => source, 'partyid' => partyid),"Add Contact", true,"{title: 'Add Contact'" + dialog_callback_option+ "}","green") %>
+      <% else %>
+          <%= action_input_only("Add Contact Details",url_for(:controller => :contact, :action => :new, 'source' => source, 'partyid' => partyid),"Add Contact", true,"{title: 'Add Contact'" + dialog_callback_option+ "}","green") %>
+      <% end %>      
+      <%= action("View History",url_for(:controller => :contact, :action => :show, 'partyid' => partyid),"View Contact Details History", true,"{title: 'Contact Details History', addCloseButton:true}") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table cellpadding="0" cellspacing="0" width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="1%" title="Preferred Contact">&nbsp;<!-- Preferred --></th>
+          <th width="1%" title="Internal Use Only Contact">&nbsp;<!-- Internal Use Only --></th>
+          <th width="35%">Address/Number</th>
+          <!-- <th width="4%">Preferred</th> -->
+          <th width="30%"><%= glossary_term("Note", "notes_contact") %></th>
+          <th width="12%"><%= glossary_term("Privacy", "privacy") %></th>
+          <th width="5%" class="audit hide">Date</th>
+          <th width="10%" class="audit hide">User</th>
+          <th width="6%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% contacts.each_with_index { |contact, index | %>
+          <tr class="<%= if (index - 1) % 2 == 0 then "even" else "odd" end  %> <%= contact.privacy_lu.code %>" onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+            <td valign="top"><% if contact.preferred == "Y" then %><%= image_tag "preferred.png", :alt=>"Preferred Contact", :title=>"Preferred Contact"  %><% end %></td>
+            <td valign="top"><% if contact.privacy_lu.code == "internal" then %><%= image_tag "stop.png", :alt=>"Contact detail for Internal Use Only", :title=>"Contact detail for Internal Use Only"  %><% end %></td>
+            <td valign="top"><%= format_contact_values_for_display(contact) %></td>
+            <!-- <td valign="top"><%= format_preferred(contact.preferred) %></td> -->
+            <td valign="top"><%= nl2br(contact.note) %> &nbsp;</td>
+            <td valign="top" class="privacy-label"><%= contact.privacy_lu.label %></td>
+            <td valign="top" class="audit hide"><%= format_date_for_display(contact.auditdate) %></td>
+            <td valign="top" class="audit hide"><%= contact.audituser %></td>
+            <td valign="top">
+              <ul class="table-actions horizontal-menu">
+                <%
+                  dialog_close_js_param = ""
+                  if not dialogOnCloseCallback.nil? then
+                    dialog_close_js_param = ", close: "+dialogOnCloseCallback
+                  end
+                %>
+                <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :contact, :action => :edit, :id => contact.contactid),"Edit Contact Details", true, "{title: 'Edit Contact'"+dialog_close_js_param+"}") %>
+                <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :contact, :action => :delete, :id => contact.contactid),"Archive Contact Details", true, "{title: 'Archive Contact', width: 300, height: 200"+dialog_close_js_param+"}") %>
+              </ul>
+            </td>
+          </tr>
+          <%
+        }
+      %>
+      </tbody>
+    </table>
+  </div>
+</div>

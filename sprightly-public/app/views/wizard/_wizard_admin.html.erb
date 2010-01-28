@@ -1,0 +1,15 @@
+<button onclick="return AjaxDialogHelper.show('<%= url_for :controller=>:agreement, :action=>"edit", :id=>@agreement.agreementid.to_i  %>', 'ajax=true', {title: 'Edit Agreement Details', close: refreshAccordionContent});">Edit Details</button>
+
+<% if @agreement.draft? && @agreement.createdate == @agreement.agreementdate %>
+<p class="warning-msg">
+   Please note that Agreement Date defaults to the date the Agreement was created in Sprightly.  Please <b>Edit Details</b> to change this value.
+</p>
+<% end %>
+
+<div class="wizard-result">
+  <%= render :partial=>"agreement/show_details.html" %>
+</div>
+
+<div id="wizard_trim_list">
+  <%=  render :partial => 'trim/list.html', :locals => { :id_name => 'agreementid', :id => @agreement.agreementid.to_i, :dialogOnCloseCallback=>"refreshAccordionContent" } %>
+</div>

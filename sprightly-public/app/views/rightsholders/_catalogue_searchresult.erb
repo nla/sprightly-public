@@ -1,0 +1,18 @@
+<div class="result">
+
+  <%
+    bibid = catalogue_get_bibid(catalogue_searchresult)
+  %>
+
+  <input type="checkbox" name="work" value="<%= bibid %>" style="float: left;"/>
+
+  <div style="float:left">
+    <b><%= catalogue_get_title(catalogue_searchresult) %></b>
+    <%= catalogue_get_author2(catalogue_searchresult) %>
+    <br/>Bib ID: <%= bibid %>
+    <br/>Formats: <% catalogue_get_formats(catalogue_searchresult).each { |format| %><%=format %>&nbsp;<%  } %>
+  </div>
+
+  <%= clear_fix %>
+  
+</div>

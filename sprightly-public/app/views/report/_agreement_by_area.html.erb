@@ -1,0 +1,23 @@
+<h3>By Collection Area</h3>
+<table class="report data" style="width: 600px">
+  <thead>
+    <th>Collection Area</th>
+    <th class="int">Active</th>
+    <th class="int">Draft</th>
+    <th class="int">Archived</th>
+    <th class="int">Deleted</th>
+    <th class="int" style="border-left-width: 2px">Total</th>
+  </thead>
+  <tbody>
+    <% @agreements_by_collection_and_status.sort.each { |collection , data| %>
+    <tr>
+      <td><%= collection.capitalize %></td>
+      <td class="int"><%= data["Active"] %></td>
+      <td class="int"><%= data["Draft"] %></td>
+      <td class="int"><%= data["Archived"] %></td>
+      <td class="int"><%= data["Deleted"] %></td>
+      <td class="int" style="border-left-width: 2px"><%= data["Active"]+data["Draft"]+data["Archived"]+data["Deleted"] %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

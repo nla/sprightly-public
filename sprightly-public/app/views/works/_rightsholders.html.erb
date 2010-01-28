@@ -1,0 +1,44 @@
+<div class="section violet <% if @roles.size==0 %>collapsed<% end %> ">
+  <div class="section-header">
+    <h3 class="section-title">Rights Holders Associated by Role</h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add Role",url_for(:controller => :roles, :action => :new, :copypid=>@copydetails.copypid),"Add Role", true,"{title: 'Add Role', close: refreshTabContents}","green") %>
+      <li class="action">        
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-content">
+    <% if @roles.size>0 %>
+      <%= render :partial=>"roles/list_for_work.html", :locals=>{:roles=>@roles, :rightsholders=>@rightsholders_from_roles} %>
+    <% else %>
+      <p class="empty">No associations via any Roles.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="section violet <% if @rightsholders_from_agreements.size == 0 then %>collapsed<% end %>">
+  <div class="section-header">
+    <h3 class="section-title">Rights Holders Associated by Agreement</h3>
+    <ul class="actions horizontal-menu">
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-content">
+      <% if @rightsholders_from_agreements.size > 0 then %>
+        <%= render :partial=>"rightsholders/list_for_agreements.html", :locals=>{:rightsholders=>@rightsholders_from_agreements} %>
+      <% else %>
+        <p class="empty">No associations via any Agreements.</p>
+      <% end %>
+  </div>
+</div>

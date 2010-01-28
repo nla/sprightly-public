@@ -1,0 +1,118 @@
+  <%
+   type_options = empty_options
+    @roleTypes.each_with_index { |type, index |
+          type_options = type_options + "<option value='"+type.role_lu_id.to_s+"'"
+          if !@role.nil? and type.role_lu_id.eql?(@role.role_lu_id)
+             type_options = type_options + " selected='selected' "
+          end
+          type_options = type_options + ">"+ type.label.to_s + "</option>"
+    }
+  %>
+
+  <% if not @msg.blank? %>
+    <div class="error-msg"><%= @msg %></div>
+  <% end %>
+  
+  <table class="form" id="addRoleForm">
+  <tr>
+    <td class="label">Rights Holder</td>
+    <td class="field">
+        <%= hidden_field_tag  "rightsholderid" %>
+        <% if @rightsholder.nil? then %>
+          <span id="rightsHolder" class="empty">Please search and select a Rights Holder</span>
+        <% else %>
+           <span id="rightsHolder" class="valid"><%= @rightsholder.preferred %></span>
+        <% end %>
+        <a href="javascript:void" onclick="toggleRHSelector(); return false;"><%= image_tag "magnifier.gif" %></a> <a href="javascript:void" onclick="clearRHSelection()"><%= image_tag "delete.gif" %></a>
+        <%= error_message_on(@role, :rightsholderid) %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("role_lu", "id", "Role Type") %></td>
+    <td class="field">
+      <% if @role.blank? or @role.new_record? then  %>
+        <%= select_tag "role_lu_id[]", type_options, {:multiple=>true} %>
+        <script type="text/javascript">
+            /*********************************************************************
+             * Enable the role select as a jQuery multiselect widget.
+             */
+            $("#role_lu_id_").multiSelect({
+              selectAll: false,
+              noneSelected: 'Please select one or more:',
+              oneOrMoreSelected: '*'
+            });
+        </script>
+      <% else %>
+        <strong><%= @role.role_lu.label %></strong>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label">To Work</td>
+    <td class="field">
+        <%= hidden_field_tag "copypid[]", @copydetails.copypid %>
+        <b><%= @copydetails.copypid %></b>
+    </td>
+  </tr>
+
+  </table>
+
+
+
+
+<script type="text/javascript">
+  /*****************************************************************************
+   * toggleRHSelector
+   *
+   * Expand/collapse the rightsholder selector widget.
+   *
+   */
+  function toggleRHSelector() {
+    $("#rhSelector").slideToggle();
+  }
+
+  /*****************************************************************************
+   * resizeResultsList
+   *
+   * resize the results list so it displays within the parent.
+   *
+   */
+  function resizeResultsList() {
+      if ($("#resultsPanel")) {
+        $("#resultsPanel").css("overflow","auto");
+        $("#resultsPanel").css("height",$(".ui-dialog-content").height() - $("#addRoleForm").position().top - 120 + "px");
+      }
+  }
+
+  /*****************************************************************************
+   * clearRHSelection
+   *
+   * clear the hidden input and revert the widget.
+   *
+   */
+  function clearRHSelection() {
+      $("#rightsHolder").html("Please search and select a Rights Holder");
+      $("#rightsholderid").val("");      
+      $("#rightsHolder").addClass("empty").removeClass("valid");
+  }
+
+ /*****************************************************************************
+   * Add all rightsholder selector widget handlers.
+   *
+   *  ajaxload - resize the list to accom all results upon search
+   *  pageloaded - resize the list to accom all results upon load of dialog
+   *  selected - upon selection of result item update hidden input and display
+   *             of widget.
+   */
+  $("#rhSelector").bind("ajaxload", resizeResultsList);
+  $("#rhSelector").bind("pageloaded", resizeResultsList);
+  $("#rhSelector").bind("selected", function(event, rhId, rhName) {
+    toggleRHSelector();
+    $("#rightsholderid").val(rhId);
+    $("#rightsHolder").html(rhName);
+    $("#rightsHolder").removeClass("empty");
+    $("#rightsHolder").addClass("valid");
+  });
+
+</script>

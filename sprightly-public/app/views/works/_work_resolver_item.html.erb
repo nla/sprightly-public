@@ -1,0 +1,39 @@
+<%
+    copypid = "" if copypid.nil?
+    copypid_validated = "" if copypid_validated.nil?
+    copytitle = "???" if copytitle.nil?
+    valid = nil if valid.nil?
+    shownew = false if shownew.nil?
+    just_validated = false if just_validated.nil?
+
+    cssClass = ""
+    if not valid.nil? then
+      if valid then
+        cssClass = "valid"
+      else
+        cssClass = "invalid"
+      end
+    end
+%>
+
+<div class="work-resolver <%= cssClass %>">
+  <%= hidden_field_tag  "copypid[]", copypid_validated %>
+  <% if valid.nil? %>
+      <%= text_field_tag "copypid_toresolve", copypid %> <button class="validate-button blue-button secondary" onclick="resolver.validate(this); return false;">Validate</button>
+  <% elsif valid %>
+      <%= copytitle %>
+      <% if just_validated %>
+        <span class="valid-notification">Work PI Validated</span>
+      <% end %>
+  <% else %>
+      <%= text_field_tag "copypid_toresolve", copypid %> <button class="validate-button blue-button secondary" onclick="resolver.validate(this); return false;">Validate</button> <span class="message">Unable to resolve id</span>
+  <% end %>
+  <a class="work-resolver-remove" href="javascript:void(0);" onclick="resolver.remove(this); return false;"><%= image_tag "delete.gif" %></a>
+  <script type="text/javascript">
+    $("#copypid_toresolve").autocomplete(<%= Work.pi_prefixes.inspect  %> , {delay: 10, matchCase: false, highlight: false,minChars:0});
+  </script>
+</div>
+
+<% if shownew %>
+  <%= render :partial=>"works/work_resolver_item.html"  %>
+<% end %>

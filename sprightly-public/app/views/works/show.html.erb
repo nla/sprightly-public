@@ -1,0 +1,93 @@
+<div class="main-tab-container work">
+  <ul class="main-tabs horizontal-menu">
+    
+    <li class="main-left-tab selected work-tab ui-corner-top">
+      <div class="main-tab-icon">
+        <%= image_tag "work.png", :class=>"icon"  %>
+        <div class="main-tab-desc"><%= format_source_for_display(@source) %> Work</div>
+      </div>
+      <h2><%=  trunc_to_dotdotdot(@work.title, 50, true) %></h2>
+    </li>
+    <% if session[:user].updater? %>
+      <%= render :partial => 'common/input_tabs.html' %>
+    <% end %>
+  </ul>
+  <%= clear_fix %>
+  <div class="main-tab-content ui-corner-all">
+    <div id="wkTabs">
+        <ul>
+          <li><a title="wkDetails" href="<%= url_for :controller=>'works',:action=>'show_details',:id=>@id,:source=>@source %>"><span class="tab-label" title="Details tab">Details</span></a></li>
+          <% if @active_agreements.length > 0 or @archived_agreements.length > 0 %>
+            <%
+                if @archived_agreements.length > 0 then
+                  agreement_count_html = "<span class='multi-count'>"
+                  agreement_count_html += get_count_html(@active_agreements.length, @active_agreements.length.to_s+" Submitted Agreement(s) linked to this Work", "blue")
+                  agreement_count_html += get_count_html(@archived_agreements.length, @archived_agreements.length.to_s+" Archived Agreement(s) linked to this Work", "orange")
+                  agreement_count_html += "</span>"
+                else
+                  agreement_count_html = get_count_html(@active_agreements.length, @active_agreements.length.to_s+" Submitted Agreement(s) linked to this Work", "blue")
+                end
+            %>
+            <li><a title="wkAgreements" href="<%= url_for :controller=>"works",:action=>"show_agreements",:id=>@id, :source=>@source %>"><span class="tab-label" title="Agreements tab"><%= agreement_count_html %>Agreements</span></a></li>
+          <% end %>
+          <li class="ignore-me">
+            <div class="print-invoker">
+              <a href="<%= url_for :controller=>"works",:action=>"print",:id=>@id, :source=>@source %>" target="_blank"><%= image_tag "printer.png" %></a>
+            </div>
+            <script type="text/javascript">
+              $(document).ready(function() {
+                 $(".print-invoker a").open({
+                      width: 640,
+                      height: 480,
+                      centered: "yes"
+                 });
+              });
+            </script>
+          </li>
+        </ul>      
+    </div>
+  </div>
+</div>
+
+
+<%# javascript_include_tag "jquery-splitter"  %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#wkTabs").tabs({cache:true, remote: true, show: onTabShow, load: initTab});
+    $("#wkTabs").tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
+	$("#wkTabs .ui-tabs-nav li").removeClass('ui-corner-top').addClass('ui-corner-left');
+
+    $("#wkTabs .ui-tabs-panel").removeClass("ui-corner-bottom").addClass("ui-corner-all");
+    setTabWidth();
+    $(window).resize(setTabWidth);
+    $(document.body).addClass("detail-page");
+  });
+
+  function initTab(event,ui) {
+    initialiseSections("#"+$(ui.panel).attr("id"));
+  }
+
+  function initAgreementTabContents() {
+    /* the tab contents overrides this function upon being loaded into the page
+     * via ajax
+     */
+  }
+
+  function onTabShow(event, ui) {
+    if ($(ui.tab).attr("title")=="wkAgreements") {
+      initAgreementTabContents();
+    }
+  }
+
+  function refreshTabContents() {
+    $($("#wkTabs .ui-tabs-selected a").attr("href")).html('<%= image_tag "busy.gif" %>')
+    $("#wkTabs").tabs('load',$("#wkTabs").tabs('option','selected'));
+  }
+
+  function setTabWidth() {
+      $("#wkTabs").width($("#main").width() - 20);
+      $("#wkTabs").height($(window).height()-$("#wkTabs").position().top - $("#main").position().top - 20);
+      $("#wkTabs .ui-tabs-panel").width($("#wkTabs").width()-$("#wkTabs .ui-tabs-nav").width()-40 +"px");
+      $("#wkTabs .ui-tabs-panel").height($("#wkTabs").height()-30 +"px");
+  }
+</script>

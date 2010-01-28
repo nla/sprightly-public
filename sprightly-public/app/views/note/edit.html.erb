@@ -1,0 +1,14 @@
+<% if @note.errors.size > 0 %>
+  <div class="error-msg">Unable to update note</div>
+<% end %>
+
+<div id="add" class="popup">
+  <% ajax_form_for :note, :url => { :action => "update", :id => @note.noteid.to_i } do |f| %>
+    <input name="_method" type="hidden" value="put" />
+    <%= render :partial => 'note/form.html', :locals => {:f => f} %>
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+</div>
+

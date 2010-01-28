@@ -1,0 +1,15 @@
+<% ajax_form_for :role, :url => { :controller=>"roles", :action => "create" } do |f| %>
+
+    <% if @copydetails then %>
+      <%= render :partial=>"roles/form_for_work.html" %>
+    <% else %>
+      <%= render :partial=>"roles/form.html" %>
+    <% end %>
+
+    <p><%= f.submit 'Create' %></p>
+<% end %>
+<% if @copydetails then %>
+  <div id="rhSelector" style="background-color: white; border: 1px dashed #aaa; padding: 0.5em 1em; position: absolute; left: 220px; top: 80px; display: none;">
+    <%= render :partial=>"rightsholders/search_and_select", :locals=>{:parent_selector=>"#rhSelector"} %>
+  </div>
+<% end %>

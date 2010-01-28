@@ -1,0 +1,31 @@
+<div style="padding: 0 1em">
+  <h2>Work Tray</h2>
+
+   <p>Reports: <a href="<%= url_for :controller=>:roles %>">All Roles</a> | <a href="<%= url_for :controller=>:relationship %>">All Relationships</a></p>
+
+</div>
+
+
+<div id="wtTabs">
+    <ul>
+      <li><a href="#wtDraft"><span class="tab-label" title="Draft Agreements tab">Drafts <% if @drafts.length > 0 then %><span class="work-tray-count"><%= @drafts.length %></span><% end %></span></a></li>
+      <li><a title="#wtActive" href="<%= url_for :controller=>:agreement, :action=>:work_tray_listing, :id=>-1, :status=>"submitted" %>"><span class="tab-label" title="Submitted Agreements tab">Submitted</span></a></li>
+      <li><a title="#wtArchived" href="<%= url_for :controller=>:agreement, :action=>:work_tray_listing, :id=>-1, :status=>"archived" %>"><span class="tab-label" title="Archived Agreements tab">Archived</span></a></li>
+      <li style="margin-left: 20px"><a title="#wtAllDrafts" href="<%= url_for :controller=>:agreement, :action=>:work_tray_listing, :id=>-1, :status=>"alldrafts" %>"><span class="tab-label" title="Draft Agreements for All Users tab">Drafts for All Users</span></a></li>
+    </ul>
+    <div id="wtDraft">
+        <%= render :partial=>"agreement/work_tray_list.html",:locals=>{:agreements=>@drafts, :status=>"draft", :allow_delete=>true} %>
+    </div>
+</div>
+
+<script type="text/javascript">
+  /* Initialise the jQuery UI tabs */
+  $(document).ready(function(){
+    $("#wtTabs").tabs({cache:true, load: initTab});
+  });
+
+  function initTab(event,ui) {
+    initialiseSections("#"+$(ui.panel).attr("id"));
+  }
+</script>
+

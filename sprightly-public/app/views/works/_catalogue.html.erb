@@ -1,0 +1,19 @@
+<div class="thumbnail">
+  <%= image_tag(SERVICE_NLATHUMB + @id) %>
+</div>
+
+<div class="work-details">
+  <%= label_and_value("Title", @work.title) %>
+  <%= label_and_value("Bib ID", @id + " " + catalogue_link(@id)) %>
+
+  <% if !@work.pi.nil? %>
+    <%= label_and_value("PI", "<a href="+url_for(:controller=>:works, :action=>:show, :id=>@work.pi, 'source'=>'dcm')+">"+@work.pi+"</a>", true) %>
+  <% end %>
+
+  <%= render :partial=>"catalogue_rightsholders.html" %>
+
+  <%= label_and_value("Formats",  display_work_formats(@work.get_formats)) %>
+
+</div>
+
+<%= clear_fix %>

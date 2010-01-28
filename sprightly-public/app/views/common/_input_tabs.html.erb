@@ -1,0 +1,26 @@
+<%
+  draft_agreement_count_html = ""
+  draft_agreement_count = Agreement.find_drafts_for_user(session[:user].id).length
+  if draft_agreement_count > 0 then
+    draft_agreement_count_html = get_count_html(draft_agreement_count, draft_agreement_count.to_s+" Draft Agreements", "")
+  end
+
+  active_agreement_count_html = ""
+  active_agreement_count = Agreement.find_submitted_for_user(session[:user].id).length
+  if active_agreement_count > 0 then
+    active_agreement_count_html = get_count_html(active_agreement_count, active_agreement_count.to_s+" Submitted Agreements", "blue")
+  end
+%>
+
+
+
+<li class="work-tray ui-corner-top">
+  <div class="work-tray-container">
+    <ul class="add-actions-list">
+      <%= action_input_only(image_tag("go.png") + " <span class='add-action-text'>Work Tray</span>",url_for(:controller=>:agreement,:action=>:work_tray,:id=>-1),"View Work Tray", false,"","add-action blue") %>
+    </ul>
+    <%= clear_fix %>
+    <div class="tray-info"><a href="<%= url_for :controller=>"agreement",:action=>"work_tray",:id=>"-1", :anchor=>"wtDraft" %>">Drafts</a> <%=  draft_agreement_count_html %></div>
+    <div class="tray-info"><a href="<%= url_for :controller=>"agreement",:action=>"work_tray",:id=>"-1", :anchor=>"wtActive" %>">Submitted</a> <%=  active_agreement_count_html %></div>
+  </div>
+</li>

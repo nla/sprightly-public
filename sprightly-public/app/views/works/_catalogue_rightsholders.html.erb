@@ -1,0 +1,7 @@
+<% if !@work.rightsholders.nil? && @work.rightsholders.length > 0 %>
+  <%= label_and_value("Rights Holders", format_catalogue_rightsholder_list(@work.rightsholders)) %>
+<% end %>
+
+<script type="text/javascript">
+  addAgreementCountToRightsholderLinks();
+</script>

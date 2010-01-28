@@ -1,0 +1,14 @@
+<div id="searchPanel">
+     <form method="get" action="<%= url_for(:action => 'search', :controller => 'search', :only_path => false) %>">
+       <div id="simpleSearch">
+            <input type="text" value="<%= @query %>" name="q" id="searchString" /> <%= image_submit_tag("search_32.png",:id=>"searchButton") %>
+            <ul class="horizontal-menu">
+                <li><input type="radio" name="source" value="rightsholder" id="searchScopeRH" <% if session[:search_source]==nil or @source==nil || @source=='rightsholder'|| session[:search_source]=='rightsholder' %>checked="checked"<% end %>/><label for="searchScopeRH">Rights Holders</label></li>
+                <li><input type="radio" name="source" value="catalogue" id="searchScopeCatalogue" <% if @source=='catalogue' or session[:search_source]=='catalogue'%>checked="checked"<% end %>   /><label for="searchScopeCatalogue">Catalogue</label></li>
+                <li><input type="radio" name="source" value="dcm" id="searchScopeDCM" <% if @source=='dcm' or session[:search_source]=='dcm'%>checked="checked"<% end %>/><label for="searchScopeDCM">Internal Images</label></li>
+                <li style="display: none"><a href="javascript:void(0);" style="font-size: 0.8em" onclick="toggleAdvancedCriteria(this); return false;">Advanced</a></li>
+            </ul>
+            <%= clear_fix %>
+       </div>
+     </form>
+</div>

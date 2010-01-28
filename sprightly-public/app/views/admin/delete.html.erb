@@ -1,0 +1,16 @@
+<% if !@msg.nil? %>
+  <div class="separator"></div>
+  <h1><%= @msg %></h1>
+  <div class="separator"></div>
+<% end %>
+
+<p>
+  Are you sure you want to remove access for <%=  @name %>?
+</p>
+<% ajax_form_for :admin, :url => { :action => "destroy", :id => @name } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+
+  <%= hidden_field_tag "group", @group %>
+
+  <%= f.submit 'Delete' %>
+<% end %>

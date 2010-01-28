@@ -1,0 +1,43 @@
+
+    <%= hidden_field_tag 'permission[agreementid]', @permission.agreementid %>
+
+    <table class="form">
+
+      <tr>
+        <td class="label"><%= label(:permission, :permissionholder, glossary_term("Permission Holder", "permission_holder")) %></td>
+        <td class="field"><%= select_tag("permission[permissionholder]", empty_options() + options_for_select(Permission.permissionholder_options,@permission.permissionholder)) %> <%= error_message_on(@permission, :permissionholder) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :details, "Details") %></td>
+        <td class="field"><%= @f.text_area :details, :rows=>3, :cols=>60 %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :permissiontype_lu_id, glossary_term("Type", "permission_type")) %></td>
+        <td class="field"><%= select_tag("permission[permissiontype_lu_id]", empty_options() + options_for_select(PermissiontypeLu.options,@permission.permissiontype_lu_id)) %> <%= error_message_on(@permission, :permissiontype_lu_id) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :permissionpolicy_lu_id, glossary_term("Policy", "permission_policy")) %></td>
+        <td class="field"><%= select_tag("permission[permissionpolicy_lu_id]", empty_options() + options_for_select(PermissionpolicyLu.options,@permission.permissionpolicy_lu_id)) %> <%= error_message_on(@permission, :permissionpolicy_lu_id) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :permissionpurpose_lu_id, glossary_term("Purpose", "permission_purpose")) %></td>
+        <td class="field"><%= select_tag("permission[permissionpurpose_lu_id]", empty_options() + options_for_select(PermissionpurposeLu.options,@permission.permissionpurpose_lu_id)) %> <%= error_message_on(@permission, :permissionpurpose_lu_id) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :eventoperator, glossary_term("Event Operator", "event_operator")) %></td>
+        <td class="field"><%= select_tag("permission[eventoperator]", empty_options() + options_for_select(Permission.eventoperator_options,@permission.eventoperator)) %> <%= error_message_on(@permission, :eventoperator) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :triggerdate, glossary_term("Trigger Date", "trigger_date")) %> (dd-mm-yyyy)</td>
+        <td class="field"><%= @f.text_field :triggerdate, :value => format_date_for_display(@permission.triggerdate), :class=>"datepicker", :editable => false %> <%= error_message_on(@permission, :triggerdate) %></td>
+      </tr>
+      <tr>
+        <td class="label"><%= label(:permission, :event, glossary_term("Event", "event")) %></td>
+        <td class="field"><%= @f.text_field :event, :value => @permission.event %> <%= error_message_on(@permission, :event) %></td>
+      </tr>
+     
+      <tr>
+        <td class="label"><%= label_glossary_term("Note", "permission_note", "notes_permission") %></td>
+        <td class="field"><%= @f.text_area :note, :rows=>3, :cols=>60 %></td>
+      </tr>
+    </table>

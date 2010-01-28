@@ -1,0 +1,62 @@
+<p class="question-text">23. May the Library use the Material in its own publications?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23", "a", false %>
+  <%= label_tag "q23_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23", "b", false %>
+  <%= label_tag "q23_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q23b" class="wizard-question-subform">
+    <%= text_area_tag "q23_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q23_b_eventdate", "", :class=>"datepicker", :editable => false %><br/>
+    <%= text_area_tag "q23_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23","c", false %>
+  <%= label_tag "q23_c", "Yes, for the following parts of the Material:" %>
+  <div id="q23c" class="wizard-question-subform">
+    <%= text_area_tag "q23_c_inclusions", "", :rows=>5, :cols=>70 %><br/>
+    <p><%= label_tag "q23_c","the rest of the Material requires my specific permission until the following date or event" %></p>
+    <%= text_field_tag "q23_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q23_c_eventtext", "", :rows=>5, :cols=>70 %>
+    <p><%= label_tag "q23_c", "after which, without seeking my permission." %></p>
+  </div>
+</div>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23","d", false %>
+  <%= label_tag "q23_d", "Yes, but only with my specific permission until the following date or event:" %>
+  <div id="q23d" class="wizard-question-subform">    
+    <%= text_field_tag "q23_d_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q23_d_eventtext", "", :rows=>5, :cols=>70 %>
+    <p><%= label_tag "q23_d", "after which, without seeking my permission." %></p>
+  </div>
+</div>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23", "e", false %>
+  <%= label_tag "q23_e", "Yes, but only for the following uses:" %>
+  <div id="q23e" class="wizard-question-subform">
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q23_e_a", "a" %>
+      <%= label_tag "q23_e_a", "in the Library's own informational and scholarly publications, including books, films, performances, transmissions, broadcasts and online media, whether chargeable or provided free of charge;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q23_e_b", "b" %>
+      <%= label_tag "q23_e_b", "in other organisations' publications including newspapers, films, performances, transmissions, broadcasts and online media, where the Library wishes to use the Material for the purpose of  promoting or advertising the Library;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q23_e_c", "c" %>
+      <%= label_tag "q23_e_c", "in merchandise such as gift cards issued by the Library." %>
+    </p>
+  </div>
+</div>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q23", "f", false %>
+  <%= label_tag "q23_f", "No, the Library must refer all request to me" %>
+</div>

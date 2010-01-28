@@ -1,0 +1,19 @@
+<div class="result">  
+  
+  <%
+    workpid = dcm_get_workpid(dcm)
+  %>
+
+  <div class="result-thumbnail">
+    <img alt="Thumbnail for DCM work - <%= workpid %>" src='http://www.nla.gov.au/<%= workpid %>-t' />&nbsp;
+  </div>
+  
+  <div class="result-details">
+    <b><a href='<%= url_for(:controller=> 'works', :action=>'show', 'id'=>workpid, 'source'=>@source) %>'><%= dcm_get_title(dcm) %></a></b>
+    <br/><%= workpid %>
+    <%= dcm_get_creator(dcm) %>
+  </div>
+
+  <%= clear_fix %>
+    
+</div>

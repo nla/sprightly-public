@@ -1,0 +1,35 @@
+<%
+
+
+  allow_detach = false if allow_detach.nil? || agreement.nil?
+
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+%>
+<table class="data" width="100%">
+  <thead>
+    <tr>
+      <th>Rights Holder</th>
+      <th class="no-sort" style="width: 5%">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+<% rightsholders.each_with_index { |rh, index|  %>
+   <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+     <td><a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>rh.id %> "><%= rh.name %> <%= rh.life_dates %></a></td>
+     <td>
+      <ul class="table-actions horizontal-menu">
+        <%= action(image_tag("view_agreements.png", :alt=>"View Agreements", :title=>"View Agreements"),url_for(:controller => :rightsholders, :action => :show, :id => rh.id, :anchor=>"rhAgreements"),"View Agreements") %>
+        <% if allow_detach %>
+        <%= action_input_only(image_tag("delete.gif"), url_for(:controller => :wizard, :action => :detach_rights_holder, :id => agreement.id.to_int, :rightsholderid=>rh.id),"Detach Rights Holder", true, "{title: 'Detach Rights Holder', width: 300, height: 200"+dialog_callback_option+"}") %>
+        <% end %>
+      </ul>        
+     </td>
+   <tr>
+<%  } %>
+  </tbody>
+</table>

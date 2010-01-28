@@ -1,0 +1,4 @@
+<%= label_and_value(glossary_term("Agreement Date","date_agreement"), format_date_for_display(@agreement.agreementdate)) %>
+<%= label_and_value(glossary_term("Collection Area","collection_area"), @agreement.collection_display_label) %>
+<%= label_and_value(glossary_term("Note","notes_agreement"), @agreement.note) %>
+<%= clear_fix %>

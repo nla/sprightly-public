@@ -1,0 +1,115 @@
+<%
+
+  typeOptions = empty_options
+  @relationshipTypes.each_with_index { |type, index |
+        typeOptions = typeOptions + "<option value='"+type.relationship_lu_id.to_s
+        if type.relationship_lu_id.eql?(@relationship.relationship_lu_id) then
+          typeOptions=typeOptions+" selected='selected' "
+        end
+        typeOptions=typeOptions+"'>"+ type.label.to_s + "</option>"
+  }
+
+%>
+
+<% if @relationship.errors.size > 0 %>
+  <div class="error-msg">Unable to create Relationship</div>
+<% end %>
+
+<div id="relationshipForm">
+  <% ajax_form_for :relationship, :url => { :controller=>"relationship", :action => "create"} do |f| %>
+      <%= hidden_field :relationship, :delegator %>
+
+      <table class="form">
+        <tr>
+          <td class="label"><%= label_tag "relationship[delegator]", "Rights Holder A" %></td>
+          <td class="field"><strong><%= @rightsholderA.preferred %></strong></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label :relationship, :relationship_lu_id, "Relationship Type" %></td>
+          <td class="field">
+            <%= select_tag "relationship[relationship_lu_id]", typeOptions %>
+            <%= error_message_on(@relationship, :relationship_lu_id) %>
+          </td>
+        </tr>
+        <tr>
+          <td class="label"><%= label :relationship, :delegatee, "Rights Holder B" %></td>
+          <td class="field">
+            <%= hidden_field_tag  "delegatee_rightsholder_id" %>
+            <%= hidden_field :relationship, :delegatee %>
+            <% if @rightsholderB.nil? then %>
+              <span id="rightsHolderB" class="empty">Please search and select a Rights Holder</span>
+            <% else %>
+               <span id="rightsHolderB" class="valid"><%= @rightsholderB.preferred %></span>
+            <% end %>
+            <a href="javascript:void" onclick="toggleRHSelector(); return false;"><%= image_tag "magnifier.gif" %></a> <a href="javascript:void" onclick="clearRHSelection()"><%= image_tag "delete.gif" %></a>
+            <%= error_message_on(@relationship, :delegatee) %>
+          </td>
+        </tr>
+      </table>
+
+    <p><%= f.submit 'Create' %></p>
+
+  <% end %>
+
+  <div id="rhSelector" style="border: 1px dashed #aaa; padding: 0.5em 1em; position: absolute; left: 208px; top: 90px; display: none;">
+    <%= render :partial=>"rightsholders/search_and_select", :locals=>{:parent_selector=>"#rhSelector"} %>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  /*****************************************************************************
+   * toggleRHSelector
+   *   
+   * Expand/collapse the rightsholder selector widget.
+   *
+   */
+  function toggleRHSelector() {
+    $("#rhSelector").slideToggle();
+  }
+
+  /*****************************************************************************
+   * resizeResultsList
+   *
+   * resize the results list so it displays within the parent.
+   *
+   */
+  function resizeResultsList() {
+      if ($("#resultsPanel")) {
+        $("#resultsPanel").css("overflow","auto");
+        $("#resultsPanel").css("height",$(".ui-dialog-content").height() - $("#relationshipForm").position().top - 120 + "px");
+      }
+  }
+
+  /*****************************************************************************
+   * clearRHSelection
+   *
+   * clear the hidden input and revert the widget.
+   *
+   */
+  function clearRHSelection() {
+      $("#rightsHolderB").html("Please search and select a Rights Holder");
+      $("#delegatee_rightsholder_id").val("");
+      $("#relationship_delegatee").val("");
+      $("#rightsHolderB").addClass("empty").removeClass("valid");
+  }
+
+ /*****************************************************************************
+   * Add all rightsholder selector widget handlers.
+   *
+   *  ajaxload - resize the list to accom all results upon search
+   *  pageloaded - resize the list to accom all results upon load of dialog
+   *  selected - upon selection of result item update hidden input and display
+   *             of widget.
+   */
+  $("#rhSelector").bind("ajaxload", resizeResultsList);
+  $("#rhSelector").bind("pageloaded", resizeResultsList);
+  $("#rhSelector").bind("selected", function(event, rhId, rhName) {
+    toggleRHSelector();
+    $("#delegatee_rightsholder_id").val(rhId);
+    $("#rightsHolderB").html(rhName);
+    $("#rightsHolderB").removeClass("empty");
+    $("#rightsHolderB").addClass("valid");
+  });
+
+</script>

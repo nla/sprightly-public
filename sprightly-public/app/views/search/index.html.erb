@@ -1,0 +1,6 @@
+<% if session[:user].updater? %>
+  <%= render :partial => 'dashboard_input.html' %>
+<% else %>
+  <%= render :partial => 'dashboard_readonly.html' %>
+<% end %>
+

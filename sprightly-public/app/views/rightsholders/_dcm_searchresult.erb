@@ -1,0 +1,17 @@
+<div class="result">  
+  
+  <%
+    workpid = dcm_get_workpid(dcm_searchresult)
+  %>
+
+  <input type="checkbox" name="work" value="<%= workpid %>"  style="float: left;"/>
+
+  <div style="float: left">
+    <b><%= dcm_get_title(dcm_searchresult) %></b>
+    <br/><%= workpid %>
+    <%= dcm_get_creator(dcm_searchresult) %>
+  </div>
+
+  <%= clear_fix %>
+    
+</div>

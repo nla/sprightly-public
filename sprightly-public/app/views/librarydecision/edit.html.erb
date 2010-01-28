@@ -1,0 +1,16 @@
+<!-- <%= @source %> -->
+<div id="add" class="popup">
+
+  <% ajax_form_for :copystatus, :url => { :action => "update" } do |f| %>
+      <%= hidden_field_tag 'id', @copystatus.copystatusid %>
+
+
+     <%= render :partial=>"form.html", :locals => {:f => f} %>
+    
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+
+</div>
+

@@ -1,0 +1,37 @@
+<ol start="8" class="wizard-questions-list">
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>8} %>
+    <div class="wizard-question-text">May the Library allow unrestricted access to and use of the Material?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>9} %>
+    <div class="wizard-question-text">May the Library allow unrestricted access to the Material?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>10} %>
+    <div class="wizard-question-text">May the Library allow people to access the Material on the Library’s premises or while on loan in other libraries?</div>    
+  </li>
+  <li>
+    <div class="wizard-question-text">Not Used</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>12} %>
+    <div class="wizard-question-text">May the Library allow people to copy the Material for research or study?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>13} %>
+    <div class="wizard-question-text">May the Library make digital copies of the Material accessible through its online catalogue and finding aids, and through the online catalogues and finding aids to which the Library contributes?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>14} %>
+    <div class="wizard-question-text">May the Library use the Material in its own publications?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>15} %>
+    <div class="wizard-question-text">May the Library provide copies of the Material for people and organisations other than the Library to use in publications, films, performances, transmissions, broadcasts and in other public ways, including uses in online media?</div>    
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>16} %>
+    <div class="wizard-question-text">Variation of your instructions for particular researchers</div>
+  </li>
+</ol>

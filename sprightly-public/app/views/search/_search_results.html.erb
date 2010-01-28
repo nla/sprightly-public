@@ -1,0 +1,91 @@
+<div id="resultsPanel" class="results-panel">
+  <div class="summary">
+    Displaying <b><%= (@start.to_i + 1) %></b> to <b><%= @finish %></b> of <b><%= @search_response.num_found %></b>
+
+    <% if @source.eql?("catalogue") %>
+
+      <% form_for :search, :html => {:method => :get }, :url => {:action=>'search'} do  %>
+
+      <%= hidden_field_tag 'q', @query %>
+      <%= hidden_field_tag 'source', @source %>
+      <%= hidden_field_tag 'start', @start %>
+
+      <br/>Sort By:
+
+      <%  options_hash = [ ["Relevance", ""],
+                           ["Date (oldest to newest)", "sort_date_asc"], ["Date (newest to oldest)", "sort_date_desc"],
+                           ["Author (A-Z)", "sort_author_asc"], ["Author (Z-A)", "sort_author_desc"],
+                           ["Title (A-Z)", "sort_title_asc"], ["Title (Z-A)", "sort_title_desc"],
+                           ["Uniform title (A-Z)", "sort_uniformtitle_asc"], ["Uniform title (Z-A)", "sort_uniformtitle_desc"] ]%>
+
+       <select name="sort" onChange="this.form.submit()">
+        <%= options_for_select(options_hash, @sort) %>
+       </select>
+
+       <% end %>
+
+    <% end %>
+
+  </div>
+  <div class="pagination">
+      <%
+        currentPage = (@start.to_i/@rows) + 1
+        totalPages = (@search_response.num_found.to_i/@rows) + 1
+
+        if currentPage - 5 <= 0
+          startPage = 1
+        else
+          startPage = currentPage - 5
+        end
+
+        if currentPage + 5 >= totalPages
+          lastPage = totalPages
+        else
+          lastPage = currentPage + 5
+        end
+
+
+      %>
+
+      <% if @start.to_i > 0 %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>(@start.to_i - @rows), 'sort'=>@sort) %>">&#171; previous</a><% end %>
+
+      <%
+
+        for i in (startPage..lastPage)
+
+          if i == currentPage
+            %><b><%= i %></b><%
+          else
+            %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>((i-1) * @rows), 'sort'=>@sort) %>"><%= i  %></a><%
+          end
+        end
+
+      %>
+
+      <% if (@start.to_i+@rows) <= @search_response.num_found.to_i %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>(@start.to_i + @rows), 'sort'=>@sort) %>">next &#187;</a><% end %>
+
+  </div>
+  <div class="results-list">
+    <%=  render :partial => @source, :collection => @search_response.items %>
+  </div>
+  <div class="pagination">
+
+      <% if @start.to_i > 0 %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>(@start.to_i - @rows), 'sort'=>@sort) %>">&#171; previous</a><% end %>
+
+      <%
+
+        for i in (startPage..lastPage)
+
+          if i == currentPage
+            %><b><%= i %></b><%
+          else
+            %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>((i-1) * @rows), 'sort'=>@sort) %>"><%= i  %></a><%
+          end
+        end
+
+      %>
+
+      <% if (@start.to_i+@rows) <= @search_response.num_found.to_i %><a href="<%= url_for(:action=>'search', 'q'=>@query, 'source'=>@source, 'start'=>(@start.to_i + @rows), 'sort'=>@sort) %>">next &#187;</a><% end %>
+
+  </div>
+</div>

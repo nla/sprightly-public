@@ -1,0 +1,8 @@
+<p>
+  Are you sure you want to archive this contact?
+</p>
+<% ajax_form_for :contact, :url => { :controller=>'contact', :action => "destroy", :id => @contact.contactid } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+  <%= hidden_field_tag "id", @contact.contactid %>
+  <%= f.submit 'Archive' %>
+<% end %>

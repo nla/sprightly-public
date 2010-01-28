@@ -1,0 +1,10 @@
+<table class="form">
+  <tr>
+    <td class="label"><%= label("contact", :email, "Email") %></td>
+    <td class="field"><%= text_field_tag "contactdetail[email]", @contactdetail["email"] %></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label_glossary_term "Note", "contact_note", "notes_contact" %></td>
+    <td class="field"><%= text_area_tag "contact[note]", @contact.note, :rows=>3, :cols=>60 %></td>
+  </tr>
+</table>

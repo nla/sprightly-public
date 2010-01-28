@@ -1,0 +1,47 @@
+<%
+    containerclass = "" if containerclass.nil?
+%>
+
+<div class="work-resolver-container <%= containerclass %>">
+  <%  if !copysets.nil?
+            copysets.each { |copyset|
+               copydetail = Copydetails.find(copyset.copydetailsid)
+  %>
+        <%= render :partial=>"works/work_resolver_item.html", :locals=>{:valid=>true,:copypid_validated=>copydetail.copypid,:copytitle=>copydetail.copypid}  %>
+  <%        }
+      end
+  %>
+  <%= render :partial=>"works/work_resolver_item.html"  %>
+</div>
+<script type="text/javascript">
+  var resolver = {};
+  resolver.add = function(parentSelector) {
+    $.ajax({
+      url: "<%= url_for :controller=>'works', :action=>'add_work_resolver', :id=>-1 %>",
+      success: function(data) {
+        $(parentSelector).append(data);
+      }
+    });
+  }
+  
+  resolver.validate = function(validateButton) {
+    var workResolverEl = $(validateButton).parents(".work-resolver:first");
+    workResolverEl.removeClass("invalid");
+    workResolverEl.removeClass("valid");
+    workResolverEl.find(".message").remove();
+    $(validateButton).after('<%= image_tag "busy.gif" %>')
+    $.ajax({
+      url: "<%= url_for :controller=>'works', :action=>'validate_work', :id=>-1 %>",
+      data: {"copypid": $(workResolverEl).find("input#copypid_toresolve").val()},
+      success: function(data) {
+        $(workResolverEl).replaceWith(data);
+        /* flash success message */
+        $(".work-resolver-container .valid-notification").fadeIn(1000, function() {setTimeout("$('.work-resolver-container .valid-notification').fadeOut(1000, function() {$(this).remove();})",1000)});
+      }
+    });
+  }
+
+  resolver.remove = function(el) {
+    $(el).parents(".work-resolver:first").remove();
+  }
+</script>

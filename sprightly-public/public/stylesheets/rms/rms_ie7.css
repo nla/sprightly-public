@@ -1,0 +1,65 @@
+html {
+    overflow: auto;
+}
+
+#main .left, .ui-dialog-content .left {
+	width: 58%;
+}
+
+.version-info {width:220px;}
+
+#titleZone h1 {
+    bottom:-6px;
+}
+
+.version-info {    
+    font-size: 0.7em;
+}
+
+#main .right, .ui-dialog-content .right {
+	width: 38%;
+}
+
+#agreementDetails .left {width: 48%; float: left;}
+#agreementDetails .right {width: 48%; margin-left: 2%; float: left;}
+#agreementDetails .section {width: 98%;}
+
+.ui-tabs-panel .section {width: 98%; position: relative;}
+.ui-tabs-nav .work-tray-count {line-height: 1em;}
+
+.rights-holder-accordion {width: 98%;}
+
+#itemDetails img {min-width: 5px;}
+
+#agreementSplitter {width: 98% !important;}
+
+.wizard-questions-list li {margin-left: 40px;}
+
+.work-tray-input-actions {top: 0px; left: 27em; width: auto;}
+
+table.data {width: 98%;}
+
+.rightsholder-result-details {
+    margin-left: 10em;
+}
+
+.agreement-rh-search .results-list {float: left; width: 98%;}
+
+.main-tab-icon {width: 5em;}
+
+.wizard-result .section {width: 98%;}
+.wizard-question-text {width: 550px;}
+.wizard-questions-list li {list-style-position: outside; display:list-item}
+
+.business-card .label-value-pair .value {width: 170px;}
+.business-card #rh_thumbnail_image img {max-height: 120px;}
+.business-card .rh-details {height:120px; width: 290px;}
+
+.work-tray-count {line-height: 2em;}
+.ui-tabs-vertical .tab-label .work-tray-count {line-height: 1.6em}
+
+.rightsholder-actions {float: left; margin-right: 3px;}
+
+#tooltip h3 {font-size: 1.4em;}
+
+.wizard-questions-list .wizard-question-text {width: 550px;}

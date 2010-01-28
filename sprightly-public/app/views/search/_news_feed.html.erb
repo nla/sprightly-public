@@ -1,0 +1,47 @@
+<div class="cool-box">
+   <div class="cool-box-header">
+     <div style="float: right">
+       <a title="View Sprightly Blog" target="_blank" href="<%= escape_once(SPRIGHTLY_BLOG_HTML) %>"><%= image_tag "html.png" %></a>
+       <a title="View Sprightly RSS Feed" target="_blank" href="<%= escape_once(SPRIGHTLY_BLOG_RSS) %>"><%= image_tag "rss.png" %></a>
+       <a title="Expand/Collapse Sprightly News" class="expand-collapse-news-link collapsed" href="javascript:void(0);"><%= image_tag "show.gif", :class=>"expand-icon" %><%= image_tag "hide.gif", :class=>"collapse-icon" %></a>
+     </div>
+     <h2>Sprightly News and Announcements</h2>
+   </div>
+   <div class="cool-box-content" id="newsFeed">
+     <%= image_tag "busy.gif" %>
+   </div>
+   <script type="text/javascript">
+     var RssReader = {};
+     RssReader.loadMore = function(index, length) {
+        if ($("#newsFeed .more-link").length>0) {
+          $("#newsFeed .more-link").html('<%= image_tag "busy.gif" %>');
+        }
+
+        $.ajax({
+          url: "<%= url_for :controller=>:search, :action=>:news_feed %>?index="+index+"&amp;length="+length,
+          success: function(data){
+            if ($("#newsFeed .more-link").length == 0) {
+               $("#newsFeed").html(data);
+               $("#newsFeed .feed-item-summary:first").toggle();
+            } else {
+              $("#newsFeed .more-link").remove();
+              $("#newsFeed").append(data);
+            }
+            $.each($("#newsFeed .feed-item-list li"), function() {$(this).fadeIn();});
+            if ($("#newsFeed li").length == 0) {
+              $("#newsFeed").html("<p class='info-msg'>No News Items</p>");
+            }
+            $("#newsFeed .feed-item").addHoverCSS();
+            $("#newsFeed .feed-item-title").addHoverCSS();
+            $("#newsFeed .feed-item-title").click(RssReader.toggleDisplay);
+          }
+        });
+      }
+
+      RssReader.toggleDisplay = function() {
+        $(this).next().toggle(500);
+      }
+
+      RssReader.loadMore(0, 5);
+   </script>
+</div>

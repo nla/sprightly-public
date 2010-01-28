@@ -1,0 +1,28 @@
+<p class="question-text">11. May the Library publish the Material in its own publications?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q11", "a", false %>
+  <%= label_tag "q11_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q11", "b", false %>
+  <%= label_tag "q11_b", "Yes, but only for the following uses:" %>
+  <div id="q11b" class="wizard-question-subform">
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q11_b_a", "a" %>
+      <%= label_tag "q11_b_a", "in the Library's own informational and scholarly publications, including books, films, performances, transmissions, broadcasts and online media, whether chargeable or provided free of charge;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q11_b_b", "b" %>
+      <%= label_tag "q11_b_b", "in other organisations' publications including newspapers, films, performances, transmissions, broadcasts and online media, where the Library wishes to use the Material for the purpose of  promoting or advertising the Library;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q11_b_c", "c" %>
+      <%= label_tag "q11_b_c", "in merchandise such as gift cards issued by the Library." %>
+    </p>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q11", "c", false %>
+  <%= label_tag "q11_c", "No, the Library must refer all requests to me" %>
+</div>

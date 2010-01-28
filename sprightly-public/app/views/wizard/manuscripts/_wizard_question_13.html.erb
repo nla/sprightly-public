@@ -1,0 +1,28 @@
+<p class="question-text">13. May the Library make digital copies of the Material accessible through its online catalogue and finding aids, and through the online catalogues and finding aids to which the Library contributes? </p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q13", "a", false %>
+  <%= label_tag "q13_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q13", "b", false %>
+  <%= label_tag "q13_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q13b" class="wizard-question-subform">
+    <%= text_area_tag "q13_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q13_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q13_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q13", "c", false %>
+  <%= label_tag "q13_c", "Yes, but only after the following date or event:" %>
+  <div id="q13c" class="wizard-question-subform">
+    <%= text_field_tag "q13_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q13_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q13", "d", false %>
+  <%= label_tag "q13_d", "No" %>
+</div>

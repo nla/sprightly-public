@@ -1,0 +1,102 @@
+<collection xmlns="http://www.loc.gov/MARC21/slim"><record>
+    <leader>01041cam  22002891a 4500</leader>
+    <controlfield tag="001">1971673</controlfield>
+    <controlfield tag="005">20080611131109.0</controlfield>
+    <controlfield tag="008">980914s2000    vraac  c      000 0beng d</controlfield>
+    <datafield tag="019" ind1="1" ind2=" ">
+      <subfield code="a">14123827</subfield>
+
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0521776171</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+      <subfield code="a">ANB:REV</subfield>
+      <subfield code="b">eng</subfield>
+
+      <subfield code="c">ANB:REV</subfield>
+      <subfield code="d">ANL</subfield>
+      <subfield code="d">VSL</subfield>
+    </datafield>
+    <datafield tag="042" ind1=" " ind2=" ">
+      <subfield code="a">anuc</subfield>
+    </datafield>
+
+    <datafield tag="043" ind1=" " ind2=" ">
+      <subfield code="a">u-at---</subfield>
+    </datafield>
+    <datafield tag="082" ind1="0" ind2="4">
+      <subfield code="a">428.62</subfield>
+      <subfield code="2">21</subfield>
+    </datafield>
+
+    <datafield tag="100" ind1="1" ind2=" ">
+      <subfield code="a">Geoghegan, Bronwyn.</subfield>
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">Kylie Minogue /</subfield>
+      <subfield code="c">Bronwyn Geoghegan.</subfield>
+    </datafield>
+
+    <datafield tag="260" ind1=" " ind2=" ">
+      <subfield code="a">Melbourne :</subfield>
+      <subfield code="b">Cambridge University Press,</subfield>
+      <subfield code="c">2000.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">iv, 28 p. :</subfield>
+
+      <subfield code="b">ill., ports. ;</subfield>
+      <subfield code="c">22 cm.</subfield>
+    </datafield>
+    <datafield tag="440" ind1=" " ind2="0">
+      <subfield code="a">Livewire real lives</subfield>
+    </datafield>
+    <datafield tag="521" ind1=" " ind2=" ">
+
+      <subfield code="a">Secondary students with primary school reading age.</subfield>
+    </datafield>
+    <datafield tag="600" ind1="1" ind2="0">
+      <subfield code="a">Minogue, Kylie,</subfield>
+      <subfield code="d">1968-</subfield>
+      <subfield code="v">Juvenile literature.</subfield>
+    </datafield>
+
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Television actors and actresses</subfield>
+      <subfield code="z">Australia</subfield>
+      <subfield code="v">Biography</subfield>
+      <subfield code="v">Juvenile literature.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+
+      <subfield code="a">Readers</subfield>
+      <subfield code="x">Television actors and actresses</subfield>
+      <subfield code="z">Australia</subfield>
+      <subfield code="v">Biography.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Readers</subfield>
+
+      <subfield code="x">Singers</subfield>
+      <subfield code="z">Australia</subfield>
+      <subfield code="v">Biography.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Singers</subfield>
+      <subfield code="z">Australia</subfield>
+
+      <subfield code="v">Biography</subfield>
+      <subfield code="v">Juvenile literature.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Easy to read materials.</subfield>
+    </datafield>
+    <datafield tag="984" ind1=" " ind2=" ">
+
+      <subfield code="a">ANL</subfield>
+      <subfield code="c">N 428.62 M751G</subfield>
+    </datafield>
+  </record>
+</collection>
+

@@ -1,0 +1,33 @@
+<ol start="17" class="wizard-questions-list">
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>17} %>
+    <div class="wizard-question-text">May the Library permit unrestricted access to and use of the Material?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>18} %>
+    <div class="wizard-question-text">May the Library permit unrestricted access to the Material?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>19} %>
+    <div class="wizard-question-text">May the Library allow people to access the Material on the Library's premises or while on loan in other libraries?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>20} %>
+    <div class="wizard-question-text">May the Library display the material in exhibitions - both in its own and other institutions' exhibitions?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>21} %>
+    <div class="wizard-question-text">May the Library allow people to copy the Material for research or study?</div>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>22} %>
+    <div class="wizard-question-text">May the Library make digital copies of the Material accessible through its web site, and through web sites to which the Library contributes?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>23} %>
+    <div class="wizard-question-text">May the Library use the Material in its own publications?</div>
+  </li>
+  <li>
+    <%= render :partial=>"wizard/answer_action.html", :locals=>{:agreementid=>@agreement.id.to_int,:qid=>24} %>
+    <div class="wizard-question-text">May the Library provide copies of the Material for people and organisations other than the Library to use in publications, films, performances, transmissions, broadcasts and in other public ways, including uses in online media?</div>
+  </li>
+</ol>

@@ -1,0 +1,20 @@
+
+    <table width="80%" class="data">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Sample Queries</th>
+          <th>Available</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @services.each do |service| %>
+              <tr>
+                <td valign="top"><%= service.name %></td>
+                <td valign="top"><a href="<%= service.url %>"><%= service.url %></a></td>
+                <td valign="top" style="<%= get_background_color(service.available) %>" >&nbsp;</td>
+              </tr>
+      <% end %>
+      </tbody>
+    </table>
+  

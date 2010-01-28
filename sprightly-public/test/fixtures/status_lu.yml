@@ -1,0 +1,12 @@
+active:
+  status_lu_id: 1
+  code: Active
+deleted:
+  status_lu_id: 2
+  code: Deleted
+archived:
+  status_lu_id: 3
+  code: Archived
+draft:
+  status_lu_id: 4
+  code: Draft

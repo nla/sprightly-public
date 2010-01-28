@@ -1,0 +1,18 @@
+online:
+  permissionpurpose_lu_id: 1
+  code: online
+publications_merchandise_publicity:
+  permissionpurpose_lu_id: 2
+  code: publications_merchandise_publicity
+merchandise:
+  permissionpurpose_lu_id: 3
+  code: merchandise
+publicity:
+  permissionpurpose_lu_id: 4
+  code: publicity
+publications:
+  permissionpurpose_lu_id: 5
+  code: publications
+specific_exhibition_publication:
+  permissionpurpose_lu_id: 6
+  code: specific_exhibition_publication

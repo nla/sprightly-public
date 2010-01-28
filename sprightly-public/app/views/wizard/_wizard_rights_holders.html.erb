@@ -1,0 +1,18 @@
+<button onclick="return AjaxDialogHelper.show('<%= url_for :action=>"add_rights_holder", :id=>@agreement.id.to_int %>', 'ajax=true', {title: 'Add Rights Holder', close: refreshAccordionContent});">Add Rights Holder</button>
+
+<!-- List all Rights Holders attached to the Agreement -->
+
+<% if @rightsholders.length == 0 %>
+  <p class="warning-msg">Please add all rights holders associated to this agreement by clicking the <strong>Add Rights Holder</strong> button for each.</p>
+<% end %>
+
+<%  @rightsholders.each do |rightsholder| %>
+  <div class="wizard-result">
+    <div class="dettach-rh-action">
+      <button class="red-button secondary" onclick="return AjaxDialogHelper.show('<%= url_for :action=>"detach_rights_holder", :id=>@agreement.agreementid.to_i, :rightsholderid=>rightsholder.id %>', 'ajax=true', {title: 'Detach Rights Holder', width: 300, height: 200, close: refreshAccordionContent});">Detach from Agreement</button>
+    </div>
+    <h2><%= rightsholder.preferred %></h2>
+    <%= render :partial=>"contact/list.html", :locals=>{:contacts=>@contacts[rightsholder.id], :partyid=>rightsholder.partyid, :source=>rightsholder.source, :dialogOnCloseCallback=>"refreshAccordionContent",:showButtonForCompiledForm=>true} %>
+    <%  rightsholder = nil %>
+  </div>
+<% end %>

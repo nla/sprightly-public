@@ -1,0 +1,18 @@
+<!-- include in the page to help debug javascript/DOM issues in IE7 -->
+
+<!--[if IE 7]>
+<div style="display: none; position: absolute; bottom: 0px; left: 0px; width: 100%; background-color: white; z-index: 10000000; padding: 1em;">
+  <%= text_field_tag "consoleInput","",:id=>"consoleInput",:style=>"width:60%" %><button class="console-button" onclick="console.eval()">Eval</button>
+  <%= text_area_tag "output","",:rows=>3,:id=>"consoleOutput",:style=>"width:60%" %>
+</div>
+<script type="text/javascript">
+  var console = {};
+  console.log = function(strToEval) {
+      $("#consoleOutput").val(">> "+ strToEval + "\n" + eval(strToEval)+"\n"+$("#consoleOutput").val());
+  }
+  console.eval = function() {
+    console.log($("#consoleInput").val());
+    //$("#consoleInput").val("");
+  }
+</script>
+<![endif]-->

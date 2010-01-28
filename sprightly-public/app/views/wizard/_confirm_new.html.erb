@@ -1,0 +1,8 @@
+<p>
+  Are you sure you want to create a new agreement?
+</p>
+<% form_for :agreement, :url => {:controller=>"wizard", :action => "new"} do |f| %>
+  <%= hidden_field_tag "formtype", @formtype  %>
+  <%= f.submit 'Create' %> | <a class='ajax-form-cancel' onclick='AjaxFormHelper.closeDialog(this, true); return false;' href='javascript:void(0);'>Cancel</a>
+<% end %>
+

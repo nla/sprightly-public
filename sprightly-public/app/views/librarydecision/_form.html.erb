@@ -1,0 +1,24 @@
+<% if @copystatus.errors.size > 0 %>
+  <div class="error-msg">Unable to save Library Decision</div>
+<% end %>
+
+ <%= hidden_field_tag 'copystatus[copydetailsid]', @copystatus.copydetailsid %>
+ <%= hidden_field_tag 'copystatus[status_lu_id]', StatusLu.active %>
+
+
+<table class="form">
+  <tr>
+    <td class="label"><%= f.label :datedetermined, glossary_term("Date Determined","date_library_decision") %></td>
+    <td class="field">
+        <%= f.text_field :datedetermined,:value => format_date_for_display(@copystatus.datedetermined), :class=>"datepicker", :editable => false %>
+         <%= error_message_on(@copystatus, :datedetermined) %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= f.label :note, glossary_term("Note", "notes_library_decision") %></td>
+    <td class="field">
+      <%= f.text_area :note, :rows=>3, :cols=>60 %>
+      <%= error_message_on(@copystatus, :note) %>
+    </td>
+  </tr>
+</table>

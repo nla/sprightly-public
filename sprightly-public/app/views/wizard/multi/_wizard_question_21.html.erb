@@ -1,0 +1,35 @@
+<p class="question-text">21. May the Library allow people to copy the Material for research or study?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q21", "a", false %>
+  <%= label_tag "q21_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q21", "b", false %>
+  <%= label_tag "q21_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q21b" class="wizard-question-subform">
+    <%= text_area_tag "q21_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p><%= label_tag "q21_b", "until the following date or event:" %></p>
+    <%= text_field_tag "q21_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q21_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q21", "c", false %>
+  <%= label_tag "q21_c", "Yes, for the following parts of the Material:" %>
+  <div id="q21c" class="wizard-question-subform">
+    <%= text_area_tag "q21_c_inclusions", "", :rows=>5, :cols=>70 %><br/>
+    <p><%= label_tag "q21_c","the rest of the Material requires my specific permission until the following date or event" %></p>
+    <%= text_field_tag "q21_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q21_c_eventtext", "", :rows=>5, :cols=>70 %>
+    <p><%= label_tag "q21_c", "after which, without seeking my permission." %></p>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q21", "d", false %>
+  <%= label_tag "q21_d", "Yes, but only after the following date or event:" %>
+  <div id="q21d" class="wizard-question-subform">
+    <%= text_field_tag "q21_d_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q21_d_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>

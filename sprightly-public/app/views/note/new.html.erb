@@ -1,0 +1,14 @@
+<% if @note.errors.size > 0 %>
+  <div class="error-msg">Unable to create note</div>
+<% end %>
+
+<div id="add" class="popup">
+  <% ajax_form_for :note, :url => { :action => "create" } do |f| %>
+    <%= hidden_field_tag 'note[partyid]', @note.partyid%>
+    <%= render :partial => 'note/form.html', :locals => {:f => f} %>
+    <p>
+      <%= f.submit 'Create' %>
+    </p>
+  <% end %>
+</div>
+

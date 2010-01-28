@@ -1,0 +1,97 @@
+<div id="resultsPanel" class="results-panel">
+  <div style="float: left;" class="pagination">
+      <%
+        currentPage = (@start.to_i/@rows) + 1
+        totalPages = (@related_works.size/@rows) + 1
+
+        if currentPage - 5 <= 0
+          startPage = 1
+        else
+          startPage = currentPage - 5
+        end
+
+        if currentPage + 5 >= totalPages
+          lastPage = totalPages
+        else
+          lastPage = currentPage + 5
+        end
+      %>
+
+      <% if @start.to_i > 0 %><a href="javascript:void(0)" onclick="relatedWorksList.showPage(<%= (@start.to_i - @rows) %>)">&#171; previous</a><% end %>
+
+      <%
+
+        for i in (startPage..lastPage)
+
+          if i == currentPage
+            %><b><%= i %></b><%
+          else
+            %><a href="javascript:void(0)" onclick="relatedWorksList.showPage(<%= ((i-1) * @rows) %>)"><%= i %></a><%
+          end
+        end
+
+      %>
+
+      <% if (@start.to_i+@rows) <= @related_works.size %><a href="javascript:void(0)" onclick="relatedWorksList.showPage(<%=  (@start.to_i + @rows) %>)">next &#187;</a><% end %>
+
+  </div>
+</div>  
+
+<br/>
+
+  <div id="section" class="section">
+    <div class="section-header" id="relatedWorksSection">
+      <h3 class="section-title">Linked Works - (<%= @related_works.size %>)</h3>
+      <ul class="actions horizontal-menu">
+        <li class="action">
+          <a href="javascript:void(0)" class="toggle-collapse-expand">
+            <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+            <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="section-content">
+      <table width="100%" class="data">
+        <thead>
+          <tr>
+            <th width="20%">Bib Id</th>
+            <th width="80%">Title</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @works.each_with_index do |work, index| %>
+              <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top"><a href="<%= url_for :controller => :works, :action => :show, :id => work.bib_id, 'source' => 'catalogue' %>"><%= work.bib_id %></a> </td>
+                <td valign="top"><%= work.title %></td>
+              </tr>
+        <%  end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+          /*********************************************************************
+           * rhsearch defines the functions required by this select widget
+           */
+          var relatedWorksList = {};
+
+          /*********************************************************************
+           * rhsearch.showPage
+           *    pageIndex (int)
+           *
+           * ajax load the results for the pageIndex.
+           */
+          relatedWorksList.showPage = function (pageIndex) {
+            $("#resultsPanel").html('<%= image_tag("busy.gif") %>');
+            $("#section").html('');
+            $("#resultsPanel").parent().ajaxload(
+              "<%= url_for(:action=>:rightsholders, :action=>:show_related_works, :authorityid=>@authorityid )%>?ajax=true&start=" + pageIndex,
+              null, function() {$("#resultsPanel").parent().triggerHandler("pageloaded");}
+            );
+          }
+  </script>
+
+
+

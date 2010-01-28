@@ -1,0 +1,23 @@
+<% if !@image.blank? && !@image.src.blank? %>
+  <div id="rh_image">
+    <img src="<%= @image.src %>" alt="Thumbnail Source: <%= @image.id %>"/>
+  </div>
+  <div id="rh_image_source">
+    Thumbnail Source: <a href="<%= @image.id %>"><%= @image.id %></a>
+  </div>
+<% else %>
+  <div id="rh_image" class="missing">
+    <%= image_tag "missing_image_placeholder.png", :alt=>"No image available" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $("#rh_image").hover(function() {$(this).addClass("hovered")}, function() {$(this).removeClass("hovered")});
+  $("#rh_image").append("<div id='rhImageChangerHandle'>Edit</div>");
+  $("#rh_image").click(openRHImageChanger);
+  $("#rh_image").attr("tabindex",0);
+
+  function openRHImageChanger() {
+    return AjaxDialogHelper.show('<%= url_for :controller=>:rightsholders,:action=>:edit_thumbnail,:id=>@rightholderid  %>', 'ajax=true', {title: 'Edit Rights Holder Thumbnail', close: refreshThumbnailImage});
+  }
+</script>

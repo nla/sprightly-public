@@ -1,0 +1,51 @@
+  <%
+   type_options = empty_options
+    @roleTypes.each_with_index { |type, index |
+          type_options = type_options + "<option value='"+type.role_lu_id.to_s+"'"
+          if !@role.nil? and type.role_lu_id.eql?(@role.role_lu_id)
+             type_options = type_options + " selected='selected' "
+          end
+          type_options = type_options + ">"+ type.label.to_s + "</option>"
+    }
+  %>
+
+  <% if not @msg.blank? %>
+    <div class="error-msg"><%= @msg %></div>
+  <% end %>
+
+  <%= hidden_field_tag "rightsholderid", @rightsholder.id %>
+  <table class="form" id="addRoleForm">
+  <tr>
+    <td class="label">Rights Holder</td>
+    <td class="field"><strong><%= @rightsholder.preferred %></strong></td>
+  </tr>
+  <tr>
+    <td class="label"><%= label("role_lu", "id", "Role Type") %></td>
+    <td class="field">
+      <% if @role.blank? or @role.new_record? then  %>
+        <%= select_tag "role_lu_id[]", type_options, {:multiple=>true} %>
+        <script type="text/javascript">
+            /*********************************************************************
+             * Enable the role select as a jQuery multiselect widget.
+             */
+            $("#role_lu_id_").multiSelect({
+              selectAll: false,
+              noneSelected: 'Please select one or more:',
+              oneOrMoreSelected: '*'
+            });
+        </script>
+      <% else %>
+        <strong><%= @role.role_lu.label %></strong>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label">To Works (<i>optional</i>)</td>
+    <td class="field">
+         <div>Specify Work PI(s) (e.g. nla.cat-vnXXXXX) - <a href="javascript:void(0);" onclick="resolver.add('#addRoleForm .work-ids'); return false;">Add Another</a></div>
+         <%= render :partial=>"works/work_resolver.html", :locals=>{:containerclass=>"work-ids",:copysets=>@copysets} %>
+    </td>
+  </tr>
+
+  </table>

@@ -1,0 +1,18 @@
+<p class="question-text">6. May the Library allow people to access and make notes about the Material on the Library's premises or while on loan in other libraries?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q6", "a", false %>
+  <%= label_tag "q6_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q6", "b", false %>
+  <%= label_tag "q6_b", "Yes, but only if the Library has received my specific permission on each occasion" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q6", "c", false %>
+  <%= label_tag "q6_c", "Yes, but only after the following date or event:" %>
+  <div id="q6c" class="wizard-question-subform">
+    <%= text_field_tag "q6_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q6_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>

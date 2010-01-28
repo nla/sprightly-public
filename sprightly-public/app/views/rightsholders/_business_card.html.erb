@@ -1,0 +1,110 @@
+<div class="source">Source:&nbsp;<%= @rightsholder.source %></div>
+<div id="rh_thumbnail_image">
+  <script type="text/javascript">
+    $(document).ready(function() {
+      refreshThumbnailImage();
+    });
+
+    function refreshThumbnailImage() {
+      $("#rh_thumbnail_image").ajaxload('<%= url_for :controller => :rightsholders, :action => :thumbnail, :id => @rightsholder.id, :name=>@rightsholder.name,:life_dates=>@rightsholder.life_dates,:ajax=>true %>');
+    }
+  </script>
+</div>
+<%=  render :partial => 'identity_title.html' %>
+
+<ul class="business-cards add-actions-list">
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id, :anchor=>"rhAgreements" %>">
+      <%= image_tag "agreement.png" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+          <span class="label">Agreements:</span>
+          <span class="value"><%= count_html(@active_agreements.length) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id %>">
+      <%= image_tag "contacts.png" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+          <span class="label">Contacts:</span>
+          <span class="value"><%= count_html(@party.active_contacts.count) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id %>">
+      <%= image_tag "note.png" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+        <span class="label">Notes:</span>
+        <span class="value"><%= count_html(@party.active_notes.count) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id %>">
+      <%= image_tag "trim.png" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+        <span class="label">TRIM:</span>
+        <span class="value"><%= count_html(@party.active_trimrecords.count) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id, :anchor=>"rhRoles"  %>">
+      <%= image_tag "work.png", :style=>"max-height: 20px" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+        <span class="label">Roles:</span>
+        <span class="value"><%= count_html(@party.active_roles.count) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id, :anchor=>"rhRoles"  %>">
+      <%= image_tag "relationship.png" %>
+      <span class="add-action-text">
+        <span class="label-value-pair">
+        <span class="label">Relationships:</span>
+        <span class="value"><%= count_html(@party.active_delagators.count + @party.active_delagatees.count) %></span>
+        </span>
+      </span>
+    </a>
+  </li>
+</ul>
+<ul class="add-actions-list go-to-action">
+  <li class="action add-action blue">
+    <a href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id %>">
+      <%= image_tag "rightsholder.png" %>
+      <span class="add-action-text">
+        Go to Rights Holder page
+      </span>
+    </a>
+  </li>
+</ul>
+<!--
+<div class="go-to-action">
+    <a title="View Rights Holder" href="<%= url_for :controller=>:rightsholders, :action=>:show, :id=>@rightsholder.id %>">      
+      <span class="">Go to Rights Holder page</span>
+    </a>
+</div>
+-->
+<script type="text/javascript">
+  $("#searchResultBusinessCard").dialog('option', 'title', "<%= @rightsholder.preferred  %>")
+  $("#searchResultBusinessCard .add-action").hover(
+      function() {
+         $(this).addClass("hovered");
+      },
+      function() {
+         $(this).removeClass("hovered");
+      }
+  );
+</script>

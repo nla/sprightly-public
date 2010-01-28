@@ -1,0 +1,18 @@
+<table class="form">
+  <tr>
+    <td class="label"><%= f.label(:forename,'Firstname') %></td>
+    <td class="field"><%= f.text_field :forename, :value => @party.forename %><%= error_message_on(@party, :forename) %></td>
+  </tr>
+  <tr>
+   <td class="label"><%= f.label :surname %></td>
+   <td class="field"><%= f.text_field :surname, :value => @party.surname %><%= error_message_on(@party, :surname) %></td>
+  </tr>
+  <tr>
+   <td class="label"><%= f.label :birthdate, 'Birth Date' %></td>
+   <td class="field"><%= f.text_field :birthdate, :value => @party.birthdate, :maxlength=>4 %> YYYY <%= error_message_on(@party, :birthdate) %></td>
+  </tr>
+  <tr>
+   <td class="label"><%= f.label :deathdate, 'Death Date' %></td>
+   <td class="field"><%= f.text_field :deathdate, :value => @party.deathdate, :maxlength=>4 %> YYYY <%= error_message_on(@party, :deathdate) %></td>
+  </tr>
+</table>

@@ -1,0 +1,34 @@
+<div id="copyrightstatus" class="section green">
+  <div class="section-header">
+    <h3 class="section-title"><%= glossary_term("Copyright Status Tool","copyright_status_tool") %></h3>
+    <ul class="actions horizontal-menu">
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-content">
+
+    <h3>
+      <%= @copyrightstatus.copyrightStatus %>
+      <%
+        if !@copyrightstatus.copyrightStatusReason.nil?
+          %> : <%= @copyrightstatus.copyrightStatusReason %> <%
+        end
+      %>
+    </h3>
+
+    <%= label_and_value("Creator Status", @copyrightstatus.creatorAliveStatus, true) %>
+    <%= label_and_value("Creator Date of Death", @copyrightstatus.creatorDateOfDeath, true) %>
+    <%= label_and_value("Creation Date", @copyrightstatus.creationDate, true) %>
+    <%= label_and_value("Material Type", @copyrightstatus.materialType, true) %>
+    <%= label_and_value("Publication Date", @copyrightstatus.publicationDate, true) %>
+    <%= label_and_value("Published Status", @copyrightstatus.publishedStatus, true) %>
+    <%= label_and_value("Govt Copyright Ownership", @copyrightstatus.govtCopyrightOwnership, true) %>
+    <%= clear_fix %>
+  </div>
+</div>

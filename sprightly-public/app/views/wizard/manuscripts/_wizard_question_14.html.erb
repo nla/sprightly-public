@@ -1,0 +1,47 @@
+<p class="question-text">14. May the Library use the Material in its own publications?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q14", "a", false %>
+  <%= label_tag "q14_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q14", "b", false %>
+  <%= label_tag "q14_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q14b" class="wizard-question-subform">
+    <%= text_area_tag "q14_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q14_b_eventdate", "", :class=>"datepicker", :editable => false %><br/>
+    <%= text_area_tag "q14_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q14", "c", false %>
+  <%= label_tag "q14_c", "Yes, but only with the my specific permission until the following date or event:" %>
+  <div id="q14c" class="wizard-question-subform">
+    <%= text_field_tag "q14_c_eventdate", "", :class=>"datepicker", :editable => false %><br/>
+    <%= text_area_tag "q14_c_eventtext", "", :rows=>5, :cols=>70 %>
+    <p>after which, without seeking my permission.</p>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q14", "d", false %>
+  <%= label_tag "q14_d", "Yes, but only for the following uses:" %>
+  <div id="q14d" class="wizard-question-subform">
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q14_d_a", "a" %>
+      <%= label_tag "q14_d_a", "in the Library's own informational and scholarly publications, including books, films, performances, transmissions, broadcasts and online media, whether chargeable or provided free of charge;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q14_d_b", "b" %>
+      <%= label_tag "q14_d_b", "in other organisations' publications including newspapers, films, performances, transmissions, broadcasts and online media, where the Library wishes to use the Material for the purpose of promoting or advertising the Library;" %>
+    </p>
+    <p class="wizard-checkbox-suboption">
+      <%= check_box_tag "q14_d_c", "c" %>
+      <%= label_tag "q14_d_c", "in merchandise such as gift cards issued by the Library." %>
+    </p>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q14", "e", false %>
+  <%= label_tag "q14_e", "No, the Library must refer all request to me" %>
+</div>

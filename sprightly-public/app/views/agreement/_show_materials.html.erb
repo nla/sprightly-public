@@ -1,0 +1,19 @@
+<% if not @agreement.extent.nil? or @copysets.size > 0 %>
+  <% if not @agreement.extent.nil? %>
+    <%= label_and_value("Materials Covered", @agreement.extent ) %>
+    <br/>
+  <% end %>
+  <% if @copysets.size > 0 %>
+    <%= clear_fix %>
+      <p><strong>Specific Works:</strong></p>
+      <ul>
+      <% @copysets.each { |copyset|
+            copydetail = Copydetails.find(copyset.copydetailsid)
+      %>
+        <li><%= copydetail.copypid %></li>
+      <% } %>
+      </ul>
+  <% end %>
+<% else %>
+  <p class="warning-msg">No materials associated with this agreement.</p>
+<% end %>

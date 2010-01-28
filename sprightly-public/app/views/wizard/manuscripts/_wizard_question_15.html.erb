@@ -1,0 +1,21 @@
+<p class="question-text">15. May the Library make digital copies of the Material accessible through its online catalogue and finding aids, and through the online catalogues and finding aids to which the Library contributes? </p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q15", "a", false %>
+  <%= label_tag "q15_a", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q15a" class="wizard-question-subform">
+    <%= text_area_tag "q15_a_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q15_a_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q15_a_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q15", "b", false %>
+  <%= label_tag "q15_b", "Yes, but only with my specific permission until the following date or event:" %>
+  <div id="q15b" class="wizard-question-subform">
+    <%= text_field_tag "q15_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q15_b_eventtext", "", :rows=>5, :cols=>70 %>
+    <p>after which, without seeking my permission.</p>
+  </div>
+</div>

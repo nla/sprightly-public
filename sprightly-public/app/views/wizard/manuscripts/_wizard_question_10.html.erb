@@ -1,0 +1,33 @@
+<p class="question-text">10. May the Library allow people to access the Material on the Library's premises or while on loan in other libraries?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q10", "a", false %>
+  <%= label_tag "q10_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q10", "b", false %>
+  <%= label_tag "q10_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q10b" class="wizard-question-subform">
+    <%= text_area_tag "q10_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q10_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q10_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q10", "c", false %>
+  <%= label_tag "q10_c", "Yes, but only after the following date or event:" %>
+  <div id="q10c" class="wizard-question-subform">
+    <%= text_field_tag "q10_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q10_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q10", "d", false %>
+  <%= label_tag "q10_d", "Yes, but only with the [my/our/the primary contact/the role name's] specific permission until the following date or event:" %>
+  <div id="q10d" class="wizard-question-subform">
+    <%= text_field_tag "q10_d_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q10_d_eventtext", "", :rows=>5, :cols=>70 %>
+    <p><%= label_tag "q10_d", "after which, without seeking [my/our/their] permission." %></p>
+  </div>  
+</div>

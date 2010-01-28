@@ -1,0 +1,25 @@
+<%
+  show_work_tray_link = false if show_work_tray_link.nil?
+%>
+<ul class="add-actions-list">
+  <%= action_input_only(image_tag("plus.png") + " <span class='add-action-text'>Agreement</span>","#","Create Agreement",false,"","add-action green","id='wizardLauncher'") %>
+  <%= action_input_only(image_tag("plus.png") + " <span class='add-action-text'>Rights Holder</span>",url_for(:controller => :rightsholders, :action => :new),"Add New Rights Holder",true,"{title: 'Add New Rights Holder'}","add-action green") %>
+  <% if show_work_tray_link then %>
+        <%= action_input_only(image_tag("go.png") + " <span class='add-action-text'>Work Tray</span>",url_for(:controller=>:agreement,:action=>:work_tray,:id=>-1),"View Work Tray", false,"","add-action blue") %>
+  <% end %>
+</ul>
+<%= render :partial => 'wizard/wizard_launcher_menu.html' %>
+<script type="text/javascript">
+  /* Initialise the jQuery context menu for the Agreement Wizard action */
+  $(document).ready(function() {
+    $("#wizardLauncher").contextMenu({menu: 'wizardLauncherMenu', fixed: true});
+    $("#wizardLauncherMenu").css("left", $("#wizardLauncher").offset().left+"px");
+    $("#wizardLauncherMenu").css("top", $("#wizardLauncher").offset().top+$("#wizardLauncher").height()+"px");
+    $(document.body).append($("#wizardLauncherMenu")); /* move to body to avoid styling issues in IE7*/
+
+    $("#wizardLauncherMenu").bind("closed", function() {
+      $("#wizardLauncher").removeClass("hovered");
+    });
+  });
+
+</script>

@@ -1,0 +1,26 @@
+<% if  @refreshPageOnSave %>
+  <div class="notice <% if @msgClass!=nil %><%= @msgClass %><% end %>"><%= @msg %></div>
+  <script type="text/javascript">
+    window.location.reload();
+  </script>
+  <p>Refreshing page...</p>
+<% elsif @redirect_page_on_save and @redirect_url!=nil %>
+  <div class="notice <% if @msgClass!=nil %><%= @msgClass %><% end %>"><%= @msg %></div>
+  <script type="text/javascript">
+    window.location.href="<%= @redirect_url %>";
+  </script>
+  <p>Redirecting page...</p>
+<% elsif @closeDialog %>
+  <div id="dialogClosingMessage" class="notice">Oooops... Dialog should have closed... please close it for us :)</div>
+  <script type="text/javascript">
+    $("#dialogClosingMessage").parents(".ui-dialog-content:first").data("ajaxDialog").destroy();
+    <% if not @msg.blank?  %>
+      showTransientMessage("<%= @msg %>","<% if @msgClass!=nil %><%= @msgClass %><% end %>");
+    <% end %>
+  </script>
+<% else %>
+  <div class="notice <% if @msgClass!=nil %><%= @msgClass %><%  else %>info-msg<% end %>"><%= @msg %></div>
+  <p>
+    <button onclick="$(this).parents('.ui-dialog-content:first').data('ajaxDialog').destroy();">Close</button>
+  </p>
+<% end %>

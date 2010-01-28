@@ -1,0 +1,22 @@
+<div class="section">
+  <div class="section-header">
+    <h3 class="section-title">
+      <% if status=="alldrafts" then %>
+        All Draft Agreements for All Users
+      <% else %>
+        <%= status.capitalize %> Agreements created by <%= session[:user].id %>
+      <% end %>
+    </h3>
+    <ul class="actions horizontal-menu">
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <%=  render :partial => 'agreement/list.html', :locals=>{:agreements=>agreements,:allow_delete=>false, :show_links=>true} %>
+  </div>
+</div>

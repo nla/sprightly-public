@@ -1,0 +1,12 @@
+access:
+  permissiontype_lu_id: 1
+  code: access
+copying:
+  permissiontype_lu_id: 2
+  code: copying
+publishing:
+  permissiontype_lu_id: 3
+  code: publishing
+exhibition:
+  permissiontype_lu_id: 4
+  code: exhibition

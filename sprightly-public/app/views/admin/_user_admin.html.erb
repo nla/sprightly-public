@@ -1,0 +1,89 @@
+<div id="administrator_users" class="section <% if @administrators.length == 0 %>collapsed<% end %> violet">
+  <div class="section-header">
+    <h3 class="section-title">Administrators</h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add Administrator",url_for(:controller => :admin, :action => :new, :group => 'rms:administrator'),"Add New Administrator", true,"{title: 'Add New Administrator', close: refreshTabContents}", "green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="90%">User Name</th>
+          <th width="5%" class="no-sort"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%
+        if !@administrators.nil?
+          @administrators.each_with_index { |name, index|
+
+            %>
+              <tr  <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top"><%= name %></td>
+                <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :admin, :action => :delete, :id => name, :group => 'rms:administrator'),"Remove Administrator Access", true, "{title: 'Remove Administrator Access', width: 300, height: 200, close: refreshTabContents}") %>
+                  </ul>
+                </td>
+              </tr>
+
+            <%
+          }
+        end
+      %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="updater_users" class="section <% if @updaters.length == 0 %>collapsed<% end %> violet">
+  <div class="section-header">
+    <h3 class="section-title">Updaters</h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add Updater",url_for(:controller => :admin, :action => :new, :group => 'rms:updater'),"Add New Updater", true,"{title: 'Add New Updater', close: refreshTabContents}", "green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="90%">User Name</th>
+          <th width="5%" class="no-sort"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%
+        if !@updaters.nil?
+          @updaters.each_with_index { |name, index|
+
+            %>
+              <tr  <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top"><%= name %></td>
+                <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :admin, :action => :delete, :id => name, :group => 'rms:updater'),"Remove Updater Access", true, "{title: 'Remove Updater Access', width: 300, height: 200, close: refreshTabContents}") %>
+                  </ul>
+                </td>
+              </tr>
+
+            <%
+          }
+        end
+      %>
+      </tbody>
+    </table>
+  </div>
+</div>

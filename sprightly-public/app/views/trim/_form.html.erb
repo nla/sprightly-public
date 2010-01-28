@@ -1,0 +1,29 @@
+<%= hidden_field_tag 'trim[partyid]', @trim.partyid %>
+<%= hidden_field_tag 'trim[policyid]', @trim.policyid %>
+<%= hidden_field_tag 'trim[originalpolicyid]', @trim.originalpolicyid %>
+<%= hidden_field_tag 'trim[copydetailsid]', @trim.copydetailsid %>
+<%= hidden_field_tag 'trim[agreementid]', @trim.agreementid %>
+
+<table class="form">
+  <tr>
+    <td class="label"><%= f.label(:trimrefnumber,'TRIM Reference Number') %></td>
+    <td class="field">
+       <%= f.text_field :trimrefnumber, :value => @trim.trimrefnumber %>
+       <%= error_message_on(@trim, :trimrefnumber) %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= f.label :description %></td>
+    <td class="field">
+      <%= f.text_area :description, :value => @trim.description, :rows=>3, :cols=>60 %>
+      <%= error_message_on(@trim, :description) %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= label_glossary_term("Date TRIM'd", "trim_trimdate", "date_trimd") %> (dd-mm-yyyy)</td>
+    <td class="field">
+      <%= f.text_field :trimdate, :value => format_date_for_display(@trim.trimdate), :class=>"datepicker", :editable => false %>
+      <%= error_message_on(@trim, :trimdate) %>
+    </td>
+  </tr>
+</table>

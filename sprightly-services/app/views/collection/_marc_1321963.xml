@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><response schema="http://schema.nla.gov.au/NXPL" version="1.0"><container type="LOON-SCHEMA-MARC21"><collection><record>
+    <leader>01422ccm  2200301 a 4500</leader>
+    <controlfield tag="001">1321963</controlfield>
+    <controlfield tag="005">20060630100237.0</controlfield>
+    <controlfield tag="008">961028s1994    enkrca         nn   eng d</controlfield>
+    <datafield tag="019" ind1="1" ind2=" ">
+      <subfield code="a">12813285</subfield>
+
+    </datafield>
+    <datafield tag="020" ind1=" " ind2=" ">
+      <subfield code="a">0711948380</subfield>
+    </datafield>
+    <datafield tag="028" ind1="3" ind2="2">
+      <subfield code="a">AM927762</subfield>
+      <subfield code="b">Wise</subfield>
+
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">000012813285</subfield>
+    </datafield>
+    <datafield tag="035" ind1=" " ind2=" ">
+      <subfield code="9">2774435</subfield>
+    </datafield>
+    <datafield tag="040" ind1=" " ind2=" ">
+
+      <subfield code="a">NZOC</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="c">NZOC</subfield>
+      <subfield code="d">ANL</subfield>
+    </datafield>
+    <datafield tag="110" ind1="2" ind2=" ">
+      <subfield code="a">INXS (Musical group)</subfield>
+
+    </datafield>
+    <datafield tag="245" ind1="1" ind2="0">
+      <subfield code="a">INXS :</subfield>
+      <subfield code="b">the greatest hits.</subfield>
+      <subfield code="h">[music].</subfield>
+    </datafield>
+    <datafield tag="260" ind1=" " ind2=" ">
+
+      <subfield code="a">London :</subfield>
+      <subfield code="b">Wise,</subfield>
+      <subfield code="c">c1994.</subfield>
+    </datafield>
+    <datafield tag="300" ind1=" " ind2=" ">
+      <subfield code="a">1 score (120 p.) :</subfield>
+      <subfield code="b">ports. ;</subfield>
+
+      <subfield code="c">31 cm.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">"All the songs from the album in piano, voice and guitar arrangements complete with lyrics and guitar chord boxes</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Words and music chiefly by Andrew Farriss and Michael Hutchence.</subfield>
+
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Words of all songs and extra verses also printed as text.</subfield>
+    </datafield>
+    <datafield tag="500" ind1=" " ind2=" ">
+      <subfield code="a">Copyright dates of individual songs: 1965-1994.</subfield>
+    </datafield>
+    <datafield tag="505" ind1="2" ind2=" ">
+
+      <subfield code="a">Just keep walking -- The loved one -- Don't change -- Original sin -- I send a message -- Burn for you -- What you need -- This time -- Kiss the dirt (falling down the mountain) -- Listen like thieves --Need you tonight --</subfield>
+    </datafield>
+    <datafield tag="505" ind1="2" ind2=" ">
+      <subfield code="a">Mediate -- Devil inside -- New sensation -- Never tear us apart -- Suicide blonde -- Disappear --Heaven sent -- The gift -- The stramgest party (these are the times) -- Deliver me.</subfield>
+    </datafield>
+    <datafield tag="650" ind1=" " ind2="0">
+      <subfield code="a">Rock music.</subfield>
+
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Farriss, Andrew.</subfield>
+    </datafield>
+    <datafield tag="700" ind1="1" ind2=" ">
+      <subfield code="a">Hutchence, Michael,</subfield>
+      <subfield code="d">1960-1997</subfield>
+
+    </datafield>
+    <datafield tag="984" ind1=" " ind2=" ">
+      <subfield code="a">ANL</subfield>
+      <subfield code="c">MUS NL m 783.242164 I63</subfield>
+    </datafield>
+  </record>
+</collection></container></response>

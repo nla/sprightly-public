@@ -1,0 +1,50 @@
+
+
+<% if @related_works.size > 0 %>
+<div id="works" class="section disabled">
+  <div class="section-header">
+    <h3 class="section-title">Works linked in Catalogue <%= get_count_html(@related_works.size, "Sourced from the Catalogue: Rights Holder is the Creator/Contributor of "  + @related_works.size.to_s + " Works","blue") %></h3>
+    <ul class="actions horizontal-menu">
+      <li class="action text">
+        <a title="View Creator/Contributor Works linked in Catalogue" href="javascript:void(0)" onclick="return AjaxDialogHelper.show('<%= url_for :controller => :rightsholders, :action => :show_related_works, :id=>@rightsholder.authorityid %>', 'ajax=true', {title: 'Creator/Contributor Works linked in Catalogue'})">View</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<% end %>
+
+<div id="works" class="section <% if @roles.length == 0 %>collapsed<% end %>">
+  <div class="section-header">
+    <h3 class="section-title"><%= glossary_term("Roles", "role") %></h3>
+    <ul class="actions horizontal-menu">
+      <%= action_input_only("Add New Role",url_for(:controller => :roles, :action => :new, 'rightsholderid'=>@rightsholder.id),"Add New Role", true,"{title: 'Add New Role', close: refreshTabContents}","green") %>
+      <li class="action">
+        <a href="javascript:void(0)" class="toggle-collapse-expand">
+          <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+          <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section-content">
+  <%= render :partial => 'roles/list', :locals=>{:roles=>@roles,:dialogOnCloseCallback=>"refreshTabContents"} %>
+ </div>
+</div>
+
+  <div id="people" class="section <% if @delegators.length == 0 && @delegatees.length == 0 %>collapsed<% end %>">
+    <div class="section-header">
+      <h3 class="section-title"><%= glossary_term("Relationships", "relationship") %></h3>
+      <ul class="actions horizontal-menu">
+        <%= action_input_only("Add New Relationship",url_for(:controller => :relationship, :action => :new, 'rightsholderid'=>@rightsholder.id),"Add New Relationship", true,"{title: 'Add New Relationship', close: refreshTabContents}","green") %>
+        <li class="action">
+          <a href="javascript:void(0)" class="toggle-collapse-expand">
+            <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+            <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="section-content">
+      <%= render :partial => 'relationship/list.html',:locals=>{:delegators=>@delegators, :delegatees=>@delegatees,:rightsholder=>@rightsholder,:rightsholders=>@rightsholders,:dialogOnCloseCallback=>"refreshTabContents"} %>
+    </div>
+  </div>

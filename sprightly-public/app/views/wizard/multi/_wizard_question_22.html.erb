@@ -1,0 +1,39 @@
+<p class="question-text">22. May the Library make digital copies of the Material accessible through its web site, and through web sites to which the Library contributes?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q22", "a", false %>
+  <%= label_tag "q22_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q22", "b", false %>
+  <%= label_tag "q22_b", "Yes, except the following parts of the Material which require my specific permission:" %>
+  <div id="q22b" class="wizard-question-subform">
+    <%= text_area_tag "q22_b_exceptions", "", :rows=>5, :cols=>70 %><br/>
+    <p>until the following date or event:</p>
+    <%= text_field_tag "q22_b_eventdate", "", :class=>"datepicker", :editable => false %><br/>
+    <%= text_area_tag "q22_b_eventtext", "", :rows=>5, :cols=>100 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q22", "c", false %>
+  <%= label_tag "q22_c", "Yes, but only with my specific permission until the following date or event:" %>
+  <div id="q22c" class="wizard-question-subform">
+    <%= text_field_tag "q22_c_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q22_c_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q22", "d", false %>
+  <%= label_tag "q22_d", "Yes, for the following parts of the Material:" %>
+  <div id="q22d" class="wizard-question-subform">
+    <%= text_area_tag "q22_d_inclusions", "", :rows=>5, :cols=>70 %><br/>
+    <p><%= label_tag "q22_d","the rest of the Material requires my specific permission until the following date or event" %></p>
+    <%= text_field_tag "q22_d_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q22_d_eventtext", "", :rows=>5, :cols=>70 %>
+    <p><%= label_tag "q22_d", "after which, without seeking my permission." %></p>
+  </div>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q22", "e", false %>
+  <%= label_tag "q22_e", "No" %>
+</div>

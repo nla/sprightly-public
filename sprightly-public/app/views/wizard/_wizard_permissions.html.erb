@@ -1,0 +1,14 @@
+<%= render :partial => "wizard/"+@agreement.formtype+"/wizard_questions.html" %>
+
+<%= clear_fix %>
+
+<div class="wizard-result">
+  <%=  render :partial => 'permission/list.html', :locals => { :agreementid => @agreement.id.to_int, :close => ", close: refreshAccordionContent"} %>
+</div>
+
+<script type="text/javascript">
+  $(".wizard-questions-list li").hover(
+    function() {$(this).addClass("hovered")},
+    function() {$(this).removeClass("hovered")}
+  );
+</script>

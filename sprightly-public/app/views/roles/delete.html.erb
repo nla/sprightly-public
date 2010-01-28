@@ -1,0 +1,8 @@
+<p>
+  Are you sure you want to delete this role?
+</p>
+<% ajax_form_for :contact, :url => { :controller=>'roles', :action => "destroy", :id => @role.roleid } do |f| %>
+  <input type="hidden" value="delete" name="_method"/>
+  <%= f.submit 'Delete' %>
+<% end %>
+

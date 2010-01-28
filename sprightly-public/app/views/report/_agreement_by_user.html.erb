@@ -1,0 +1,25 @@
+<h3>By User</h3>
+<table class="report data" style="width: 600px">
+  <thead>
+    <th>User</th>
+    <th class="date">Last Created</th>
+    <th class="int">Active</th>
+    <th class="int">Draft</th>
+    <th class="int">Archived</th>
+    <th class="int">Deleted</th>
+    <th class="int" style="border-left-width: 2px">Total</th>
+  </thead>
+  <tbody>
+    <% @agreements_by_user_and_status.sort.each { |user_name , data| %>
+    <tr>
+      <td><%= user_name %></td>
+      <td class="date"><%= data["lastCreated"] %></td>
+      <td class="int"><%= data["Active"] %></td>
+      <td class="int"><%= data["Draft"] %></td>
+      <td class="int"><%= data["Archived"] %></td>
+      <td class="int"><%= data["Deleted"] %></td>
+      <td class="int" style="border-left-width: 2px"><%= data["Active"]+data["Draft"]+data["Archived"]+data["Deleted"] %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+<% if @valid %>
+  <div class="success-msg">
+    <p>The PI is valid and refers to the following thumbnail:</p>
+    <%= label_and_value("Preview", "<img src='http://nla.gov.au/"+@copypid.strip+"-t' alt='Thumbnail for "+@copypid+"' style='color: #AAAAAA; font-style: italic;'/>") %>
+    <%= clear_fix %>
+    <%= hidden_field_tag "copypid_validated", @copypid %>
+    <script type="text/javascript">
+      $("#updateThumbnailForm input[type=submit]").removeClass("disabled").removeAttr("disabled");
+    </script>
+  </div>
+<% else %>
+  <div class="error-msg">
+    <p>The PI is invalid.</p>
+    <script type="text/javascript">
+      $("#updateThumbnailForm input[type=submit]").addClass("disabled").attr("disabled","disabled");
+    </script>
+  </div>
+<% end %>

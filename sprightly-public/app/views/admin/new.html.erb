@@ -1,0 +1,24 @@
+<% if !@msg.nil? %>
+  <div class="<%= @msgClass %>"><%= @msg %></div>
+<% end %>
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :admin, :url => { :action => "create" } do |f| %>
+    
+  <%= hidden_field_tag "group", @group %>
+
+    <table class="form">
+      <tr>
+        <td class="label"><strong>User Name</strong></td>
+        <td class="field">
+          <td class="field"><%= text_field_tag("name", @name) %></td>
+          <%#= select_tag("name", empty_options+options_for_select(@users,@name), :onchange=>"changeContactType(this);") %>
+        </td>
+      </tr>
+    </table>
+
+    <%= f.submit("Add") %>
+  <% end %>
+
+</div>

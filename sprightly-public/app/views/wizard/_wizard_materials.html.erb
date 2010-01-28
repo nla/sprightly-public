@@ -1,0 +1,13 @@
+<button onclick="return AjaxDialogHelper.show('<%= url_for :controller=>:wizard, :action=>"edit_materials", :id=>@agreement.id.to_int  %>', 'ajax=true', {title: 'Edit Materials', close: refreshAccordionContent});">Edit Materials</button>
+
+<!-- Preview materials... -->
+
+<% if not @agreement.extent.nil? or @copysets.size > 0 %>
+<div class="wizard-result">
+<% end %>
+
+<%= render :partial=>"agreement/show_materials.html" %>
+
+<% if not @agreement.extent.nil? or @copysets.size > 0 %>
+</div>
+<% end %>

@@ -1,0 +1,6 @@
+<div style="border: 1px dashed #AAA; background-color: #FFEEEE; padding: 1em; color: #CC1111">
+  <%
+    message = "An error has occured.  If the problem persists, please contact the system administrator." if message.nil?
+  %>
+  <%= image_tag "error.png" %> <%= message %>
+</div>

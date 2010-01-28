@@ -1,0 +1,16 @@
+
+
+
+<div id="add" class="popup">
+
+  <% ajax_form_for :copystatus, :url => { :action => "create" } do |f| %>
+    
+    <%= render :partial=>"form.html", :locals => {:f => f} %>
+    
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+  <% end %>
+
+</div>
+

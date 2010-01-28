@@ -1,0 +1,49 @@
+    <%
+      dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+
+      dialog_callback_option = ""
+      if not dialogOnCloseCallback.nil? then
+        dialog_callback_option = ", close: "+dialogOnCloseCallback
+      end
+    %>
+    <table width="100%" class="data">
+      <thead>
+        <tr>
+          <th width="15%">Role</th>
+          <th width="15%">Work(s)</th>
+          <th width="9%" class="audit hide">Date</th>
+          <th width="9%" class="audit hide">User</th>
+          <th width="2%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%
+        if !roles.nil?
+          roles.each_with_index do |role, index|
+            %>     
+              <tr <%= if (index - 1) % 2 == 0 then "class='even'" else "class='odd'" end  %> onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')">
+                <td valign="top"><%= role.role_lu.label %></td>
+                <td valign="top">
+                  <% role.copyset.each do |copyset|
+
+                    # Display Active links to works
+                    if copyset.status_lu_id == 1
+                      %><a href="<%= get_work_url(copyset.copydetails.copypid) %>"><%= copyset.copydetails.copypid %></a><br/><%
+                    end
+                   end %>
+                </td>
+                <td valign="top" class="audit hide"><%= format_date_for_display(role.auditdate) %></td>
+                <td valign="top" class="audit hide"><%= role.audituser %></td>
+                <td valign="top">
+                  <ul class="table-actions horizontal-menu">
+                    <%= action_input_only(image_tag("page_edit.png"),url_for(:controller => :roles, :action => :edit, :id => role.roleid),"Edit Role", true, "{title: 'Edit Role'"+dialog_callback_option+"}") %>
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :roles, :action => :delete, :id => role.roleid),"Delete Role", true, "{title: 'Delete Role', width: 300, height: 200"+dialog_callback_option+"}") %>
+                  </ul>
+                </td>
+              </tr>            
+            <%
+          end
+        end
+      %>
+      </tbody>
+    </table>

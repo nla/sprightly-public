@@ -1,0 +1,70 @@
+<%
+  allow_delete = false if allow_delete.nil?
+  allow_wizard = true if allow_wizard.nil?
+  show_links = false if show_links.nil?
+
+  dialogOnCloseCallback = nil if local_assigns[:dialogOnCloseCallback].nil?
+  dialog_callback_option = ""
+  if not dialogOnCloseCallback.nil? then
+    dialog_callback_option = ", close: "+dialogOnCloseCallback
+  end
+
+%>
+    <table width="100%" class="data">
+      <thead>
+      <tr>
+        <th width="10%"><%= glossary_term("Collection","collection_area") %></th>
+        <th width="20%">Rights Holders</th>
+        <th width="30%">Materials Covered</th>
+        <th width="10%">Date</th>
+        <th width="10%">State</th>
+        <th width="20%"><%= glossary_term("Note","notes_agreement") %></th>
+        <th width="10%" class="audit hide">Updated</th>
+        <th width="10%" class="audit hide">Updated By</th>
+        <th width="10%" class="audit hide">Created</th>
+        <th width="10%" class="audit hide">Created By</th>
+        <th width="4%" class="no-sort"><%= image_tag "clock_edit.png", :title=>"Toggle audit fields", :class=>"audit-toggle", :onclick=>"toggleAuditFields(this);" %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+        if !agreements.nil?
+          agreements.each_with_index { |agreement, index |
+            %>
+            <tr class="<%= if (index - 1) % 2 == 0 then 'even' else 'odd' end  %> <%= agreement.status_lu.code.downcase %>" onmouseover="$(this).addClass('hovered')" onmouseout="$(this).removeClass('hovered')" agreementId="<%= agreement.id %>">
+              <td valign="top">
+                <% if agreement.collection_display_label=="" then %>
+                  <span class="empty">N/A</span>
+                <% else %>
+                  <%= agreement.collection_display_label %>
+                <% end %>
+              </td>
+              <td valign="top"><%= list_rightsholders(agreement.get_associated_rightsholders, show_links) %></td>
+              <td valign="top"><%= agreement.extent %></td>
+              <td valign="top"><%= format_date_for_display(agreement.agreementdate) %></td>
+              <td valign="top"><%= agreement.status_lu.code %></td>
+              <td valign="top"><%= agreement.note %></td>
+              <td valign="top" class="audit hide"><%= format_date_for_display(agreement.auditdate) %></td>
+              <td valign="top" class="audit hide"><%= agreement.audituser %></td>
+              <td valign="top" class="audit hide"><%= format_date_for_display(agreement.createdate) %></td>
+              <td valign="top" class="audit hide"><%= agreement.createuser %></td>
+              <td valign="top" class="actions">
+                  <ul class="table-actions horizontal-menu">
+                  <% if allow_wizard %>
+                    <%= action_input_only(image_tag("wand.png"),url_for(:controller => :wizard, :action => :wizard, :id => agreement.id.to_int), "Edit Agreement in Wizard") %>
+                  <% end %>
+                  <% if allow_delete and agreement.draft? %>
+                    <%= action_input_only(image_tag("delete.gif"),url_for(:controller => :agreement, :action => :delete, :id => agreement.id.to_int),"Delete Agreement", true, "{title: 'Delete', width: 300, height: 200"+dialog_callback_option+"}") %>
+                  <% end %>
+                  <% if agreement.active?  %>
+                    <%= action_input_only(image_tag("archive.png"),url_for(:controller => :agreement, :action => :archive, :id => agreement.id.to_int),"Archive Agreement", true, "{title: 'Archive', width: 300, height: 200"+dialog_callback_option+"}") %>
+                  <% end %>
+                  </ul>
+              </td>
+            </tr>
+            <%
+          }
+        end
+      %>
+      </tbody>
+    </table>

@@ -1,0 +1,14 @@
+<p class="question-text">8. May the Library make the full Interview accessible through its website, provided that the Library requires the end user to agree to the online End User Licence conditions which limits uses and defines responsibilities?</p>
+
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q8", "a", false %>
+  <%= label_tag "q8_a", "Yes" %>
+</div>
+<div class="wizard-radio-option">
+  <%= radio_button_tag "q8", "b", false %>
+  <%= label_tag "q8_b", "Yes, but only after the following date or event:" %>
+  <div id="q8b" class="wizard-question-subform">
+    <%= text_field_tag "q8_b_eventdate", "", :class=>"datepicker" %><br/>
+    <%= text_area_tag "q8_b_eventtext", "", :rows=>5, :cols=>70 %>
+  </div>
+</div>

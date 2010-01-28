@@ -1,0 +1,48 @@
+<div class="rights-holder-accordion">
+  <h3><a href="#">Find an Existing Rights Holder</a></h3>
+  <div class="agreement-rh-search" url="<%= url_for :controller=>'rightsholders', :action=>'search', :ajax=>true, :page_source=>"wizard" %>">
+    <%= render :partial => 'rightsholders/search_and_select.html', :locals=>{:show_create_rightsholder_button=>true, :create_rightsholder_action=>"openCreateRightsholderPanel()"} %>
+  </div>
+    <h3><a href="#">Create a New Sprightly Rights Holder</a></h3>
+    <div class="agreement-rh-create" url="<%= url_for :controller=>'wizard', :action=>'new_rights_holder', :id=>@agreement.agreementid %>?ajax=true">
+    <!--<div class="agreement-rh-create" url="<%= url_for :controller=>'search', :action=>'todo' %>/-1?ajax=true">
+      <%= image_tag "busy.gif" %>
+    </div>-->
+</div>
+
+<script type="text/javascript">
+    /***************************************************************************
+     * Enable the jQuery accordion for the Find and New options
+     */
+    $(".rights-holder-accordion").accordion(
+        {
+          fillSpace: true,
+          change: function(event, ui) {
+            $(ui.newHeader).next().ajaxload($(ui.newHeader).next().attr("url"));
+            if ($(ui.newHeader).text().match(/Find*/g)) {
+                initSearchPane();
+            } 
+          }
+        }
+    );
+
+    function openCreateRightsholderPanel() {
+       $(".rights-holder-accordion").accordion('activate',1);
+    }
+
+    /***************************************************************************
+    *  Add handler for the "selected" event to use ajax to attach the rightsholder
+    */
+    initSearchPane();
+    function initSearchPane() {
+      $(".rights-holder-accordion .agreement-rh-search").bind("selected", wizardSelectRightsHolder);
+    }
+
+    function wizardSelectRightsHolder(event, rhId, rhName) {
+      $(".rights-holder-accordion").parents(".ui-dialog-content:first").ajaxload(
+        "<%= url_for :controller=>:wizard, :action=>"attach_rights_holder", :id=>@agreement.id.to_int %>?ajax=true&rightsholderid="+rhId
+       );
+    };
+
+
+</script>

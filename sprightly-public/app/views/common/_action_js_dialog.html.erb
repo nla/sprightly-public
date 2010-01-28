@@ -1,0 +1,3 @@
+<li class="action <%= css_class %>" <%= extra_attributes %>>
+  <a href="javascript:void(0)" <% if not tooltip.empty? %> title="<%= tooltip %>"<% end %> onclick="return AjaxDialogHelper.show('<%= url %>', 'ajax=true', <%= js_dialog_params %>);"><%= label %></a>
+</li>

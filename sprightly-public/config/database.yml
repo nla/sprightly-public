@@ -1,0 +1,49 @@
+# Environment set to use standard rails environment
+development:
+  adapter: oracle_enhanced
+  database: webdev.nla.gov.au
+  username: rms_os
+  password: rms_os
+  pool: 5
+  timeout: 5000
+
+# This is the standard rails test environment
+# NOTE: rake test will BLOW AWAY the database
+# Rather use: rake rms:test_units
+test:
+  adapter: oracle_enhanced
+  database: 
+  username: 
+  password: 
+  pool: 5
+  timeout: 5000
+
+# Environment set to be deployed using JRuby
+user_test:
+  adapter: oracle_enhanced
+  host: 
+  database: 
+  username: 
+  password:
+  pool: 5
+  timeout: 5000
+
+# Environment set to be deployed using JRuby
+production:
+  adapter: oracle_enhanced
+  host: 
+  database: 
+  username: 
+  password: 
+  pool: 5
+  timeout: 5000
+
+# Environment set to use Jruby rails environment
+production_dcm:
+  adapter: oracle_enhanced
+  host: 
+  database: 
+  username: 
+  password: 
+  pool: 5
+  timeout: 5000

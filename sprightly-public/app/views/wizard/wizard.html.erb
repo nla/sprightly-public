@@ -1,0 +1,118 @@
+<ul class="add-actions-list" style="float: right; width: 200px; margin-right: 10px;">
+  <%= action_input_only(image_tag("go.png") + " <span class='add-action-text'>Work Tray</span>",url_for(:controller=>:agreement,:action=>:work_tray,:id=>-1),"Go to the Work Tray", false,"","add-action blue") %>
+</ul>
+<h2 style="padding-left: 10px">
+  <% if  @agreement.draft? %>[Draft] <% end %>
+  Agreement Wizard for the <%= @agreement.formtype_display_label %>
+</h2>
+<div class="wizard-accordion" style="width: 99%; margin-left: auto; margin-right: auto;">
+  <h3><a href="#">A. Material Covered by Agreement</a></h3>
+  <div class="material" url="<%= url_for :controller=>'wizard', :action=>'materials', :id=>@agreement.id.to_i %>">
+    <%=  render :partial => 'wizard/wizard_materials.html' %>
+  </div>
+
+  <h3><a href="#">B. Rights Holders and Contact Details</a></h3>
+  <div class="rightsholders" url="<%= url_for :controller=>'wizard', :action=>'rightsholders', :id=>@agreement.id.to_i %>">
+      <%= image_tag "busy.gif" %>
+  </div>
+
+  <h3><a href="#">C. Roles and Relationships</a></h3>
+  <div class="relationships" url="<%= url_for :controller=>'wizard', :action=>'relationships', :id=>@agreement.id.to_i %>">
+      <%= image_tag "busy.gif" %>
+  </div>
+
+  <h3><a href="#">D. Instructions for Access and Use</a></h3>
+  <div class="permissions" url="<%= url_for :controller=>'wizard', :action=>'permissions', :id=>@agreement.id.to_i %>">
+        <%= image_tag "busy.gif" %>
+  </div>
+
+  <h3><a href="#">E. Agreement Details</a></h3>
+  <div class="notes" url="<%= url_for :controller=>'wizard', :action=>'admin', :id=>@agreement.id.to_i %>">
+        <%= image_tag "busy.gif" %>
+  </div>
+</div>
+
+<div class="wizard-actions" style="width: 95%; margin-left: auto; margin-right: auto; margin-top: 15px">
+  <input id="activateAgreementButton" type="button" class="blue-button" value="Submit Agreement" onclick="wizard.activateAgreement()"/>
+  <input id="markInProgressButton" type="button" class="blue-button secondary" value="Mark as Draft" onclick="wizard.markAsDraft()"/>
+  <% if @agreement.draft? %>
+    <input id="deleteAgreementButton" type="button" class="red-button secondary" value="Delete Agreement" onclick="wizard.deleteAgreement()"/>
+  <% elsif @agreement.active? %>
+    <input id="archiveAgreementButton" type="button" class="orange-button secondary" value="Archive Agreement" onclick="wizard.archiveAgreement()"/>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+
+    resizeAccordion();
+
+    //$(window).resize(resizeAccordion);
+
+    function resizeAccordion() {
+      $("#main").height($(window).height()-$("wizard-accordion").offset().top-165+"px");
+    }
+
+    $(".wizard-accordion ").accordion(
+        {
+          fillSpace: true,
+          change: function(event, ui) {
+            $(ui.newHeader).next().ajaxload($(ui.newHeader).next().attr("url"),null,function() {initialiseSections(".wizard-accordion .ui-accordion-content-active:visible");});
+            $(ui.oldHeader).next().html('<%= image_tag "busy.gif" %>');
+          }
+        }
+    );
+
+    $(".wizard-accordion h3").each(function() {
+      $(this).append('<%= image_tag "tick.png", :class=>"completed-icon" %>')
+    });
+
+    function refreshAccordionContent() {
+      $(".wizard-accordion .ui-accordion-content-active:visible").html('<%= image_tag "busy.gif" %>');
+      $(".wizard-accordion .ui-accordion-content-active:visible").ajaxload(
+        $(".wizard-accordion .ui-accordion-content-active:visible").attr("url"),
+        null,
+        function() {initialiseSections(".wizard-accordion .ui-accordion-content-active:visible");}
+      );
+    }
+
+    var wizard = {};
+
+    wizard.activateAgreement = function() {
+      displayExitMessage = false;
+      document.location.href = "<%= url_for :controller=>:agreement, :action=>"activate_agreement", :id=>@agreement.id.to_int %>";
+    }
+
+    wizard.markAsDraft = function() {
+      displayExitMessage = false;
+      document.location.href = "<%= url_for :controller=>:agreement, :action=>"mark_as_draft", :id=>@agreement.id.to_int %>";
+    }
+
+    wizard.deleteAgreement = function() {
+      //document.location.href = "<%= url_for :controller=>:agreement, :action=>"delete_agreement", :id=>@agreement.id.to_int %>";
+      displayExitMessage = false;
+      return AjaxDialogHelper.show('<%= url_for :controller => :agreement, :action => :delete, :id => @agreement.id.to_int %>', 'ajax=true&from_wizard=true', {title: 'Delete', width: 300, height: 200, close: resetExitConfirmation})
+    }
+
+    wizard.archiveAgreement = function() {
+      //document.location.href = "<%= url_for :controller=>:agreement, :action=>"archive_agreement", :id=>@agreement.id.to_int %>";
+      displayExitMessage = false;
+      return AjaxDialogHelper.show('<%= url_for :controller => :agreement, :action => :archive, :id => @agreement.id.to_int %>', 'ajax=true&from_wizard=true', {title: 'Archive', width: 300, height: 200, close: resetExitConfirmation})
+    }
+
+    function confirmExit() {
+      if (displayExitMessage) {
+        <% if  @agreement.status_lu.code == "Draft"  %>
+          return "This agreement is currently in draft. To submit this agreement click Cancel and then Submit Agreement."
+        <% end %>
+      }
+    }
+
+    function resetExitConfirmation() {
+      displayExitMessage = true;
+    }
+
+    var displayExitMessage = true;
+    window.onbeforeunload = confirmExit;
+
+    transientMessageTargetSelector = ".wizard-accordion"
+</script>

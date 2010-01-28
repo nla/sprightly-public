@@ -1,0 +1,63 @@
+<div class="agreement-details <%= @agreement.status_lu.code.downcase %>">
+  <%= render :partial => 'permission/list.html', :locals => { :agreementid => @agreementid.to_i , :close => ", close: function() {showAgreementDetails(" + @agreementid.to_s + ");}"} %>
+
+  <div class="left">
+    <div class="section">
+      <div class="section-header">
+        <h3 class="section-title">Agreement Details</h3>
+        <ul class="actions horizontal-menu">
+          <%= action_input_only("Edit Details",url_for(:controller => :agreement, :action => :edit, :id=>@agreementid),"Edit Details",true,"{title: 'Edit Details', close: function() {showAgreementDetails(" + @agreementid.to_s + ");}}") %>
+          <li class="action">
+            <a href="javascript:void(0)" class="toggle-collapse-expand">
+              <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+              <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="section-content">
+        <%= render :partial=>"agreement/show_details.html" %>
+      </div>
+    </div>
+     <div class="section">
+      <div class="section-header">
+        <h3 class="section-title">Materials Covered</h3>
+        <ul class="actions horizontal-menu">
+          <%= action_input_only("Edit Materials",url_for(:controller => :wizard, :action => :edit_materials, :id=>@agreementid),"Edit Materials Covered",true,"{title: 'Edit Materials', close: function() {showAgreementDetails(" + @agreementid.to_s + ");}}") %>
+          <li class="action">
+            <a href="javascript:void(0)" class="toggle-collapse-expand">
+              <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+              <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="section-content">
+        <%= render :partial=>"agreement/show_materials.html" %>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+      <div class="section">
+      <div class="section-header">
+        <h3 class="section-title">Rights Holders</h3>
+        <ul class="actions horizontal-menu">
+          <%= action_input_only("Add Rights Holder",url_for(:controller => :wizard, :action => :add_rights_holder, :id=>@agreementid),"Add Rights Holder",true,"{title: 'Add Rights Holder', close: function() {showAgreementDetails(" + @agreementid.to_s + ");}}","green") %>
+          <li class="action">
+            <a href="javascript:void(0)" class="toggle-collapse-expand">
+              <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+              <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="section-content">
+        <% if @rightsholders.size > 0 then %>
+            <%= render :partial=>"rightsholders/list_for_agreements.html", :locals=>{:rightsholders=>@rightsholders, :allow_detach=>true, :agreement=>@agreement, :dialogOnCloseCallback=>"function() {showAgreementDetails(" + @agreementid.to_s + ");}"} %>
+        <% end %>
+      </div>
+    </div>
+    <%= render :partial => 'trim/list.html', :locals => { :id_name => 'agreementid', :id => @agreementid , :dialogOnCloseCallback => "function() {showAgreementDetails(" + @agreementid.to_s + ")}" } %>
+  </div>
+  <%= clear_fix %>
+</div>

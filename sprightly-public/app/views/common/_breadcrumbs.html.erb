@@ -1,0 +1,32 @@
+<% if not @breadcrumbs.nil? %>
+  <%
+      crumb = ""
+      @breadcrumbs.each_with_index { |breadcrumb, index |
+
+        separator = " > "
+        if (index == 0)
+         separator = ""
+        end
+
+        url = ""
+        if breadcrumb.url.include?("?")
+          url = "<a href='" + escape_once(breadcrumb.url) + "&amp;position=" + index.to_s + "'>" + breadcrumb.name + "</a>"
+        else
+          url = "<a href='" + escape_once(breadcrumb.url) + "?position=" + index.to_s + "'>" + breadcrumb.name + "</a>"
+        end
+
+        if ((index + 1) == @breadcrumbs.length)
+          url = "<span class='current'>" + breadcrumb.name + "</span>"
+        elsif (index == 0)
+          url = "<a href='" + escape_once(breadcrumb.url) + "'>" + breadcrumb.name + "</a>"
+        end
+
+        crumb = crumb + separator + url
+      }
+
+  %>
+
+    <div id="breadcrumbs">
+        <%= crumb %>
+    </div>
+<% end %>

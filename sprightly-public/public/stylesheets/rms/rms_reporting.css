@@ -1,0 +1,8 @@
+.report.data tr:nth-child(2n) td {background-color: #F3F3F3;}
+.report.data  .even td {background-color: transparent}
+.report.data  td, .report.data  th { border-left: 1px solid #CCCCCC;}
+.report.data  td:nth-child(1), .report.data  th:nth-child(1) { border-left: none;}
+.report.data .int {text-align: right;}
+.report.data tr:hover td {background-color: #eeffee}
+.report.data td.int:hover {background-color: #ffeedd !important}
+.filter-options {border: 1px solid #aaaaaa; padding: 0.5em; background-color: #eeeeee; font-size: 0.8em; width: 640px;}

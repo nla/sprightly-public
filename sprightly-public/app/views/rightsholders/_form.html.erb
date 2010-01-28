@@ -1,0 +1,6 @@
+<% if !@rightsholder_type.nil? %>
+    <%= hidden_field_tag "party_type", @rightsholder_type %>
+    <%=  render :partial => "rightsholders/" + @rightsholder_type + ".html", :locals => { :f => f} %>
+<% else %>
+  <p style="font-style: italic;" class="error-msg">Please select a rights holder <strong>type</strong>.</p><br/>
+<% end %>

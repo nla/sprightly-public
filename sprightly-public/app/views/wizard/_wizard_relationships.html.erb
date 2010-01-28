@@ -1,0 +1,66 @@
+<% if @rightsholders.size>0 %>
+
+<%  @rightsholders.each do |rightsholder| %>
+  <div class="wizard-result">
+    <h2><%= rightsholder.preferred %></h2>
+    <div class="section">
+      <div class="section-header">
+        <h3 class="section-title"><%= glossary_term("Roles", "role") %></h3>
+        <ul class="actions horizontal-menu">
+          <li class="action text green">
+            <a href="javascript:void(0)" onclick="return AjaxDialogHelper.show('<%= url_for :controller => :wizard, :action => "add_role", :id=>@agreement.id.to_int, :rightsholderid=>rightsholder.id %>', 'ajax=true', {title: 'Add Role', close: refreshAccordionContent})">
+                Add New Role
+            </a>
+          </li>
+          <li class="action">
+            <a href="javascript:void(0)" class="toggle-collapse-expand">
+              <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+              <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="section-content">
+        <%  party = Party.get_party(rightsholder.id)
+            roles = party.active_roles
+            delegators = party.active_delagators
+            delegatees = party.active_delagatees
+            rh_map = Relationship.get_rightsholders_in_relationship(delegators, delegatees)
+        %>
+        <%= render :partial=>"roles/list.html", :locals=>{:roles=>roles, :dialogOnCloseCallback=>"refreshAccordionContent"} %>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h3 class="section-title"><%= glossary_term("Relationships", "relationship") %></h3>
+        <ul class="actions horizontal-menu">
+          <% if @rightsholders.size>1 %>
+          <li class="action text green">
+            <a href="javascript:void(0)" onclick="return AjaxDialogHelper.show('<%= url_for :controller => :wizard, :action => "add_relationship", :id=>@agreement.id.to_int, :partyid=>rightsholder.partyid %>', 'ajax=true' , {title: 'Add Relationship', close: refreshAccordionContent})">
+                Add New Relationship
+            </a>
+          </li>
+          <% end %>
+          <li class="action">
+            <a href="javascript:void(0)" class="toggle-collapse-expand">
+              <%= image_tag "hide.gif", :class=>"toggle-collapse", :alt=>"Hide this section" %>
+              <%= image_tag "show.gif", :class=>"toggle-expand", :alt=>"Show this section" %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="section-content">
+          <% if @rightsholders.length < 2 %>
+            <p class="warning-msg">Add all Rights Holders associated with the agreement in step B to then create relationships between them.</p>
+          <% end %>
+          <%= render :partial => 'relationship/list.html', :locals=>{:rightsholder=>rightsholder, :delegators=>delegators,:delegatees=>delegatees, :rightsholders=>rh_map, :dialogOnCloseCallback=>"refreshAccordionContent"} %>
+      </div>
+    </div>
+
+ </div>
+<% end %>
+
+<% else %>
+  <p class="warning-msg">No Rights Holders associated to the Agreement.  Please add them in Step B.</p>
+<%  end %>

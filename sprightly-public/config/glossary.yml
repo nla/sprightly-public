@@ -1,0 +1,27 @@
+agreement: Contract signed by a person (or person representing an organisation) detailing access, copying and publishing conditions for NLA collection material. Also known as a Rights Agreement.
+agreement_wizard: Step by step assistant for data input of an Agreement
+collection_area: Section in the Library responsible for particular work formats eg Manuscripts, Maps.
+copyright_status_tool: Calculator that uses a set of rules based on Australian copyright law, and metadata from the catalogue record, to determine whether a work is in copyright. The results are returned and displayed in the catalogue. The tool was developed by Library staff as part of the Rights Management Project.
+date_agreement: Date the Rights Agreement was signed (section 18 of the form). For the Pictures migrated data this date is always 01-01-2008.
+date_trimd: Date original Rights Agreement was sent to RMU to be put in TRIM. This date is helpful in determining the most recent agreement or relevant document.
+date_library_decision: Date a Library Decision was made eg a risk decision.
+event: Occurrence that sets a particular permission into action eg 'until my  death'.
+event_operator: Used in conjunction with Trigger date or Event to define when a permission comes into effect eg until 2015 or after my death
+library_decision: Risk management decision about access to or use of an item. This is for cases where Library staff have made a decision about how we will use an item, based on rights research and risk assessment, eg for an orphan work.
+permission: Part of the Agreement where the Rights Holder conveys their authorization for access, copying and publication eg allow unrestricted access or provide copies.
+permission_holder: Who the permission refers to ie either Everyone or NLA
+permission_policy: Type of authorization or decision that applies to a permission eg Open for Copying or Permission required for Exhibition etc
+permission_purpose: Used for Publishing/Public Use or Exhibition Types only and specifies to what use a publication or exhibition is to be put.
+permission_type: Particular kind of rights ie relating to access, copying, exhibition or publishing/public use.
+preferred_contact: Where Rights Holder nominates how they would prefer to be contacted eg by post or by phone
+privacy:  Where a rights holder nominates which of their contact details can be given to enquirers eg <ul><li>Email 'Internal use only' means the email address is for staff use only and must not be given to users.</li><li>Public means the address is able to be shared with all users or published in a public version of the RMS in future</li><li>Public on request means the address may be provided to users if they ask for it</li></ul>Note - all Pictures migrated data has a default Privacy category of 'Public on request'.
+notes_agreement: A note about information the rights holder provided that does not fit in the standard form, or interpretation of the agreement by Library staff, or the status of the agreement in the system (e.g. waiting on TRIM ref number)
+notes_contact: A note to help other staff contacting the rights holder (e.g. lives in Provence in the northern Summer, son never replies to email) or about a specific contact detail (e.g. silent number)
+notes_library_decision: Describes how and why the decision was made and what it means for access to or use of the work
+notes_permission: Clarifies detail of the permission, e.g. specific publication the permission applies to
+notes_rights_holder: Corporate knowledge about the rights holder that is useful to share and not limited to a specific agreement
+relationship: Connection between two or more people associated with an Agreement eg creator and heir, copyright holder and agent. 
+role: Function a rights holder has in relation to the Library collection material eg Copyright owner, Creator, Donor.
+trigger_date: Date that sets a particular permission into action eg '2015'
+trim_reference: Section in Sprightly to record details of the original agreement of document in TRIM including record number, date sent to RMU and description eg 'Note for file' or 'Old agreement'.
+work_tray: Area in Sprightly where unfinished Rights Agreements are stored waiting for input to be completed.

@@ -1,0 +1,18 @@
+<%  if @solr_response && @solr_response.num_found.to_i == 0 %>
+  <div class="success-msg">
+    No duplicates found.
+  </div>
+<% elsif @solr_response %>
+  <div class="warning-msg">
+    <p><b><%= @solr_response.num_found.to_i %> possible duplicates found.</b>  Please ensure the rights holder record doesn't already exist in Sprightly before creating.</p>
+    <div style="padding: 2px 0 4px; columns: 5; -moz-column-count: 5; max-height: 150px; overflow: auto;">
+      <% @solr_response.items.each { |rh |  %>
+        <div class="duplicate-rights-holder"><a target="_blank" href='<%= url_for :controller=>:rightsholders,:action=>:show,:id=>rightsholder_get_id(rh) %>'><%= rightsholder_get_name(rh) %></a></div>
+      <% } %>
+    </div>
+  </div>
+<% else %>
+  <div class="info-msg">
+    Check for duplicates to allow creation of a new Rights Holder.
+  </div>
+<% end %>

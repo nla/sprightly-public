@@ -1,0 +1,34 @@
+@media print {
+    .print-actions {display: none;}
+}
+
+a {color: black; text-decoration: none}
+.print-actions {background-color:#EEEEEE;border-bottom:1px solid #AAAAAA;height:28px;padding:4px;}
+
+#titleZone {min-width: 0; float: right; border: none;background-color:white;background-image:none;border-bottom:none}
+#main {min-width: 0;}
+.section {border-bottom: 5px solid #f3f3f3; padding: 10px 0;}
+h2 {border-top: 12px solid #f3f3f3; padding-top: 12px;}
+h1 {clear: both}
+
+.add-action {display: none;}
+
+.main-tab-container .work-tray {display: none;}
+.ui-tabs-nav, .main-tab-icon,.actions, .table-actions {display: none ;}
+#rhTabs, .ui-tabs-panel {height: auto !important;}
+.section {clear: both; border: none; }
+.section .section-header {background-color: transparent !important; }
+.section.collapsed .section-content {display: block !important;}
+.section h3 {font-size: 1em;}
+#itemDetails .rh-details, #itemDetails .work-details, #itemDetails .thumbnail {float: none;}
+.label-value-pair .label, .label-value-pair .value {display: inline;}
+.label-value-pair .label {padding-right: 30px;}
+.audit-toggle {display: none;}
+
+table.data {border-spacing: 0px; border-collapse: collapse;}
+table.data th {background-color: #EEEEEE;}
+table.data td, table.data th {text-align: left; border: 1px solid #CCCCCC;}
+
+.cat-rights-holder a img {display:none;}
+
+.left, .right {float: none !important; margin: 0 !important; width: auto !important;}

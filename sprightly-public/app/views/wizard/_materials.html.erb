@@ -1,0 +1,122 @@
+<% ajax_form_for :agreement, :html=> {:class=>'material'}, :url => { :action => "update_materials", :id=>@agreement.id.to_i } do |f| %>
+
+  <% if @agreement.formtype == "oral"  %>
+    <%# FORM FOR ORAL HISTORY  %>
+    <div class="wizard-radio-option <% if @agreement.extent==nil %>checked<%  end %>">
+      <%= radio_button_tag "materials", "new_from_fields", @agreement.extent==nil %>
+      <%= label_tag "materials_new_from_fields", 'Generate from fields:' %>
+      <table class="form" style="margin-left: 2em;">
+        <tr>
+          <td class="label"><%= label_tag "trc_number", "TRC Number"%></td>
+          <td class="field"><%= text_field_tag "trc_number", "" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label_tag "interviewee", "Interviewee Name"%></td>
+          <td class="field"><%= text_field_tag "interviewee", "" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label_tag "interviewer", "Interviewer Name"%></td>
+          <td class="field"><%= text_field_tag "interviewer", "" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label_tag "place", "Place of Interview"%></td>
+          <td class="field"><%= text_field_tag "place", "" %></td>
+        </tr>
+        <tr>
+          <td class="label"><%= label_tag "date", "Date of Interview"%></td>
+          <td class="field"><%= text_field_tag "date", "", :class=>"datepicker" %></td>
+        </tr>
+      </table>
+   </div>
+    <div class="wizard-radio-option <% if @agreement.extent!=nil %>checked<%  end %>">
+      <%= radio_button_tag "materials", "free_text", @agreement.extent!=nil %>
+      <%= label_tag "materials_free_text", 'Or enter free text:' %><br/>
+      <%= text_area_tag "free_text", @agreement.extent, :rows=>5, :cols=>70 %>
+    </div>
+  <% else %>
+    <%# FOR MULTI FORM ONLY %>
+    <% if @agreement.formtype == "multi" %>
+    <div class="wizard-radio-option">
+      <%= radio_button_tag "materials", "all_in_library", false %>
+      <%= label_tag "materials_all_in_library", 'All material in the Library\'s Collections' %>
+    </div>
+    <% end %>
+
+    <%# FOR ALL FORMS EXCEPT PUBLIC PROGRAMS %>
+    <% if @agreement.formtype != "public" %>
+      <div class="wizard-radio-option">
+        <%= radio_button_tag "materials", "all_in_areas", false %>
+        <% if @agreement.formtype == "multi" %>
+            <%# IF MULTI FORM, ALLOW SELECTION OF MULTIPLE AREAS %>
+            <%= label_tag "materials_all_in_areas","All material in the "%>
+            <select id="collections" name="collections[]" multiple="multiple" size="5">
+                <option value=""></option>
+                <option value="Manuscripts">Manuscripts</option>
+                <option value="Maps">Maps</option>
+                <option value="Music">Music</option>
+                <option value="Oral History">Oral History</option>
+                <option value="Pictures">Pictures</option>
+                <option value="Public Programs">Public Programs</option>
+            </select>
+            <%= label_tag "materials_all_in_areas", "collections."%>
+            <script type="text/javascript">
+                /***************************************************************
+                 * Enable the collections select as a jQuery multiselect widget 
+                 */
+                $("#collections").multiSelect({
+                  selectAll: true,
+                  noneSelected: 'Please select one or more:',
+                  oneOrMoreSelected: '*'
+                });
+            </script>
+        <% else %>
+          <%# ELSE, ONLY ALLOW MATERIALS WITHIN THE SPECIFIC COLLECTION AREA %>
+          <%= label_tag "materials_all_in_areas", 'All material in the '+ @agreement.collection_display_label + " Collection"%>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="wizard-radio-option <% if @agreement.extent!=nil or @agreement.formtype=='public'%>checked<%  end %>">
+      <%= radio_button_tag "materials", "limited", @agreement.extent!=nil||@agreement.formtype=='public' %>
+      <%= label_tag "materials_limited",'The following material:' %>
+      <div class="material-subset">
+        <div>Material Description</div>
+        <%= text_area_tag "material",@agreement.extent, :rows=>5, :cols=>70 %>
+      </div>
+    </div>
+  <% end %>
+
+    <div id="wizardMaterialResolver" class="material-resolver" style="display: none"> <!-- hide initially, then show in selected section -->
+      [Optional] <span style="color: #666">Link the agreeement to specific work PI(s) (e.g. nla.cat-vnXXXXX) - </span><a href="javascript:void(0);" onclick="resolver.add('.material .material-work-ids'); return false;">Add Another</a>
+      <%= render :partial=>"works/work_resolver.html", :locals=>{:containerclass=>"material-work-ids",:copysets=>@copysets} %>
+    </div>
+
+  <p>
+    <%= f.submit 'Save' %>
+  </p>
+<% end %>
+
+<script type="text/javascript">
+   if ($(".wizard-radio-option.checked").length>0) {
+      $(".wizard-radio-option.checked").append($("#wizardMaterialResolver"));
+      $("#wizardMaterialResolver").slideDown(500);
+   }
+   $(".material input[type=radio]").click(function() {      
+      if ($(this).parents(".wizard-radio-option:first").hasClass("checked")) return;
+      $(this).attr("checked","checked");
+      $(".material .wizard-radio-option").removeClass("checked");
+      $(this).parents(".wizard-radio-option:first").addClass("checked");
+      if ($(this).find(".material-resolver").length==0) {
+        $("#wizardMaterialResolver").slideUp(500, function() {
+          $(".wizard-radio-option.checked").append($("#wizardMaterialResolver"));
+          $("#wizardMaterialResolver").slideDown(500);
+        });
+      }
+   });
+
+   /* Clicking a form widget inside an answer block will mark the answer as checked */
+   $(".wizard-radio-option input[type!='radio'], .wizard-radio-option textarea").click(function() {
+      $(this).parents(".wizard-radio-option:first").find("input[type=radio]").triggerHandler("click");
+   });
+
+</script>

@@ -1,0 +1,147 @@
+.home #main {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+    padding-bottom: 40px;
+}
+
+.home #searchPanel {
+    background-color:#EEEEEE;
+    border:1px solid #DDDDDD;
+    margin-bottom: 2em;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height:120px;
+}
+
+.home .cool-box-col #searchPanel {
+    width: 100%;
+}
+
+.home #simpleSearch {
+	width:420px;
+	margin-left: auto;
+	margin-right: auto;
+    margin-top: 30px;
+	/*margin-bottom: 5px;*/
+}
+
+.home .advanced-criteria {
+	width: 760px;
+	margin-left: auto;
+	margin-right: auto;	
+	font-size: 0.8em;
+	display: none;
+	background-color: #BFF6FF;
+	padding: 5px;
+}
+
+.home .advanced-criteria.selected {
+	display: block;
+}
+
+.home #searchPanel input, .home #searchPanel button {
+	font-size: 1.4em;
+}
+
+#searchString {
+	width: 350px;
+    vertical-align: middle;
+}
+
+#searchButton {
+    vertical-align: middle;
+}
+
+
+.home #simpleSearch ul {
+	margin-top: 5px;
+}
+
+#searchPanel .horizontal-menu li {
+	display: inline;
+	padding:5px 12px 5px 0px;
+	background-color: transparent;	
+	margin: 0px;
+}
+
+.home #resultsPanel {
+    clear: both;
+}
+
+.home #resultsPanel .result {
+	cursor: default;
+}
+
+.result .result-thumbnail {width: 110px; float: left;}
+.result .result-thumbnail img {max-width: 100px;}
+.result .result-source {-moz-border-radius-bottomleft:2px;background-color:#AAAAAA;color:white;opacity:0.3;filter:alpha(opacity=30);padding:0.4em 0.5em 0.3em;position:absolute;right:0px;text-align:right;top:0;}
+.result .result-details {float: left; max-width: 800px}
+
+.result.hovered .result-source {opacity:0.7;filter:alpha(opacity=70);}
+
+.home #resultsPanel .result .button {
+	display: none;
+}
+
+.home #resultsPanel .result.hovered .button {
+	/* PG Hide the View button as it's not really that useful
+        display: inline-block;
+    */
+}
+
+.home .howto-message {margin-left:auto;margin-right:auto;margin-top:2em;width:600px;}
+
+#advancedCriteria {
+	display: none;
+	/*margin-top:5px;*/
+}
+
+.input-actions {
+    height: 118px;
+    margin-bottom: 2em;
+}
+
+.input-actions li {
+    list-style: none;
+    margin-top: 0;
+    width: 200px;
+}
+
+.more-info-toggle {cursor: pointer; opacity: 0.3; filter: alpha(opacity=30); position:absolute; left: 2px; top: 2px; border: 1px dotted #AAAAAA; background-color: #EEEEEE;}
+.more-info-toggle .result-item-icon {height: 3em;}
+.result.hovered .more-info-toggle {opacity: 1; filter: alpha(opacity=100);}
+.more-info-toggle:hover {border: 1px solid #33AAFF; background-color:#EEFFFF;}
+.more-info-toggle .info-icon {bottom:0;position:absolute;right:0;}
+
+/*
+.business-card {opacity: 0.8; filter: alpha(opacity=80); right: 10%;position:fixed;top:40%;width:500px; height: 300px; border: 2px solid #CCCCCC; background: white;}
+.business-card .toolbar {background:#CCCCCC url(../images/bg_lightblue.gif) repeat-x; height:24px; position: relative; margin: 1px;}
+.business-card .toolbar .close {margin: 3px; cursor: pointer; float: right; background: transparent url(../images/ui-icons_222222_256x240.png) no-repeat -96px -128px;height:16px;width:16px;}
+.business-card .business-card-content {margin: 1px;}
+*/
+
+.business-card {opacity: 0.9; filter: alpha(opacity=90); right: 10%; font-size: 0.9em;}
+.business-card .ui-dialog-titlebar {height:20px; padding: 0px 4px;}
+#searchResultBusinessCard {clear: both; padding-left: 25px; padding-right: 25px; overflow: hidden}
+.business-card #rh_thumbnail_image {float: left; margin-right: 10px}
+.business-card #rh_thumbnail_image, .business-card #rh_thumbnail_image img {max-width: 100px; max-height: 140px;}
+.business-card #rh_thumbnail_image #rh_image_source {display: none;}
+.business-card #rh_thumbnail_image {padding: 0}
+.business-card .label-value-pair .label {width: 80px;}
+.business-card .label-value-pair .value {width: 200px;}
+.business-card .rh-details {float: left;height:140px;overflow:auto;}
+.business-card .source {bottom:16px;position:absolute;right:10px;}
+.business-card .go-to-action {bottom:1.8em;height:2em;left:27px;position:absolute;text-align:center;width:280px;}
+.business-card .go-to-action .add-action {background-image: url(../images/bg_action_blue.png); background-position: 0 -35px;}
+.business-card .summary {margin-top: 0.5em;border-top:2px solid #CCCCCC;}
+.business-card .summary .label {width: 150px;}
+#goRight {cursor:pointer;height:160px;position:absolute;right:0;top:25%;width:18px; background: transparent url(../images/go-right.png) no-repeat 0 0;}
+#goLeft {cursor:pointer;height:160px;position:absolute;left:0;top:25%;width:18px; background: transparent url(../images/go-left.png) no-repeat 0 0;}
+#goRight:hover {background-position:-18px 0;}
+#goLeft:hover {background-position:-18px 0;}
+.business-cards.add-actions-list li {margin:10px 10px 0px 0px;width:180px;float:left}
+.business-cards .label {width: 100px !important; display: inline-block;}
+.business-cards .value {width: 40px !important; display: inline-block;}
+.business-cards.add-actions-list a img {height:auto;vertical-align:top;}
