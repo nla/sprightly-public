@@ -1,7 +1,8 @@
 # Sprightly
 
-*Note:* This is an old (2010) fork of the internal Sprightly codebase. The dependencies on other NLA internal systems
-were stubbed out so that this could be run standalone. The NLA does not intend to maintain this fork.
+**Note:** This is an old (2010) fork of the internal Sprightly codebase. The dependencies on other NLA internal systems
+were stubbed out so that this could be run standalone. The NLA does not intend to maintain or support this fork.
+We continue to make this available only for historical reference, it's not something that can be made use of by end users.
 
 ## Introduction
 
@@ -17,10 +18,11 @@ The high level requirements for this system were:
 
 ## Installation
 
-The application is built in Ruby on Rails.
+The application is built in Ruby on Rails v1. It will likely not run on recent versions of Ruby without
+significant modifications.
 
-Application
-git clone git://code.nla.gov.au/sprightly
+### Application
+
 There are two rails applications
 
 * sprightly-public : The core application
@@ -32,13 +34,15 @@ To run the application:
 * Go into the sprightly-services directory and run on a different port: ruby script/server -p 9191
 
 ### Database
-Install Oracle Express
-Create a tablespace called rms_os
-Import the database using the file rms_os.sql
+
+* Install Oracle Express
+* Create a tablespace called rms_os
+* Import the database using the file rms_os.sql
 
 [Datamodel](datamodel.jpg)
 
 ## Usage
+
 Application login details:
 
 * Administrator: user=admin, password=123
