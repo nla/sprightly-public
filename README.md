@@ -1,7 +1,9 @@
 # Sprightly
 
 **Note:** This is an old (2010) fork of the internal Sprightly codebase. The dependencies on other NLA internal systems
-were stubbed out so that this could be run standalone. The NLA does not intend to maintain or support this fork.
+were stubbed out so that this could be run standalone. The NLA does not intend to maintain or support this fork and it
+is missing many changes that have been made to the internal production system over the last decade.
+
 We continue to make this available only for historical reference, it's not something that can be made use of by end users.
 
 ## Introduction
