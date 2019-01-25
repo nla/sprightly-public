@@ -7,7 +7,7 @@ were stubbed out so that this could be run standalone. The NLA does not intend t
 
 The purpose of the rights management system is to collect all rights information in one place and make it accessible to Library staff. Rights information includes copyright status of works and access/use agreements with rights holders.
 
-The first version of the rights management system was developed in 2007-2008 and allowed recording of rights information for the Library's digital collection items and rights holders. The paper Developing a rights management system for the National Library of Australia's collections provides more information about this project. The current version of the rights management system, developed in 2009, allows staff to record agreements with rights holders for material in both the digital and physical collections. Staff can also view an automated calculation of copyright status for works in the collection based on information in catalogue records.
+The first version of the rights management system was developed in 2007-2008 and allowed recording of rights information for the Library's digital collection items and rights holders. The paper [Developing a rights management system for the National Library of Australia's collections](rms-paper.pdf) provides more information about this project. The current version of the rights management system, developed in 2009, allows staff to record agreements with rights holders for material in both the digital and physical collections. Staff can also view an automated calculation of copyright status for works in the collection based on information in catalogue records.
 
 The high level requirements for this system were:
 
@@ -36,7 +36,7 @@ Install Oracle Express
 Create a tablespace called rms_os
 Import the database using the file rms_os.sql
 
-Datamodel
+[Datamodel](datamodel.jpg)
 
 ## Usage
 Application login details:
